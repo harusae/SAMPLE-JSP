@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.UserMapper">
+
+    <select id="getLoginInfo" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
+        select *
+        from WISETM_USER_INFO
+        where USER_ID = #{userId}
+
+    </select>
+
+    <select id="getLoginInfo2" parameterType="java.util.Map" resultType="HashMap">
+        select *
+        from WISETM_USER_INFO
+        where USER_ID = #{userId}
+
+    </select>
+
+</mapper>
