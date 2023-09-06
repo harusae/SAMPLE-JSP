@@ -17,10 +17,25 @@
   <!--excel.js-->
   <script src="/js/exceljs.min.js"></script>
   <script src="/js/FileSaver.min.js"></script>
+  <!--bootstrap Treeview-->
+  <script src="/js/jquery-3.7.1.min.js"></script>
+  <script src="/js/bootstrap-treeview.js"></script>
+  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
+
 
 </head>
 <body>
-  <p>count : ${count}</p>
+  <div>
+    <button type="button" class="btn btn-primary" onclick="javascript:location.href='/';">HOME</button>
+    <button type="button" class="btn btn-primary" onclick="javascript:location.href='/manage/menu';">메뉴관리</button>
+    <button type="button" class="btn btn-primary" onclick="javascript:location.href='/manage/menu/auth';">권한 별 메뉴관리</button>
+
+  </div>
+  <hr/>
+
+
+<p>count : ${count}</p>
   <button onclick="onBtnExport()">Download CSV export file</button>
   <div id="grid1"></div>
   <div style="float:left;">
@@ -43,10 +58,55 @@
       <canvas id="test4" style="display: block; box-sizing: border-box;"></canvas>
     </div>
   </div>
+
+
+  <div style="float:left;">
+    <div id="treeview" style="width:400px; height:300px; border:1px solid black; float:left"/>
+  </div>
+
+
 </body>
 
 <!-- script for chart/grid (오브젝트 아래위치에서 작성해야 동작) -->
 <script>
+
+  //tree
+  var data = [
+    {
+      id:1,
+      text: 'Parent 1',
+      tags: ['1'],
+      nodes: [
+        {
+          id: 2,
+          text: 'Child 1',
+          href: '#child1',
+          tags: ['0'],
+        }
+      ]
+    },
+    {
+      id:6,
+      text: 'Parent 2',
+      tags: ['0']
+    },
+  ];
+  $(function() {
+
+    var options = {
+      bootstrap2: false,
+      showTags: true,
+      levels: 5,
+      data: data,
+      onNodeSelected: function(event, node) {
+        alert( node.id );
+      },
+    };
+
+    $('#treeview').treeview(options);
+  });
+  //tree end
+
   let dataTest = [
     ["존", "john@example.com", "(353) 01 222 3333"],
     ["마크", "mark@gmail.com", "(01) 22 888 4444"],
