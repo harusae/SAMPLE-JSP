@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -27,22 +30,29 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername (String userId) throws UsernameNotFoundException{
-        System.out.println("loadUserByUsername userId : "+ userId);
         HashMap<String, Object> param = new HashMap<>();
         param.put("userId", userId);
         //UserInfo userInfo = userMapper.getLoginInfo(param);
         HashMap<String, Object> userInfo = userMapper.getLoginInfo2(param);
 
-        logger.info("loadUserByUsername userInfo : {}", userInfo);
         if(userInfo == null){
-            return null;
+            throw new UsernameNotFoundException("잘못된 사용자 정보입니다.");
         }
 
-        return User.builder()
-                .username(userId)
-                .password((String) userInfo.get("USER_PW"))
-                .authorities(new SimpleGrantedAuthority("ROLL_"+(String) userInfo.get("USER_AUTH")))
-                .build();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority((String) userInfo.get("USER_AUTH")));
+
+        UserDetailsImpl userDetails = new UserDetailsImpl();
+        userDetails.setUsername(userId);
+        userDetails.setPassword((String) userInfo.get("USER_PW"));
+        userDetails.setAuthorities(authorities);
+        userDetails.setEnabled(true);
+        userDetails.setAccountNonExpired(true);
+        userDetails.setAccountNonLocked(true);
+        userDetails.setCredentialsNonExpired(true);
+
+
+        return userDetails;
     }
 
 }

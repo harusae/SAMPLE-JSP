@@ -21,16 +21,15 @@
 <div class="wrapper">
     <div class="container" style="float:left">
         <h1>메뉴목록</h1>
-        <div id="gridMenu"></div>
-        <!--
-        <div id="treeview" style="width:400px; height:500px; border:1px solid black; float:left"/>
-        -->
+        <div id="treeViewMenu" style="width:400px; height:500px; border:1px solid black; float:left"/>
         <br/>
     </div>
 
-    <div class="container2" style="float:left">
-        <h1>메뉴등록/수정</h1>
-        <form method="post" onsubmit="javascript:alert(1);">
+    <button class="btn btn-primary" onclick="testMenu1();">test</button>
+
+    <div class="container2" style="float:right">
+        <h1>메뉴 관리</h1>
+        <form method="post">
             <div class="form-group">
                 <label >메뉴ID</label>
                 <input type="text" name="menuId" class="form-control" placeholder="아이디 입력해주세요">
@@ -56,37 +55,14 @@
                     <option value="menuId2">메뉴3</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">등록/수정</button>
+            <button class="btn btn-primary"">등록/수정</button>
+            <button class="btn btn-primary">삭제</button>
         </form>
         <br/>
     </div>
 </div>
 </body>
-<!-- script for chart/grid (오브젝트 아래위치에서 작성해야 동작) -->
 <script>
-
-    let dataMenu = [
-        ["menuId1", "메뉴1", "", "/menu1","0"],
-        ["menuId2", "메뉴1하위1", "메뉴1", "/menu1/sub1","0"],
-        ["menuId3", "메뉴1하위2", "메뉴1", "/menu1/sub2","1"],
-        ["menuId4", "메뉴2", "", "/menu2","1"],
-        ["menuId5", "메뉴3", "", "/menu3","2"],
-        ["menuId6", "메뉴3하위1", "메뉴3", "/menu3/sub1","0"],
-
-    ];
-
-    const gridMenu = new gridjs.Grid({
-        columns: ["메뉴ID", "메뉴명", "상위메뉴명", "메뉴URL", "순서"],
-        data: dataMenu,
-        pagination: {
-            limit: 10
-        },
-        resizable: true,
-        search: true,
-        sort: true
-    }).render(document.getElementById("gridMenu"));
-
-
     //tree
     var data = [
         {
@@ -130,19 +106,18 @@
             tags: ['0']
         },
     ];
+
+    var options = {
+        bootstrap2: false,
+        showTags: true,
+        levels: 5,
+        data: data,
+        onNodeSelected: function(event, node) {
+            alert( node.id );
+        },
+    };
     $(function() {
-
-        var options = {
-            bootstrap2: false,
-            showTags: true,
-            levels: 5,
-            data: data,
-            onNodeSelected: function(event, node) {
-                alert( node.id );
-            },
-        };
-
-        //$('#treeview').treeview(options);
+        $('#treeViewMenu').treeview(options);
     });
     //tree end
 </script>

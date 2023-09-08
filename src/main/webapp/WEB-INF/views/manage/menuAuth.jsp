@@ -34,7 +34,7 @@
         <div id="gridMenuAuth"></div>
         -->
 
-        <div id="treeview" style="width:400px; height:500px; border:1px solid black; float:left"/>
+        <div id="treeViewMenuAuth" style="width:400px; height:500px; border:1px solid black; float:left"/>
         <br/>
     </div>
 
@@ -145,7 +145,7 @@
             },
         };
 
-        $('#treeview').treeview(options);
+        $('#treeViewMenuAuth').treeview(options);
     });
     //tree end
 </script>

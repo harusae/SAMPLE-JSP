@@ -1,7 +1,5 @@
 package kr.co.wisenut.config;
 
-import kr.co.wisenut.config.sub.SecurityDAO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,17 +8,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig{
-
-    @Autowired
-    private DataSource dataSource;
-    @Autowired
-    private SecurityDAO sd;
-
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
@@ -28,6 +18,7 @@ public class WebSecurityConfig{
         return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/font/**");
     }
 
+    //기본암호화 BCrypt로 password 처리
     @Bean
     public BCryptPasswordEncoder encodePwd() {
         return new BCryptPasswordEncoder();
@@ -36,19 +27,15 @@ public class WebSecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        //List<Map<String, Object>> list = sd.getAuthReq();
-        //System.out.println("list : "+ list.toString());
-
+        //예외페이지를 제외한 모든페이지는 인증관리만 적용 + 사용자별 메뉴권한은 세션데이터로 직접처리
         http
             .csrf().disable()
             .authorizeRequests()
-                //.antMatchers("/manage/**").hasAnyRole("ROLE_MANAGER")
                 .anyRequest().authenticated()
-                //.anyRequest().permitAll()
         .and()
             .formLogin()
                 .loginPage("/login").permitAll()
-                .loginProcessingUrl("/loginPrc").permitAll()
+                .loginProcessingUrl("/loginPrc")
                 .defaultSuccessUrl("/")
         .and()
             .logout()
