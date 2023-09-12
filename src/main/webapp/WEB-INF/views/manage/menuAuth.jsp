@@ -8,15 +8,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>MENU</title>
 
-    <!--grid.js-->
-    <script src="/js/gridjs.umd.js"></script>
-    <link href="/css/mermaid.min.css" rel="stylesheet"/>
-    <!--bootstrap Treeview-->
-    <script src="/js/jquery-3.7.1.min.js"></script>
-    <script src="/js/bootstrap-treeview.js"></script>
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
-
 </head>
 <body>
 <div class="wrapper">
@@ -96,7 +87,7 @@
             id:1,
             text: 'Parent 1',
             href: '#parent1',
-            tags: ['4'],
+            tags: [4],
             nodes: [
                 {
                     id:2,

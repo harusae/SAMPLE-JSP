@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.MenuMapper">
+    <select id="getMenuList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.MenuInfo" >
+        select
+            MENU_ID,
+            MENU_NAME,
+            MENU_URL,
+            UPPER_MENU_ID,
+            MENU_ORDER,
+            CRE_DT,
+            CRE_USER,
+            MOD_DT,
+            MOD_USER
+        from
+            WISETM_MENU_INFO
+    </select>
+
+    <select id="getTopMenuList" resultType="kr.co.wisenut.entity.MenuInfo" >
+        select
+            MENU_ID,
+            MENU_NAME,
+            MENU_URL,
+            UPPER_MENU_ID,
+            MENU_ORDER,
+            CRE_DT,
+            CRE_USER,
+            MOD_DT,
+            MOD_USER
+        from
+            WISETM_MENU_INFO
+        where UPPER_MENU_ID is null or UPPER_MENU_ID = ''
+        order by MENU_ORDER, MENU_NAME
+    </select>
+
+    <select id="getChildMenuList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.MenuInfo" >
+        select
+            MENU_ID,
+            MENU_NAME,
+            MENU_URL,
+            UPPER_MENU_ID,
+            MENU_ORDER,
+            CRE_DT,
+            CRE_USER,
+            MOD_DT,
+            MOD_USER
+        from
+            WISETM_MENU_INFO
+        where UPPER_MENU_ID = #{upperMenuId}
+        order by MENU_ORDER, MENU_NAME
+    </select>
+
+
+
+    <insert id="insertMenu" parameterType="java.util.Map">
+        insert into WISETM_MENU_INFO(
+            MENU_ID,
+            MENU_NAME,
+            MENU_URL,
+            UPPER_MENU_ID,
+            MENU_ORDER,
+            CRE_DT,
+            CRE_USER
+        )
+        values(
+            #{menuId},
+            #{menuName},
+            #{menuUrl},
+            #{upperMenuId},
+            #{menuOrder},
+            sysdate,
+            #{creUser}
+        )
+    </insert>
+
+    <update id="updateMenu" parameterType="java.util.Map">
+        update WISETM_MENU_INFO
+        set
+            MENU_NAME = #{menuName},
+            MENU_URL = #{menuUrl},
+            UPPER_MENU_ID = #{upperMenuId},
+            MENU_ORDER = #{menuOrder},
+            MOD_DT = sysdate,
+            MOD_USER = #{modUser}
+        where MENU_ID = #{menuId}
+    </update>
+
+    <delete id="deleteMenu" parameterType="java.util.Map">
+        delete from WISETM_MENU_INFO
+        where MENU_ID = #{menuId}
+    </delete>
+
+</mapper>

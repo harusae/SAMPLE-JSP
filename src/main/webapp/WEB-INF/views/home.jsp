@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<sec:authorize access="isAuthenticated()">
+  <sec:authentication property="principal" var="principal" />
+</sec:authorize>
+
 <!doctype html>
 <html lang="ko">
 <head>
@@ -6,15 +10,31 @@
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Home</title>
+  <title>TA</title>
 </head>
 
+<!--chart.js-->
+<script src="/js/chart.js"></script>
+<script src="/js/datalabels.js"></script>
+<!--grid.js-->
+<script src="/js/gridjs.umd.js"></script>
+<link href="/css/mermaid.min.css" rel="stylesheet"/>
+<!--excel.js-->
+<script src="/js/exceljs.min.js"></script>
+<script src="/js/FileSaver.min.js"></script>
+<!--bootstrap Treeview-->
 <script src="/js/jquery-3.7.1.min.js"></script>
+<script src="/js/bootstrap-treeview.js"></script>
+<link href="/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
+
 <script type="text/javascript">
 
   //표시한 화면 DIV ID 목록
   var divIdArray = [];
   function navInit(id, url){
+
+
     //입력된 DIV ID가 있는지 검색
     var findResult = divIdArray.indexOf(id);
 
@@ -22,9 +42,11 @@
       //새로운 DIV 생성 + 추가
       $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>");
       //새로운 DIV 네이게이션 생성
-      var html = '<div class="navDiv" id="navDiv'+id+'">'
+      var html =
+              '<div class="navDiv" id="navDiv'+id+'">'
               +'<div class="navItem" id="navItem'+id+'">'+id+'</div>'
-              +'<span class="navDel" id="navDel'+id+'">[x]</span></div>';
+              +'<span class="navDel" id="navDel'+id+'">[x]</span>' +
+              '</div>';
       //네비게이션 추가
       $( "#navBar" ).append(html);
       //생성한 DIV ID 저장
@@ -37,11 +59,13 @@
     showOnlyDivInput(id);
 
   }
+  //네비게이션 바 > 메뉴명 선택 시
   $(document).on('click', '.navItem', function() {
     var navItemId = $(this).attr("id");
     var id = navItemId.substring(7,navItemId.length);
     showOnlyDivInput(id);
   });
+  //네비게이션 바 > 메뉴삭제 선택 시
   $(document).on('click', '.navDel', function() {
     var delItemId = $(this).attr("id");
     var id = delItemId.substring(6,delItemId.length);
@@ -73,6 +97,7 @@
       }
     }
   }
+
 </script>
 
 <body>

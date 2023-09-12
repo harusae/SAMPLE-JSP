@@ -8,21 +8,6 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
 
-  <!--chart.js-->
-  <script src="/js/chart.js"></script>
-  <script src="/js/datalabels.js"></script>
-  <!--grid.js-->
-  <script src="/js/gridjs.umd.js"></script>
-  <link href="/css/mermaid.min.css" rel="stylesheet"/>
-  <!--excel.js-->
-  <script src="/js/exceljs.min.js"></script>
-  <script src="/js/FileSaver.min.js"></script>
-  <!--bootstrap Treeview-->
-  <script src="/js/jquery-3.7.1.min.js"></script>
-  <script src="/js/bootstrap-treeview.js"></script>
-  <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-  <link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
-
 </head>
 <body>
 
