@@ -1,12 +1,11 @@
 package kr.co.wisenut.service;
 
 import kr.co.wisenut.entity.MenuInfo;
+import kr.co.wisenut.entity.UserAuthInfo;
 import kr.co.wisenut.mapper.MenuMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -21,14 +20,14 @@ public class MenuService {
         return menuMapper.getMenuList(param);
     }
 
-    public List<MenuInfo> getTopMenuList(){
-        return menuMapper.getTopMenuList();
+    public List<MenuInfo> getTopMenuList(Map<String, Object> param){
+        return menuMapper.getTopMenuList(param);
     }
 
     public List<Map<String, Object>> getMenuTree(Map<String, Object> param){
         //treeview 에서 사용가능한 형태로 메뉴목록 데이터를 생성
         List<Map<String, Object>> res = new ArrayList<>();
-        List<MenuInfo> upperMenuList = menuMapper.getTopMenuList();
+        List<MenuInfo> upperMenuList = menuMapper.getTopMenuList(param);
 
         for(int i=0; i<upperMenuList.size(); i++){
             //최상위 메뉴 목록 조회
@@ -75,9 +74,27 @@ public class MenuService {
         param.put("upperMenuId", param.get("menuId"));
         List<MenuInfo> childMenuList = menuMapper.getChildMenuList(param);
         if(childMenuList.size() > 0){
-            return 0;
+            return -1;
+        }
+        else if(menuMapper.getUserAuthMenuList(param)> 0){
+            return -2;
         }
 
         return menuMapper.deleteMenu(param);
+    }
+
+    public List<UserAuthInfo> getUserAuthList(HashMap<String, Object> param){
+        return menuMapper.getUserAuthList(param);
+    }
+    public int insertUserAuthMenu(Map<String, Object> param){
+        return menuMapper.insertUserAuthMenu(param);
+    }
+    public int deleteUserAuthMenu(Map<String, Object> param){
+        param.put("upperMenuId", param.get("userAuthMenu"));
+        List<MenuInfo> childMenuList = menuMapper.getChildMenuList(param);
+        if(childMenuList.size() > 0){
+            return -1;
+        }
+        return menuMapper.deleteUserAuthMenu(param);
     }
 }

@@ -2,6 +2,7 @@ package kr.co.wisenut.controller.manage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.wisenut.entity.MenuInfo;
+import kr.co.wisenut.entity.UserAuthInfo;
 import kr.co.wisenut.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -40,7 +41,7 @@ public class ManageRestController {
     @ResponseBody
     public ResponseEntity getTopMenuList(@RequestParam HashMap<String, Object> param){
 
-        List<MenuInfo> list = menuService.getTopMenuList();
+        List<MenuInfo> list = menuService.getTopMenuList(param);
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
@@ -84,10 +85,55 @@ public class ManageRestController {
         param.put("modUser", userDetails.getUsername());
 
         int result = menuService.deleteMenu(param);
-        if(result == 0){
-            return new ResponseEntity("하위메뉴부터 삭제해야합니다.", HttpStatus.BAD_REQUEST);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("삭제실패", HttpStatus.BAD_REQUEST);
+            case -1:
+                return new ResponseEntity("하위메뉴부터 삭제해야합니다.", HttpStatus.BAD_REQUEST);
+            case -2:
+                return new ResponseEntity("특정권한에서 사용중인 메뉴입니다.", HttpStatus.BAD_REQUEST);
         }
 
         return new ResponseEntity(result, HttpStatus.OK);
     }
+
+    @RequestMapping(method= RequestMethod.POST, value="/authMenu/userAuth")
+    @ResponseBody
+    public ResponseEntity getUserAuthList(@RequestParam HashMap<String, Object> param){
+        logger.info("getUserAuthList param : {}", param);
+
+        List<UserAuthInfo> list = menuService.getUserAuthList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+    @RequestMapping(method= RequestMethod.POST, value="/authMenu/regist")
+    @ResponseBody
+    public ResponseEntity insertUserAuthMenu(@RequestParam HashMap<String, Object> param, Authentication auth){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("creUser", userDetails.getUsername());
+        logger.info("insertUserAuthMenu param : {}", param);
+
+        int result = menuService.insertUserAuthMenu(param);
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/authMenu/delete")
+    @ResponseBody
+    public ResponseEntity deleteUserAuthMenu(@RequestParam HashMap<String, Object> param, Authentication auth){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("modUser", userDetails.getUsername());
+        logger.info("deleteUserAuthMenu param : {}", param);
+
+        int result = menuService.deleteUserAuthMenu(param);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("삭제실패", HttpStatus.BAD_REQUEST);
+            case -1:
+                return new ResponseEntity("하위메뉴부터 삭제해야합니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
 }

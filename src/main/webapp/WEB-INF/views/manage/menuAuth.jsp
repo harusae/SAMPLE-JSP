@@ -13,12 +13,10 @@
 <div class="wrapper">
     <div class="container" style="float:left">
         <h1>권한 별 메뉴 목록</h1>
-        <div class="form-group">
+        <div class="form-group" id="authMenuForm">
             <label >권한</label>
-            <select name="userAuth" class="form-control" >
+            <select id="userAuth" name="userAuth" class="form-control" >
                 <option value="">권한을 선택하세요.</option>
-                <option value="MANAGER">관리자</option>
-                <option value="USER">사용자</option>
             </select>
         </div>
         <!--
@@ -33,16 +31,12 @@
         <h1>권한 별 메뉴 선택</h1>
             <div class="form-group">
                 <label >메뉴명</label>
-                <select name="userAuth" class="form-control" >
+                <select id="userAuthMenu" name="userAuthMenu" class="form-control" >
                     <option value="">메뉴를 선택하세요.</option>
-                    <option value="menuId1">메뉴1</option>
-                    <option value="menuId2">메뉴1sub1</option>
-                    <option value="menuId1">메뉴2</option>
-                    <option value="menuId2">메뉴3</option>
                 </select>
             </div>
-            <button class="btn btn-primary">등록</button>
-            <button class="btn btn-primary">삭제</button>
+            <button class="btn btn-primary" onclick="registAuthMenu();">등록</button>
+            <button class="btn btn-primary" onclick="deleteAuthMenu();">삭제</button>
         <br/>
     </div>
 </div>
@@ -81,62 +75,138 @@
     }).render(document.getElementById("gridMenuAuth"));
 */
 
-    //tree
-    var data = [
-        {
-            id:1,
-            text: 'Parent 1',
-            href: '#parent1',
-            tags: [4],
-            nodes: [
-                {
-                    id:2,
-                    text: 'Child 1',
-                    href: '#child1',
-                    tags: ['2'],
-                    nodes: [
-                        {
-                            id:3,
-                            text: 'Grandchild 1',
-                            href: '#grandchild1',
-                            tags: ['0']
-                        },
-                        {
-                            id:4,
-                            text: 'Grandchild 2',
-                            href: '#grandchild2',
-                            tags: ['0']
-                        }
-                    ]
+    function registAuthMenu(){
+        if(menuFormCheck()){
+            $.ajax({
+                url : "/manage/authMenu/regist",
+                type : "post",
+                data : {
+                    'userAuth': $('#userAuth').val(),
+                    'userAuthMenu': $('#userAuthMenu').val()
                 },
-                {
-                    id:5,
-                    text: 'Child 2',
-                    href: '#child2',
-                    tags: ['0']
+                dataType : "json",
+                success : function(res){
+                    //console.log('registMenu res : ', res);
+                    getMenuTree($('#userAuth').val());
+                    alert('등록되었습니다.');
+                },
+                error : function (res){
+                    //console.log('error : ', res);
+                    alert('등록실패');
                 }
-            ]
-        },
-        {
-            id:6,
-            text: 'Parent 2',
-            href: '#parent2',
-            tags: ['0']
-        },
-    ];
-    $(function() {
+            });
 
+        }
+    }
+    function deleteAuthMenu(){
+        if(menuFormCheck()){
+            $.ajax({
+                url : "/manage/authMenu/delete",
+                type : "post",
+                data : {
+                    'userAuth': $('#userAuth').val(),
+                    'userAuthMenu': $('#userAuthMenu').val()
+                },
+                dataType : "json",
+                success : function(res){
+                    //console.log('registMenu res : ', res);
+                    getMenuTree($('#userAuth').val());
+                    alert('삭제되었습니다.');
+                },
+                error : function (res){
+                    //console.log('error : ', res);
+                    if(res.responseText != ''){
+                        alert(res.responseText);
+                    }
+                    else{
+                        alert('삭제실패');
+                    }
+                }
+            });
+
+        }
+
+    }
+
+    function getUserAuthList() {
+        $.ajax({
+            url : "/manage/authMenu/userAuth",
+            type : "post",
+            data : {},
+            success : function(res){
+                $('#userAuth').children('option:not(:first)').remove();
+                for(var i=0; i<res.length; i++){
+                    //console.log('res['+i+'] : ', res[i]);
+                    $('#userAuth').append('<option value="'+res[i].userAuth+'">'+res[i].userAuth+'</option>');
+                }
+            },
+            error : function (res){
+                //console.log('error : ', res);
+            }
+        });
+    }
+    function getMenuList() {
+        $.ajax({
+            url : "/manage/menu/list",
+            type : "post",
+            data : {},
+            success : function(res){
+                $('#userAuthMenu').children('option:not(:first)').remove();
+                for(var i=0; i<res.length; i++){
+                    //console.log('res['+i+'] : ', res[i]);
+                    $('#userAuthMenu').append('<option value="'+res[i].menuId+'">'+res[i].menuName+'</option>');
+                }
+            },
+            error : function (res){
+            }
+        });
+    }
+    function getMenuTree(userAuth) {
+        $.ajax({
+            url : "/manage/menu/tree",
+            type : "post",
+            data : {'userAuth': userAuth},
+            success : function(res){
+                //console.log('getMenuTree res : ', res);
+                initTree(res);
+            },
+            error : function (res){
+                //console.log('error : ', res);
+            }
+        });
+    }
+
+    function initTree(data){
         var options = {
             bootstrap2: false,
             showTags: true,
-            levels: 5,
+            levels: 2,
             data: data,
             onNodeSelected: function(event, node) {
-                alert( node.id );
+                //console.log( node.id );
+                $('#userAuthMenu').val(node.id);
             },
         };
 
         $('#treeViewMenuAuth').treeview(options);
+    }
+    function menuFormCheck(){
+        if($('#userAuth').val()== '' || $('#userAuthMenu').val()== '' ){
+            alert('권한과 메뉴명을 선택하세요.');
+            return false;
+        }
+        return true;
+    }
+
+    $('#userAuth').change(function(){
+       getMenuTree(this.value);
+    });
+
+    //초기화
+    $(function() {
+        getUserAuthList();
+        getMenuList();
+
     });
     //tree end
 </script>

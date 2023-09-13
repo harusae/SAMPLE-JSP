@@ -16,43 +16,50 @@
             MOD_USER
         from
             WISETM_MENU_INFO
+        order by UPPER_MENU_ID desc, MENU_ORDER, MENU_NAME
     </select>
 
     <select id="getTopMenuList" resultType="kr.co.wisenut.entity.MenuInfo" >
         select
-            MENU_ID,
-            MENU_NAME,
-            MENU_URL,
-            UPPER_MENU_ID,
-            MENU_ORDER,
-            CRE_DT,
-            CRE_USER,
-            MOD_DT,
-            MOD_USER
-        from
-            WISETM_MENU_INFO
-        where UPPER_MENU_ID is null or UPPER_MENU_ID = ''
-        order by MENU_ORDER, MENU_NAME
+            A.MENU_ID,
+            A.MENU_NAME,
+            A.MENU_URL,
+            A.UPPER_MENU_ID,
+            A.MENU_ORDER,
+            A.CRE_DT,
+            A.CRE_USER,
+            A.MOD_DT,
+            A.MOD_USER
+        from WISETM_MENU_INFO A
+            LEFT OUTER JOIN WISETM_USERAUTH_MENU B
+                ON A.MENU_ID = B.MENU_ID
+        where (A.UPPER_MENU_ID is null or A.UPPER_MENU_ID = '')
+        <if test="userAuth != null">
+        and B.USER_AUTH = #{userAuth}
+        </if>
+        order by A.MENU_ORDER, A.MENU_NAME
     </select>
 
     <select id="getChildMenuList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.MenuInfo" >
         select
-            MENU_ID,
-            MENU_NAME,
-            MENU_URL,
-            UPPER_MENU_ID,
-            MENU_ORDER,
-            CRE_DT,
-            CRE_USER,
-            MOD_DT,
-            MOD_USER
-        from
-            WISETM_MENU_INFO
-        where UPPER_MENU_ID = #{upperMenuId}
-        order by MENU_ORDER, MENU_NAME
+            A.MENU_ID,
+            A.MENU_NAME,
+            A.MENU_URL,
+            A.UPPER_MENU_ID,
+            A.MENU_ORDER,
+            A.CRE_DT,
+            A.CRE_USER,
+            A.MOD_DT,
+            A.MOD_USER
+        from WISETM_MENU_INFO A
+                 LEFT OUTER JOIN WISETM_USERAUTH_MENU B
+                                 ON A.MENU_ID = B.MENU_ID
+        where A.UPPER_MENU_ID = #{upperMenuId}
+        <if test="userAuth != null">
+            and B.USER_AUTH = #{userAuth}
+        </if>
+        order by A.MENU_ORDER, A.MENU_NAME
     </select>
-
-
 
     <insert id="insertMenu" parameterType="java.util.Map">
         insert into WISETM_MENU_INFO(
@@ -90,6 +97,37 @@
     <delete id="deleteMenu" parameterType="java.util.Map">
         delete from WISETM_MENU_INFO
         where MENU_ID = #{menuId}
+    </delete>
+
+
+    <select id="getUserAuthList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserAuthInfo" >
+        select
+            USER_AUTH
+        from
+            WISETM_USERAUTH_INFO
+    </select>
+
+    <select id="getUserAuthMenuList" parameterType="java.util.Map" resultType="int" >
+        select count(*)
+        from WISETM_USERAUTH_MENU
+        where MENU_ID = #{menuId}
+    </select>
+
+    <insert id="insertUserAuthMenu" parameterType="java.util.Map">
+        insert into WISETM_USERAUTH_MENU(
+            MENU_ID,
+            USER_AUTH
+        )
+        values(
+            #{userAuthMenu},
+            #{userAuth}
+        )
+    </insert>
+
+    <delete id="deleteUserAuthMenu" parameterType="java.util.Map">
+        delete from WISETM_USERAUTH_MENU
+        where MENU_ID = #{userAuthMenu}
+        and USER_AUTH = #{userAuth}
     </delete>
 
 </mapper>

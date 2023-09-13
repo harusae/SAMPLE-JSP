@@ -41,7 +41,7 @@
             </div>
             <div class="form-group">
                 <label >메뉴 표시 순서</label>
-                <input type="text" id="menuOrder" name="menuOrder" class="form-control" placeholder="메뉴순서 입력해주세요">
+                <input type="number" id="menuOrder" name="menuOrder" class="form-control" placeholder="메뉴순서 입력해주세요">
             </div>
         </form>
         <button class="btn btn-primary" onclick="registMenu();">등록</button>
@@ -187,6 +187,7 @@
                         $('#menuOrder').val(menuList[i].menuOrder);
                         $('#upperMenuId').val(menuList[i].upperMenuId);
                         $("#menuId").attr("readonly",true); //menuId 변경불가처리
+                        $("#upperMenuId").not(":selected").attr("disabled", "disabled"); //upperMenuId 변경불가처리
                         return;
                     }
                 }
@@ -215,6 +216,7 @@
         $('#menuOrder').val('');
         $('#upperMenuId').val('');
         $("#menuId").attr("readonly",false);
+        $("#upperMenuId").removeAttr("disabled");
     }
 
     //초기화
