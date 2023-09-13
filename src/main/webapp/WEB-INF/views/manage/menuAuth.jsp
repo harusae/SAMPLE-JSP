@@ -76,7 +76,7 @@
 */
 
     function registAuthMenu(){
-        if(menuFormCheck()){
+        if(menuAuthFormCheck()){
             $.ajax({
                 url : "/manage/authMenu/regist",
                 type : "post",
@@ -99,7 +99,7 @@
         }
     }
     function deleteAuthMenu(){
-        if(menuFormCheck()){
+        if(menuAuthFormCheck()){
             $.ajax({
                 url : "/manage/authMenu/delete",
                 type : "post",
@@ -190,7 +190,7 @@
 
         $('#treeViewMenuAuth').treeview(options);
     }
-    function menuFormCheck(){
+    function menuAuthFormCheck(){
         if($('#userAuth').val()== '' || $('#userAuthMenu').val()== '' ){
             alert('권한과 메뉴명을 선택하세요.');
             return false;
