@@ -198,6 +198,7 @@
         return true;
     }
 
+    //select 변경 시 이벤트 처리
     $('#userAuth').change(function(){
        getMenuTree(this.value);
     });

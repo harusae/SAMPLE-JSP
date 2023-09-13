@@ -32,6 +32,7 @@ public class WebSecurityConfig{
             .csrf().disable()
             .authorizeRequests()
                 .anyRequest().authenticated()
+
         .and()
             .formLogin()
                 .loginPage("/login").permitAll()
@@ -43,7 +44,9 @@ public class WebSecurityConfig{
                 .logoutSuccessUrl("/")
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
-                .deleteCookies("JSESSIONID");
+                .deleteCookies("JSESSIONID")
+        .and()
+            .sessionManagement();
 
         return http.build();
     }
