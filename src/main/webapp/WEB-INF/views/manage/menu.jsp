@@ -78,6 +78,7 @@
     }
     function modifyMenu() {
         if (menuFormCheck()) {
+            $("#upperMenuId").removeAttr("disabled");
             $.ajax({
                 url: "/manage/menu/modify",
                 type: "post",
