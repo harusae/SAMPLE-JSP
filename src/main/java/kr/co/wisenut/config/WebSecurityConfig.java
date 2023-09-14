@@ -29,6 +29,7 @@ public class WebSecurityConfig{
 
         //예외페이지를 제외한 모든페이지는 인증관리만 적용 + 사용자별 메뉴권한은 세션데이터로 직접처리
         http
+            .httpBasic().disable()
             .csrf().disable()
             .authorizeRequests()
                 .anyRequest().authenticated()

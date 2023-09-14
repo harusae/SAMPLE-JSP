@@ -1,11 +1,13 @@
 package kr.co.wisenut.config.sub;
 
+import kr.co.wisenut.entity.MenuInfo;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 
 @Data
 public class UserDetailsImpl implements UserDetails{
@@ -19,6 +21,6 @@ public class UserDetailsImpl implements UserDetails{
     private Collection<? extends GrantedAuthority> authorities;
 
     //사용자 별 메뉴 권한목록
-    private HashMap<String, Object> menuInfo;
+    List<MenuInfo> menuList;
 
 }

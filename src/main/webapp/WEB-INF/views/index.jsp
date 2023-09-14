@@ -44,8 +44,7 @@
 
     //입력된 DIV ID가 있는지 검색
     var findResult = divIdArray.indexOf(id);
-
-    if(findResult < 0){ //미생성화면 DIV ID인 경우
+    if(findResult < 0 && url != ''){ //미생성화면 DIV ID인 경우
       //새로운 DIV 생성 + 추가
       $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>");
       //새로운 DIV 네이게이션 생성
@@ -110,11 +109,16 @@
 <body>
 <div>
   <div style="float:left;">
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('HOME','/test');">HOME</button>
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('MENU','/manage/menu');">메뉴관리</button>
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('MENUAUTH','/manage/menu/auth');">권한 별 메뉴관리</button>
+    <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
+      <button type="button" class="${menu.upperMenuId==null?'btn btn-primary':'btn btn-secondary'}"
+              onclick="javascript:navInit('${menu.menuId}','${menu.menuUrl}');">
+          ${menu.menuName}</button>
+    </c:forEach>
   </div>
   <div style="float:right;">
+    <button type="button" class="btn btn-secondary" onclick="javascript:navInit('HOME','/test');">HOME</button>
+    <button type="button" class="btn btn-secondary" onclick="javascript:navInit('MENU','/manage/menu');">메뉴관리</button>
+    <button type="button" class="btn btn-secondary" onclick="javascript:navInit('MENUAUTH','/manage/menu/auth');">권한 별 메뉴관리</button>
     <button type="button" class="btn btn-primary" onclick="javascript:location.href='/logout';">로그아웃</button>
   </div>
 </div>

@@ -1,4 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="isAuthenticated()">
+    <sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -66,6 +71,7 @@
                     //console.log('registMenu res : ', res);
                     getMenuList();
                     getMenuTree();
+                    getTopMenuList();
                     clearMenuForm();
                     alert('등록되었습니다.');
                 },
@@ -88,6 +94,7 @@
                     //console.log('registMenu res : ', res);
                     getMenuList();
                     getMenuTree();
+                    getTopMenuList();
                     clearMenuForm();
                     alert('변경되었습니다.');
                 },
@@ -109,6 +116,7 @@
                     //console.log('registMenu res : ', res);
                     getMenuList();
                     getMenuTree();
+                    getTopMenuList();
                     clearMenuForm();
                     alert('삭제되었습니다.');
                 },
@@ -201,7 +209,6 @@
         if(
             $('#menuId').val()== '' ||
             $('#menuName').val()== '' ||
-            $('#menuUrl').val()== '' ||
             $('#menuOrder').val()== ''
         ){
             alert('상위메뉴를 제외한 다른 항목을 모두 입력해야 등록가능합니다.');

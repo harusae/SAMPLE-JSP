@@ -33,10 +33,10 @@ public class HomeController {
 
 
         model.addAttribute("count", count);
-        return "home";
+        return "index";
     }
 
-    @RequestMapping("/test")
+    @RequestMapping("/home")
     public ModelAndView home() {
         int count = testService.getTest01Count();
 

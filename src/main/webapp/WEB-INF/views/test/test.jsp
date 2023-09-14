@@ -1,4 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<sec:authorize access="isAuthenticated()">
+  <sec:authentication property="principal" var="principal" />
+</sec:authorize>
 <!doctype html>
 <html lang="ko">
 <head>
@@ -11,6 +16,7 @@
 </head>
 <body>
 
+<p>session data : ${principal.authorities}</p>
 <p>count : ${count}</p>
   <button onclick="onBtnExport()">Download CSV export file</button>
   <div id="grid1"></div>
@@ -49,19 +55,19 @@
   let dataTest = [
     ["존", "john@example.com", "(353) 01 222 3333"],
     ["마크", "mark@gmail.com", "(01) 22 888 4444"],
-    ["에인", "eoin@gmail.com", "0097 22 654 00033"],
-    ["쎄러", "sarahcdd@gmail.com", "+322 876 1233"],
-    ["앺신", "afshin@mail.com", "(353) 22 87 8356"],
+    ["eoin", "eoin@gmail.com", "0097 22 654 00033"],
+    ["sarah", "sarahcdd@gmail.com", "+322 876 1233"],
+    ["afshin", "afshin@mail.com", "(353) 22 87 8356"],
     ["존2", "john@example.com", "(353) 01 222 3333"],
     ["마크2", "mark@gmail.com", "(01) 22 888 4444"],
-    ["에인2", "eoin@gmail.com", "0097 22 654 00033"],
-    ["쎄러2", "sarahcdd@gmail.com", "+322 876 1233"],
-    ["앺신2", "afshin@mail.com", "(353) 22 87 8356"],
+    ["eoin2", "eoin@gmail.com", "0097 22 654 00033"],
+    ["sarah2", "sarahcdd@gmail.com", "+322 876 1233"],
+    ["afshin2", "afshin@mail.com", "(353) 22 87 8356"],
     ["존3", "john@example.com", "(353) 01 222 3333"],
     ["마크3", "mark@gmail.com", "(01) 22 888 4444"],
-    ["에인3", "eoin@gmail.com", "0097 22 654 00033"],
-    ["쎄러3", "sarahcdd@gmail.com", "+322 876 1233"],
-    ["앺신3", "afshin@mail.com", "(353) 22 87 8356"]
+    ["eoin3", "eoin@gmail.com", "0097 22 654 00033"],
+    ["sarah3", "sarahcdd@gmail.com", "+322 876 1233"],
+    ["afshin3", "afshin@mail.com", "(353) 22 87 8356"]
   ];
 
   function onBtnExport() {

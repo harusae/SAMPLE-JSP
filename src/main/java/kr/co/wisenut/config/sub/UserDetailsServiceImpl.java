@@ -1,6 +1,8 @@
 package kr.co.wisenut.config.sub;
 
+import kr.co.wisenut.entity.MenuInfo;
 import kr.co.wisenut.entity.UserInfo;
+import kr.co.wisenut.mapper.MenuMapper;
 import kr.co.wisenut.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private MenuMapper menuMapper;
 
     @Override
     public UserDetails loadUserByUsername (String userId) throws UsernameNotFoundException{
@@ -50,6 +55,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userDetails.setAccountNonExpired(true);
         userDetails.setAccountNonLocked(true);
         userDetails.setCredentialsNonExpired(true);
+
+        Map<String, Object> menuParam = new HashMap<>();
+        menuParam.put("userAuth", userInfo.get("USER_AUTH"));
+        List<MenuInfo> menuList = menuMapper.getMenuList(menuParam);
+        logger.info("menuList : {}", menuList.size());
+        userDetails.setMenuList(menuList);
 
 
         return userDetails;
