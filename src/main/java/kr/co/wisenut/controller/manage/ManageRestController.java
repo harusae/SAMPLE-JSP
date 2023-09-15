@@ -3,7 +3,9 @@ package kr.co.wisenut.controller.manage;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.wisenut.entity.MenuInfo;
 import kr.co.wisenut.entity.UserAuthInfo;
+import kr.co.wisenut.entity.UserInfo;
 import kr.co.wisenut.service.MenuService;
+import kr.co.wisenut.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +29,8 @@ public class ManageRestController {
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private UserService userService;
 
     @RequestMapping(method= RequestMethod.POST, value="/menu/list")
     @ResponseBody
@@ -49,6 +53,7 @@ public class ManageRestController {
     @RequestMapping(method= RequestMethod.POST, value="/menu/tree")
     @ResponseBody
     public ResponseEntity getMenuTree(@RequestParam Map<String, Object> param){
+
         logger.info("getMenuTree param : {}", param);
 
         List<Map<String, Object>> list = menuService.getMenuTree(param);
@@ -136,4 +141,12 @@ public class ManageRestController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @RequestMapping(method= RequestMethod.POST, value="/user/list")
+    @ResponseBody
+    public ResponseEntity getUserList(@RequestParam HashMap<String, Object> param){
+
+        List<UserInfo> list = userService.getUserList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 }

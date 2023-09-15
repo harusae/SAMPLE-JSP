@@ -82,102 +82,64 @@
 
     function registAuthMenu(){
         if(menuAuthFormCheck()){
-            $.ajax({
-                url : "/manage/authMenu/regist",
-                type : "post",
-                data : {
-                    'userAuth': $('#userAuth').val(),
-                    'userAuthMenu': $('#userAuthMenu').val()
-                },
-                dataType : "json",
-                success : function(res){
-                    //console.log('registMenu res : ', res);
+            var param = {
+                'userAuth': $('#userAuth').val(),
+                'userAuthMenu': $('#userAuthMenu').val()
+            };
+            commonAjax("/manage/authMenu/regist", param, function(res){
                     getMenuTree($('#userAuth').val());
                     alert('등록되었습니다.');
                 },
-                error : function (res){
-                    //console.log('error : ', res);
+                function (error){
                     alert('등록실패');
                 }
-            });
-
+            );
         }
     }
     function deleteAuthMenu(){
         if(menuAuthFormCheck()){
-            $.ajax({
-                url : "/manage/authMenu/delete",
-                type : "post",
-                data : {
-                    'userAuth': $('#userAuth').val(),
-                    'userAuthMenu': $('#userAuthMenu').val()
-                },
-                dataType : "json",
-                success : function(res){
-                    //console.log('registMenu res : ', res);
+            var param = {
+                'userAuth': $('#userAuth').val(),
+                'userAuthMenu': $('#userAuthMenu').val()
+            };
+            commonAjax("/manage/authMenu/delete", param, function(res){
                     getMenuTree($('#userAuth').val());
                     alert('삭제되었습니다.');
                 },
-                error : function (res){
-                    //console.log('error : ', res);
-                    if(res.responseText != ''){
-                        alert(res.responseText);
+                function (error){
+                    if(error.responseText != ''){
+                        alert(error.responseText);
                     }
                     else{
                         alert('삭제실패');
                     }
                 }
-            });
-
+            );
         }
 
     }
 
     function getUserAuthList() {
-        $.ajax({
-            url : "/manage/authMenu/userAuth",
-            type : "post",
-            data : {},
-            success : function(res){
-                $('#userAuth').children('option:not(:first)').remove();
-                for(var i=0; i<res.length; i++){
-                    //console.log('res['+i+'] : ', res[i]);
-                    $('#userAuth').append('<option value="'+res[i].userAuth+'">'+res[i].userAuth+'</option>');
-                }
-            },
-            error : function (res){
-                //console.log('error : ', res);
+        commonAjax("/manage/authMenu/userAuth", {}, function(res){
+            $('#userAuth').children('option:not(:first)').remove();
+            for(var i=0; i<res.length; i++){
+                //console.log('res['+i+'] : ', res[i]);
+                $('#userAuth').append('<option value="'+res[i].userAuth+'">'+res[i].userAuth+'</option>');
             }
         });
     }
     function getMenuList() {
-        $.ajax({
-            url : "/manage/menu/list",
-            type : "post",
-            data : {},
-            success : function(res){
-                $('#userAuthMenu').children('option:not(:first)').remove();
-                for(var i=0; i<res.length; i++){
-                    //console.log('res['+i+'] : ', res[i]);
-                    $('#userAuthMenu').append('<option value="'+res[i].menuId+'">'+res[i].menuName+'</option>');
-                }
-            },
-            error : function (res){
+        commonAjax("/manage/menu/list", {}, function(res){
+            $('#userAuthMenu').children('option:not(:first)').remove();
+            for(var i=0; i<res.length; i++){
+                //console.log('res['+i+'] : ', res[i]);
+                $('#userAuthMenu').append('<option value="'+res[i].menuId+'">'+res[i].menuName+'</option>');
             }
         });
     }
     function getMenuTree(userAuth) {
-        $.ajax({
-            url : "/manage/menu/tree",
-            type : "post",
-            data : {'userAuth': userAuth},
-            success : function(res){
-                //console.log('getMenuTree res : ', res);
+        commonAjax("/manage/menu/tree", {'userAuth': userAuth}, function(res){
                 initTree(res);
-            },
-            error : function (res){
-                //console.log('error : ', res);
-            }
         });
     }
 

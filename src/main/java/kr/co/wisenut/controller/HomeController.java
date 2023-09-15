@@ -4,20 +4,23 @@ import kr.co.wisenut.entity.UserInfo;
 import kr.co.wisenut.mapper.TestMapper;
 import kr.co.wisenut.mapper.UserMapper;
 import kr.co.wisenut.service.TestService;
+import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 
 @Controller
+@RequiredArgsConstructor
 public class HomeController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -40,13 +43,18 @@ public class HomeController {
     public ModelAndView home() {
         int count = testService.getTest01Count();
 
-        //HashMap<String, Object> map = testService.getLoginInfo();
-        //logger.info("getLoginInfo : {}", map);
-
         ModelAndView view = new ModelAndView();
         view.addObject("count", count);
         view.setViewName("test/test");
 
         return view;
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/sessionChk")
+    @ResponseBody
+    public ResponseEntity chk(Authentication auth){
+        //logger.info("sessionChk : {}", auth.isAuthenticated());
+
+        return new ResponseEntity(auth.isAuthenticated(), HttpStatus.OK);
     }
 }

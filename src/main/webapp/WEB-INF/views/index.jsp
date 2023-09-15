@@ -40,44 +40,40 @@
   //표시한 화면 DIV ID 목록
   var divIdArray = [];
   function navInit(id, url){
+    //로그인 세션 체크
+    commonAjax('/sessionChk', {}, function(res){
+      //console.log('sessionChk : ', res);
+    });
 
+    if(url != ''){ //이동URL이 있는 경우
+      //입력된 DIV ID가 있는지 검색
+      var findResult = divIdArray.indexOf(id);
+      if(findResult < 0){ //미생성화면 DIV ID인 경우
+        //새로운 DIV 생성 + 추가
+        $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>");
+        //새로운 DIV 네이게이션 생성
+        var html =
+                '<div class="navDiv" id="navDiv'+id+'">'
+                +'<div class="navItem" id="navItem'+id+'">'+id+'</div>'
+                +'<span class="navDel" id="navDel'+id+'">[x]</span>' +
+                '</div>';
+        //네비게이션 추가
+        $( "#navBar" ).append(html);
+        //생성한 DIV ID 저장
+        divIdArray.push(id);
+        try{
+          //생성한 DIV에 페이지 로드
+          $('#'+id).load(url);
+        }
+        catch(e){
+          console.log('e:', e);
+        }
 
-    //입력된 DIV ID가 있는지 검색
-    var findResult = divIdArray.indexOf(id);
-    if(findResult < 0 && url != ''){ //미생성화면 DIV ID인 경우
-      //새로운 DIV 생성 + 추가
-      $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>");
-      //새로운 DIV 네이게이션 생성
-      var html =
-              '<div class="navDiv" id="navDiv'+id+'">'
-              +'<div class="navItem" id="navItem'+id+'">'+id+'</div>'
-              +'<span class="navDel" id="navDel'+id+'">[x]</span>' +
-              '</div>';
-      //네비게이션 추가
-      $( "#navBar" ).append(html);
-      //생성한 DIV ID 저장
-      divIdArray.push(id);
-      //생성한 DIV에 페이지 로드
-      $('#'+id).load(url);
-
+      }
+      //입력된 DIV ID에 해당하는 화면만 show 처리
+      showOnlyDivInput(id);
     }
-    //입력된 DIV ID에 해당하는 화면만 show 처리
-    showOnlyDivInput(id);
-
   }
-  //네비게이션 바 > 메뉴명 선택 시
-  $(document).on('click', '.navItem', function() {
-    var navItemId = $(this).attr("id");
-    var id = navItemId.substring(7,navItemId.length);
-    showOnlyDivInput(id);
-  });
-  //네비게이션 바 > 메뉴삭제 선택 시
-  $(document).on('click', '.navDel', function() {
-    var delItemId = $(this).attr("id");
-    var id = delItemId.substring(6,delItemId.length);
-    delDivInput(id);
-  });
-
   //선택한 ID의 DIV만 표시
   function showOnlyDivInput(id){
     for(var i=0; i<divIdArray.length; i++ ){
@@ -104,6 +100,43 @@
     }
   }
 
+  //네비게이션 바 > 메뉴명 선택 시
+  $(document).on('click', '.navItem', function() {
+    var navItemId = $(this).attr("id");
+    var id = navItemId.substring(7,navItemId.length);
+    showOnlyDivInput(id);
+  });
+  //네비게이션 바 > 메뉴삭제 선택 시
+  $(document).on('click', '.navDel', function() {
+    var delItemId = $(this).attr("id");
+    var id = delItemId.substring(6,delItemId.length);
+    delDivInput(id);
+  });
+
+  //비동기통신 시 세션체크필요 = 공통모듈로 호출
+  function commonAjax(url, param, callback, errCallback){
+    $.ajax({
+      url : url,
+      type : "post",
+      data : param,
+      success : function(res){
+        return callback(res);
+      },
+      error : function (error){
+        //console.log('error : ', error);
+        if(error.status == '403'){
+          console.log('error status : ', error.status);
+          alert('로그인이 필요합니다.');
+          location.href = '/';
+        }
+        else{
+          errCallback(error);
+        }
+
+      }
+    });
+  }
+
 </script>
 
 <body>
@@ -116,9 +149,10 @@
     </c:forEach>
   </div>
   <div style="float:right;">
-    <button type="button" class="btn btn-secondary" onclick="javascript:navInit('HOME','/test');">HOME</button>
-    <button type="button" class="btn btn-secondary" onclick="javascript:navInit('MENU','/manage/menu');">메뉴관리</button>
-    <button type="button" class="btn btn-secondary" onclick="javascript:navInit('MENUAUTH','/manage/menu/auth');">권한 별 메뉴관리</button>
+    <button type="button" class="btn btn-primary" onclick="javascript:navInit('HOME','/test');">HOME</button>
+    <button type="button" class="btn btn-primary" onclick="javascript:navInit('MENU','/manage/menu');">메뉴관리</button>
+    <button type="button" class="btn btn-primary" onclick="javascript:navInit('MENUAUTH','/manage/menu/auth');">권한 별 메뉴관리</button>
+    <button type="button" class="btn btn-primary" onclick="javascript:navInit('USER','/manage/user');">사용자관리</button>
     <button type="button" class="btn btn-primary" onclick="javascript:location.href='/logout';">로그아웃</button>
   </div>
 </div>

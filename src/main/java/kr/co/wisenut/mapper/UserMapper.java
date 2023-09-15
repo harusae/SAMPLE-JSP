@@ -4,11 +4,12 @@ import kr.co.wisenut.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Mapper
 public interface UserMapper {
     public UserInfo getLoginInfo(Map<String, Object> param);
-    public HashMap<String, Object> getLoginInfo2(Map<String, Object> param);
 
+    public List<UserInfo> getUserList(Map<String, Object> param);
 }

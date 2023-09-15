@@ -47,7 +47,11 @@ public class WebSecurityConfig{
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
         .and()
-            .sessionManagement();
+            .sessionManagement()
+        .and()
+            .exceptionHandling()
+            .authenticationEntryPoint(new ajaxAuthEntryPoint("/login"));
+
 
         return http.build();
     }

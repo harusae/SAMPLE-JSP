@@ -62,121 +62,73 @@
     function registMenu(){
         if($("#menuId").attr("readonly") == 'readonly'){clearMenuForm();}
         else if(menuFormCheck()){
-            $.ajax({
-                url : "/manage/menu/regist",
-                type : "post",
-                data : $("#menuForm").serialize(),
-                dataType : "json",
-                success : function(res){
-                    //console.log('registMenu res : ', res);
+            commonAjax("/manage/menu/regist", $("#menuForm").serialize(), function(res){
                     getMenuList();
                     getMenuTree();
                     getTopMenuList();
                     clearMenuForm();
                     alert('등록되었습니다.');
                 },
-                error : function (res){
-                    //console.log('error : ', res);
+                function (error){
                     alert('등록실패');
                 }
-            });
+            );
         }
     }
     function modifyMenu() {
         if (menuFormCheck()) {
             $("#upperMenuId").removeAttr("disabled");
-            $.ajax({
-                url: "/manage/menu/modify",
-                type: "post",
-                data: $("#menuForm").serialize(),
-                dataType: "json",
-                success: function (res) {
-                    //console.log('registMenu res : ', res);
+            commonAjax("/manage/menu/modify", $("#menuForm").serialize(), function(res){
                     getMenuList();
                     getMenuTree();
                     getTopMenuList();
                     clearMenuForm();
                     alert('변경되었습니다.');
                 },
-                error: function (res) {
-                    //console.log('error : ', res);
+                function (error){
                     alert('변경실패');
                 }
-            });
+            );
         }
     }
     function deleteMenu() {
         if (confirm('삭제하시겠습니까?')) {
-            $.ajax({
-                url: "/manage/menu/delete",
-                type: "post",
-                data: $("#menuForm").serialize(),
-                dataType: "json",
-                success: function (res) {
-                    //console.log('registMenu res : ', res);
+            commonAjax("/manage/menu/delete", $("#menuForm").serialize(), function(res){
                     getMenuList();
                     getMenuTree();
                     getTopMenuList();
                     clearMenuForm();
                     alert('삭제되었습니다.');
                 },
-                error: function (res) {
-                    //console.log('error : ', res);
-                    if(res.responseText != ''){
-                        alert(res.responseText);
+                function (error){
+                    if(error.responseText != ''){
+                        alert(error.responseText);
                     }
                     else{
                         alert('삭제실패');
                     }
                 }
-            });
+            );
         }
     }
 
     function getMenuList() {
-        $.ajax({
-            url : "/manage/menu/list",
-            type : "post",
-            data : {},
-            success : function(res){
-                menuList = res;
-                //console.log('menuList : ', menuList);
-            },
-            error : function (res){
-                //console.log('error : ', res);
-            }
+        commonAjax("/manage/menu/list", {}, function(res){
+            menuList = res;
         });
     }
     function getTopMenuList() {
-        $.ajax({
-            url : "/manage/menu/topList",
-            type : "post",
-            data : {},
-            success : function(res){
-                $('#upperMenuId').children('option:not(:first)').remove();
-                for(var i=0; i<res.length; i++){
-                    //console.log('res['+i+'] : ', res[i]);
-                    $('#upperMenuId').append('<option value="'+res[i].menuId+'">'+res[i].menuName+'</option>');
-                }
-
-            },
-            error : function (res){
-                //console.log('error : ', res);
+        commonAjax("/manage/menu/topList", {}, function(res){
+            $('#upperMenuId').children('option:not(:first)').remove();
+            for(var i=0; i<res.length; i++){
+                //console.log('res['+i+'] : ', res[i]);
+                $('#upperMenuId').append('<option value="'+res[i].menuId+'">'+res[i].menuName+'</option>');
             }
         });
     }
     function getMenuTree() {
-        $.ajax({
-            url : "/manage/menu/tree",
-            type : "post",
-            data : {},
-            success : function(res){
-                //console.log('getMenuTree res : ', res);
-                initTree(res);
-            },
-            error : function (res){
-                //console.log('error : ', res);
-            }
+        commonAjax("/manage/menu/tree", {}, function(res){
+            initTree(res);
         });
     }
 

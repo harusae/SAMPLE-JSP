@@ -11,10 +11,9 @@
 
     </select>
 
-    <select id="getLoginInfo2" parameterType="java.util.Map" resultType="HashMap">
+    <select id="getUserList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
         select *
         from WISETM_USER_INFO
-        where USER_ID = #{userId}
 
     </select>
 
