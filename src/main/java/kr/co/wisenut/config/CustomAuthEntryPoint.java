@@ -10,26 +10,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class ajaxAuthEntryPoint extends LoginUrlAuthenticationEntryPoint {
+public class CustomAuthEntryPoint extends LoginUrlAuthenticationEntryPoint {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    /**
-     * @param loginFormUrl URL where the login page can be found. Should either be
-     *                     relative to the web-app context path (include a leading {@code /}) or an absolute
-     *                     URL.
-     */
-    public ajaxAuthEntryPoint(String loginFormUrl) {
+    public CustomAuthEntryPoint(String loginFormUrl) {
         super(loginFormUrl);
     }
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
-        //rest 서비스에 ajax로 접근 + 세션만료된 경우를 위한 예외처리
+        //rest 서비스에 접근 + 세션만료된 경우를 위한 예외처리
         String ajaxHeader = ((HttpServletRequest) request).getHeader("X-Requested-With");
         boolean isAjax = "XMLHttpRequest".equals(ajaxHeader);
         if (isAjax) {
-            response.sendError(HttpServletResponse.SC_FORBIDDEN, "Session Expired");
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session Expired");
+            //response.sendError(HttpServletResponse.SC_FORBIDDEN, "Session Expired");
         } else {
             super.commence(request, response, authException);
         }

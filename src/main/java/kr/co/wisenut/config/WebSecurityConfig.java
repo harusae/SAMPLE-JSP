@@ -32,7 +32,8 @@ public class WebSecurityConfig{
             .httpBasic().disable()
             .csrf().disable()
             .authorizeRequests()
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()                                                         //전체페이지 로그인인증만 체크
+                .anyRequest().access("@authrorizationChecker.check(request, authentication)")   //전체페이지 권한메뉴+하위api 체크
 
         .and()
             .formLogin()
@@ -50,7 +51,8 @@ public class WebSecurityConfig{
             .sessionManagement()
         .and()
             .exceptionHandling()
-            .authenticationEntryPoint(new ajaxAuthEntryPoint("/login"));
+            .authenticationEntryPoint(new CustomAuthEntryPoint("/login"))
+        ;
 
 
         return http.build();

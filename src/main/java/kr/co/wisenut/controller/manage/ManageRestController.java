@@ -102,7 +102,7 @@ public class ManageRestController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @RequestMapping(method= RequestMethod.POST, value="/authMenu/userAuth")
+    @RequestMapping(method= RequestMethod.POST, value="/menu/auth/userAuth")
     @ResponseBody
     public ResponseEntity getUserAuthList(@RequestParam HashMap<String, Object> param){
         logger.info("getUserAuthList param : {}", param);
@@ -111,7 +111,7 @@ public class ManageRestController {
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
-    @RequestMapping(method= RequestMethod.POST, value="/authMenu/regist")
+    @RequestMapping(method= RequestMethod.POST, value="/menu/auth/regist")
     @ResponseBody
     public ResponseEntity insertUserAuthMenu(@RequestParam HashMap<String, Object> param, Authentication auth){
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
@@ -123,7 +123,7 @@ public class ManageRestController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
-    @RequestMapping(method= RequestMethod.POST, value="/authMenu/delete")
+    @RequestMapping(method= RequestMethod.POST, value="/menu/auth/delete")
     @ResponseBody
     public ResponseEntity deleteUserAuthMenu(@RequestParam HashMap<String, Object> param, Authentication auth){
         UserDetails userDetails = (UserDetails) auth.getPrincipal();

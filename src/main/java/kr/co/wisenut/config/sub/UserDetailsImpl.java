@@ -18,8 +18,10 @@ public class UserDetailsImpl implements UserDetails{
     private boolean isAccountNonExpired;
     private boolean isAccountNonLocked;
     private boolean isCredentialsNonExpired;
-    private Collection<? extends GrantedAuthority> authorities;
+    private Collection<? extends GrantedAuthority> authorities;;
 
+    //모든 메뉴 목록
+    List<MenuInfo> menuListAll;
     //사용자 별 메뉴 권한목록
     List<MenuInfo> menuList;
 

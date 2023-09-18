@@ -124,10 +124,14 @@
       },
       error : function (error){
         //console.log('error : ', error);
-        if(error.status == '403'){
+        if(error.status == '401'){
           console.log('error status : ', error.status);
           alert('로그인이 필요합니다.');
           location.href = '/';
+        }
+        else if(error.status == '403'){
+          console.log('error status : ', error.status);
+          alert('권한이 필요합니다.');
         }
         else{
           errCallback(error);

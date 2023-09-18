@@ -86,7 +86,7 @@
                 'userAuth': $('#userAuth').val(),
                 'userAuthMenu': $('#userAuthMenu').val()
             };
-            commonAjax("/manage/authMenu/regist", param, function(res){
+            commonAjax("/manage/menu/auth/regist", param, function(res){
                     getMenuTree($('#userAuth').val());
                     alert('등록되었습니다.');
                 },
@@ -102,7 +102,7 @@
                 'userAuth': $('#userAuth').val(),
                 'userAuthMenu': $('#userAuthMenu').val()
             };
-            commonAjax("/manage/authMenu/delete", param, function(res){
+            commonAjax("/manage/menu/auth/delete", param, function(res){
                     getMenuTree($('#userAuth').val());
                     alert('삭제되었습니다.');
                 },
@@ -120,7 +120,7 @@
     }
 
     function getUserAuthList() {
-        commonAjax("/manage/authMenu/userAuth", {}, function(res){
+        commonAjax("/manage/menu/auth/userAuth", {}, function(res){
             $('#userAuth').children('option:not(:first)').remove();
             for(var i=0; i<res.length; i++){
                 //console.log('res['+i+'] : ', res[i]);

@@ -54,8 +54,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userDetails.setCredentialsNonExpired(true);
 
         Map<String, Object> menuParam = new HashMap<>();
+        List<MenuInfo> menuListAll = menuMapper.getMenuList(menuParam); //모든 메뉴목록
+        userDetails.setMenuListAll(menuListAll);
+
         menuParam.put("userAuth", userInfo.getUserAuth());
-        List<MenuInfo> menuList = menuMapper.getMenuList(menuParam);
+        List<MenuInfo> menuList = menuMapper.getMenuList(menuParam);    //권한 별 메뉴 목록
         userDetails.setMenuList(menuList);
 
 
