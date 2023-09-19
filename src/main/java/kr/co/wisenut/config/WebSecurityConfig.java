@@ -27,19 +27,18 @@ public class WebSecurityConfig{
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        //예외페이지를 제외한 모든페이지는 인증관리만 적용 + 사용자별 메뉴권한은 세션데이터로 직접처리
         http
             .httpBasic().disable()
             .csrf().disable()
             .authorizeRequests()
                 //.anyRequest().authenticated()                                                         //전체페이지 로그인인증만 체크
                 .anyRequest().access("@authrorizationChecker.check(request, authentication)")   //전체페이지 권한메뉴+하위api 체크
-
         .and()
             .formLogin()
                 .loginPage("/login").permitAll()
                 .loginProcessingUrl("/loginPrc")
                 .defaultSuccessUrl("/")
+                .failureHandler(new CustomAuthenticatioFailureHandler())    //로그인 에러메시지 처리
         .and()
             .logout()
                 .logoutUrl("/logout")

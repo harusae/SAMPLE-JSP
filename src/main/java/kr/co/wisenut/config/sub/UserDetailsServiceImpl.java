@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -39,6 +40,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         if(userInfo == null){
             throw new UsernameNotFoundException("잘못된 사용자 정보입니다.");
+        }
+        else if(!"Y".equals(userInfo.getEnabled())){
+            throw new LockedException("사용중지된 사용자입니다.");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();

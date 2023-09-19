@@ -21,11 +21,11 @@ public class CustomAuthEntryPoint extends LoginUrlAuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
         //rest 서비스에 접근 + 세션만료된 경우를 위한 예외처리
-        String ajaxHeader = ((HttpServletRequest) request).getHeader("X-Requested-With");
-        boolean isAjax = "XMLHttpRequest".equals(ajaxHeader);
-        if (isAjax) {
+        String header = ((HttpServletRequest) request).getHeader("X-Requested-With");
+        boolean isHttp = "XMLHttpRequest".equals(header);
+        if (isHttp) {
+            //return error (401)
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Session Expired");
-            //response.sendError(HttpServletResponse.SC_FORBIDDEN, "Session Expired");
         } else {
             super.commence(request, response, authException);
         }
