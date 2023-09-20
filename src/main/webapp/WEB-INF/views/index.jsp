@@ -12,6 +12,7 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>TA</title>
+  <link rel="icon" href="data:,">
 </head>
 
 <!--chart.js-->
@@ -39,6 +40,8 @@
 
   //표시한 화면 DIV ID 목록
   var divIdArray = [];
+
+  //DIV에 하위페이지 로드/이동 처리
   function navInit(id, url){
     //로그인 세션 체크
     commonAjax('/sessionChk', {}, function(res){
@@ -46,29 +49,22 @@
     });
 
     if(url != ''){ //이동URL이 있는 경우
-      //입력된 DIV ID가 있는지 검색
-      var findResult = divIdArray.indexOf(id);
+      var findResult = divIdArray.indexOf(id);  //입력된 DIV ID가 있는지 검색
       if(findResult < 0){ //미생성화면 DIV ID인 경우
-        //새로운 DIV 생성 + 추가
-        $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>");
-        //새로운 DIV 네이게이션 생성
+        $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
         var html =
                 '<div class="navDiv" id="navDiv'+id+'">'
                 +'<div class="navItem" id="navItem'+id+'">'+id+'</div>'
                 +'<span class="navDel" id="navDel'+id+'">[x]</span>' +
-                '</div>';
-        //네비게이션 추가
-        $( "#navBar" ).append(html);
-        //생성한 DIV ID 저장
-        divIdArray.push(id);
+                '</div>'; //새로운 DIV 네이게이션 생성
+        $( "#navBar" ).append(html);  //네비게이션 추가
+        divIdArray.push(id);  //생성한 DIV ID 저장
         try{
-          //생성한 DIV에 페이지 로드
-          $('#'+id).load(url);
+          $('#'+id).load(url);  //생성한 DIV에 페이지 로드
         }
         catch(e){
-          console.log('e:', e);
+          console.log('subDiv e:', e);
         }
-
       }
       //입력된 DIV ID에 해당하는 화면만 show 처리
       showOnlyDivInput(id);
@@ -85,7 +81,6 @@
       }
     }
   }
-
   //선택한 ID의 DIV 삭제
   function delDivInput(id){
     var isShowed = $('#'+id).is(':visible');
@@ -113,7 +108,7 @@
     delDivInput(id);
   });
 
-  //비동기통신 시 세션체크필요 = 공통모듈로 호출
+  //비동기통신 시 세션체크필요 > 공통모듈로 호출
   function commonAjax(url, param, callback, errCallback){
     $.ajax({
       url : url,
@@ -136,7 +131,6 @@
         else{
           errCallback(error);
         }
-
       }
     });
   }

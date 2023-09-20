@@ -8,6 +8,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
+    <link rel="icon" href="data:,">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
@@ -26,6 +27,7 @@
         <button type="submit" class="btn btn-primary">로그인</button>
     </form>
     <br/>
+    <!-- 로그인 실패 처리 -->
     <c:if test="${not empty errorMsg}">
         <script>
             alert('${errorMsg}');
