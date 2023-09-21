@@ -87,7 +87,7 @@
                 'userAuthMenu': $('#userAuthMenu').val()
             };
             commonAjax("/manage/menu/auth/regist", param, function(res){
-                    getMenuTree($('#userAuth').val());
+                    getMenuTree2($('#userAuth').val());
                     alert('등록되었습니다.');
                 },
                 function (error){
@@ -103,7 +103,7 @@
                 'userAuthMenu': $('#userAuthMenu').val()
             };
             commonAjax("/manage/menu/auth/delete", param, function(res){
-                    getMenuTree($('#userAuth').val());
+                    getMenuTree2($('#userAuth').val());
                     alert('삭제되었습니다.');
                 },
                 function (error){
@@ -128,7 +128,7 @@
             }
         });
     }
-    function getMenuList() {
+    function getMenuList2() {
         commonAjax("/manage/menu/list", {}, function(res){
             $('#userAuthMenu').children('option:not(:first)').remove();
             for(var i=0; i<res.length; i++){
@@ -137,13 +137,13 @@
             }
         });
     }
-    function getMenuTree(userAuth) {
-        commonAjax("/manage/menu/tree", {'userAuth': userAuth}, function(res){
-                initTree(res);
+    function getMenuTree2(userAuthValue) {
+        commonAjax("/manage/menu/tree", {'userAuth': userAuthValue}, function(res){
+                initTree2(res);
         });
     }
 
-    function initTree(data){
+    function initTree2(data){
         var options = {
             bootstrap2: false,
             showTags: true,
@@ -167,13 +167,13 @@
 
     //select 변경 시 이벤트 처리
     $('#userAuth').change(function(){
-       getMenuTree(this.value);
+       getMenuTree2(this.value);
     });
 
     //초기화
     $(function() {
         getUserAuthList();
-        getMenuList();
+        getMenuList2();
 
     });
     //tree end

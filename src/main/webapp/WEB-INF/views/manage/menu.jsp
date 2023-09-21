@@ -63,8 +63,8 @@
         if($("#menuId").attr("readonly") == 'readonly'){clearMenuForm();}
         else if(menuFormCheck()){
             commonAjax("/manage/menu/regist", $("#menuForm").serialize(), function(res){
-                    getMenuList();
-                    getMenuTree();
+                    getMenuList1();
+                    getMenuTree1();
                     getTopMenuList();
                     clearMenuForm();
                     alert('등록되었습니다.');
@@ -79,8 +79,8 @@
         if (menuFormCheck()) {
             $("#upperMenuId").removeAttr("disabled");
             commonAjax("/manage/menu/modify", $("#menuForm").serialize(), function(res){
-                    getMenuList();
-                    getMenuTree();
+                    getMenuList1();
+                    getMenuTree1();
                     getTopMenuList();
                     clearMenuForm();
                     alert('변경되었습니다.');
@@ -94,8 +94,8 @@
     function deleteMenu() {
         if (confirm('삭제하시겠습니까?')) {
             commonAjax("/manage/menu/delete", $("#menuForm").serialize(), function(res){
-                    getMenuList();
-                    getMenuTree();
+                    getMenuList1();
+                    getMenuTree1();
                     getTopMenuList();
                     clearMenuForm();
                     alert('삭제되었습니다.');
@@ -112,7 +112,7 @@
         }
     }
 
-    function getMenuList() {
+    function getMenuList1() {
         commonAjax("/manage/menu/list", {}, function(res){
             menuList = res;
         });
@@ -126,13 +126,13 @@
             }
         });
     }
-    function getMenuTree() {
+    function getMenuTree1() {
         commonAjax("/manage/menu/tree", {}, function(res){
-            initTree(res);
+            initTree1(res);
         });
     }
 
-    function initTree(data){
+    function initTree1(data){
         var options = {
             bootstrap2: false,
             showTags: true,
@@ -181,9 +181,9 @@
 
     //초기화
     $(function() {
-        getMenuList();
+        getMenuList1();
         getTopMenuList();
-        getMenuTree();
+        getMenuTree1();
     });
 </script>
 
