@@ -32,6 +32,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private MenuMapper menuMapper;
 
+
     @Override
     public UserDetails loadUserByUsername (String userId) throws UsernameNotFoundException{
         HashMap<String, Object> param = new HashMap<>();

@@ -1,5 +1,6 @@
 package kr.co.wisenut.service;
 
+import kr.co.wisenut.config.sub.AES256;
 import kr.co.wisenut.entity.UserInfo;
 import kr.co.wisenut.mapper.UserMapper;
 import org.slf4j.Logger;
@@ -17,7 +18,17 @@ public class UserService {
     private UserMapper userMapper;
 
     public List<UserInfo> getUserList(HashMap<String, Object> param){
-        return userMapper.getUserList(param);
+        List<UserInfo> list = userMapper.getUserList(param);
+        AES256 aes256 = new AES256();
+        for(UserInfo userInfo : list){
+            try {
+                userInfo.setUserName(aes256.decode(userInfo.getUserName()));
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        return list;
     }
 
 }
