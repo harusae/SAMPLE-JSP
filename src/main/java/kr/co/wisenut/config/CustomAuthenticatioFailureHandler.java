@@ -16,6 +16,8 @@ public class CustomAuthenticatioFailureHandler implements AuthenticationFailureH
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        logger.info("login fail : {} : {}", request.getRequestURI(), request.getRemoteAddr());
+
         //기본 로그인 실패에러 메시지
         if(exception instanceof BadCredentialsException){
             request.setAttribute("errorMsg", "로그인이 실패했습니다.");

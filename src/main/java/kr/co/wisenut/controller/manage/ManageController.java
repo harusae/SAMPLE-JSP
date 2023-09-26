@@ -29,8 +29,6 @@ public class ManageController {
     }
     @RequestMapping("/user")
     public String user(Model model){
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        logger.info("bcrypt encode : {}", bCryptPasswordEncoder.encode("test1"));
 
         return "manage/user";
     }

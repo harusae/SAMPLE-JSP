@@ -46,7 +46,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority((String) userInfo.getUserAuth()));
+        authorities.add(new SimpleGrantedAuthority(String.valueOf(userInfo.getUserAuth())));
 
         UserDetailsImpl userDetails = new UserDetailsImpl();
         userDetails.setUsername(userId);

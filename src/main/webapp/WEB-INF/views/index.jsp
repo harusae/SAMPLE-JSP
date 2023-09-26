@@ -97,6 +97,11 @@
 
   //네비게이션 바 > 메뉴명 선택 시
   $(document).on('click', '.navItem', function() {
+    //로그인 세션 체크
+    commonAjax('/sessionChk', {}, function(res){
+      //console.log('sessionChk : ', res);
+    });
+
     var navItemId = $(this).attr("id");
     var id = navItemId.substring(7,navItemId.length);
     showOnlyDivInput(id);
