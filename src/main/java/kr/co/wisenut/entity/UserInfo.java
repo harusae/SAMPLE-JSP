@@ -11,6 +11,8 @@ public class UserInfo {
     private String userName;
     private String userEmail;
     private String userAuth;
-    private String enabled;
+    private String useYn;
+    private String activeYn;
+    private int loginFailCnt;
 
 }

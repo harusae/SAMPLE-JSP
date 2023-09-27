@@ -22,7 +22,6 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-@RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -42,8 +41,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(userInfo == null){
             throw new UsernameNotFoundException("잘못된 사용자 정보입니다.");
         }
-        else if(!"Y".equals(userInfo.getEnabled())){
-            throw new LockedException("사용중지된 사용자입니다.");
+        else if(!("Y".equals(userInfo.getUseYn()) && "Y".equals(userInfo.getActiveYn()))){
+            throw new LockedException("사용중지된 사용자입니다. 관리자에게 문의하세요.");
+        }
+        else if(5 <= userInfo.getLoginFailCnt()){
+            throw new LockedException("로그인 실패로 인하여 사용중지된 사용자입니다.\\n관리자에게 문의하세요.");
         }
 
         List<GrantedAuthority> authorities = new ArrayList<>();

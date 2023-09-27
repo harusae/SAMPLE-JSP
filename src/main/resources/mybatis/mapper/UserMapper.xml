@@ -5,14 +5,48 @@
 <mapper namespace="kr.co.wisenut.mapper.UserMapper">
 
     <select id="getLoginInfo" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
-        select *
+        select
+            USER_ID
+            ,USER_PW
+            ,USER_NAME
+            ,USER_EMAIL
+            ,USER_AUTH
+            ,USE_YN
+            ,ACTIVE_YN
+            ,LOGIN_FAIL_CNT
+
         from WISETM_USER_INFO
         where USER_ID = #{userId}
 
     </select>
 
+    <update id="addLoginFailCount" parameterType="java.util.Map">
+        update WISETM_USER_INFO A
+        set A.LOGIN_FAIL_CNT = (
+                select B.LOGIN_FAIL_CNT + 1 AS COUNT
+                from WISETM_USER_INFO B
+                where B.USER_ID = #{userId}
+            )
+        where A.USER_ID = #{userId}
+    </update>
+
+    <update id="resetLoginFailCount" parameterType="java.util.Map">
+        update WISETM_USER_INFO
+        set LOGIN_FAIL_CNT = 0
+        where USER_ID = #{userId}
+    </update>
+
     <select id="getUserList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
-        select *
+        select
+            USER_ID
+             ,'' as USER_PW
+             ,USER_NAME
+             ,USER_EMAIL
+             ,USER_AUTH
+             ,USE_YN
+             ,ACTIVE_YN
+             ,LOGIN_FAIL_CNT
+
         from WISETM_USER_INFO
 
     </select>

@@ -10,12 +10,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     private UserMapper userMapper;
+
+    public int loginFail(HashMap<String, Object> param){
+        logger.info("param : {}", param);
+        int res = 0;
+        UserInfo userInfo = userMapper.getLoginInfo(param);
+        if(userInfo != null){
+            res = userMapper.addLoginFailCount(param);
+        }
+
+        return res;
+    }
+
+    public int loginSuccess(HashMap<String, Object> param){
+        logger.info("param : {}", param);
+        int res = userMapper.resetLoginFailCount(param);
+
+        return res;
+    }
 
     public List<UserInfo> getUserList(HashMap<String, Object> param){
         List<UserInfo> list = userMapper.getUserList(param);

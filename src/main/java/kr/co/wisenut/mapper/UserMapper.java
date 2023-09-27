@@ -11,5 +11,9 @@ import java.util.Map;
 public interface UserMapper {
     public UserInfo getLoginInfo(Map<String, Object> param);
 
+    public int addLoginFailCount(Map<String, Object> param);
+
+    public int resetLoginFailCount(Map<String, Object> param);
+
     public List<UserInfo> getUserList(Map<String, Object> param);
 }
