@@ -42,7 +42,7 @@ public class AuthrorizationChecker {
 
         for(int i=0; i<menuListAll.size(); i++){
             MenuInfo target = menuListAll.get(i);
-            //사용가능한 메뉴 + 하위URL api = true
+            //사용가능한 메뉴(ex: /menu1) + 하위URL api(ex: /menu1/api1) = true
             if(target.getMenuUrl() != null && request.getRequestURI().startsWith(target.getMenuUrl())){
                 return userMenuList.contains(target);
             }

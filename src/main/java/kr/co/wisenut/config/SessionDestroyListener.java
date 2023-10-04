@@ -26,13 +26,27 @@ public class SessionDestroyListener implements ApplicationListener<SessionDestro
 
         List<SecurityContext> securityContexts = event.getSecurityContexts();
 
+        UserDetailsImpl userDetails = null;
+        WebAuthenticationDetails authDetails = null;
         for (SecurityContext securityContext : securityContexts) {
-            UserDetailsImpl userDetails = (UserDetailsImpl) securityContext.getAuthentication().getPrincipal();
-            WebAuthenticationDetails authDetails = (WebAuthenticationDetails) securityContext.getAuthentication().getDetails();
+            userDetails = (UserDetailsImpl) securityContext.getAuthentication().getPrincipal();
+            authDetails = (WebAuthenticationDetails) securityContext.getAuthentication().getDetails();
             logger.info("session expired: {} : {}", userDetails.getUsername(), authDetails.getRemoteAddress());
-        }
 
-        HashMap<String, Object> param = new HashMap<>();
-        logger.info("autowired test : {}", userService.getUserList(param));
+            if(userDetails != null && authDetails != null){
+                HashMap<String, Object> param = new HashMap<>();
+                param.put("actionType", "LOGOUT");
+                param.put("resourceId", "1002001");
+                param.put("resourceType", "LOGOUT");
+                param.put("actionMsg", "로그아웃(세션만료)");
+                param.put("actionUser", userDetails.getUsername());
+                param.put("params", "");
+                param.put("userIp", authDetails.getRemoteAddress());
+                userService.insertActionHistory(param);
+
+                userDetails = null;
+                authDetails = null;
+            }
+        }
     }
 }

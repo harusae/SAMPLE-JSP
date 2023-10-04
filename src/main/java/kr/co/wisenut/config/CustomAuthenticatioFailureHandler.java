@@ -26,9 +26,6 @@ public class CustomAuthenticatioFailureHandler implements AuthenticationFailureH
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
 
-        //이력저장 > 로그인 실패
-        logger.info("login fail : {} : {} : {} : {}", request.getRequestURI(), request.getRemoteAddr(), request.getParameter("username"), exception.getClass());
-
         //기본 로그인 실패에러 메시지
         if(exception instanceof BadCredentialsException){
             request.setAttribute("errorMsg", "로그인이 실패했습니다.");
@@ -43,6 +40,17 @@ public class CustomAuthenticatioFailureHandler implements AuthenticationFailureH
         param.put("userId", request.getParameter("username"));
         userService.loginFail(param);
 
+        //이력저장 > 로그인 실패
+        logger.info("login fail : {} : {} : {} : {}", request.getRequestURI(), request.getRemoteAddr(), request.getParameter("username"), exception.getClass());
+        param = new HashMap<>();
+        param.put("actionType", "LOGIN");
+        param.put("resourceId", "1001002");
+        param.put("resourceType", "LOGIN_FAIL");
+        param.put("actionMsg", request.getAttribute("errorMsg"));
+        param.put("actionUser", request.getParameter("username"));
+        param.put("params", "");
+        param.put("userIp", request.getRemoteAddr());
+        userService.insertActionHistory(param);
         
         //에러메시지 전달
         request.getRequestDispatcher("/login").forward(request, response);

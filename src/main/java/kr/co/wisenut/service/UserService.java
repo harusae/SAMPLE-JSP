@@ -36,6 +36,13 @@ public class UserService {
         return res;
     }
 
+    public int insertActionHistory(HashMap<String, Object> param){
+        logger.info("param : {}", param);
+        int res = userMapper.insertActionHistory(param);
+
+        return res;
+    }
+
     public List<UserInfo> getUserList(HashMap<String, Object> param){
         List<UserInfo> list = userMapper.getUserList(param);
         AES256 aes256 = new AES256();

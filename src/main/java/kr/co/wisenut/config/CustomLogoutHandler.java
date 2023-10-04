@@ -15,6 +15,7 @@ public class CustomLogoutHandler implements LogoutHandler {
 
     @Override
     public void logout(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        logger.info("logout : {} : {}, {}", request.getRequestURI(), authentication.getName(), request.getRemoteAddr());
+        //해당 위치는 사용자가 로그아웃을 실행한 경우 > 세션만료 체크로 대체 중
+        //logger.info("logout : {} : {}, {}", request.getRequestURI(), authentication.getName(), request.getRemoteAddr());
     }
 }

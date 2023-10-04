@@ -47,7 +47,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
                 .logout()
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
-                .addLogoutHandler(customLogoutHandler)
+                .addLogoutHandler(customLogoutHandler)  //로그아웃 이력 처리
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .deleteCookies("JSESSIONID")
@@ -64,7 +64,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
     }
 
 
-    //세션만료 체크 (SessionDestroyListener) SessionDestroyedEvent 캐치를 위한 설정
+    //세션만료 체크 (SessionDestroyListener) > SessionDestroyedEvent 캐치를 위한 설정
     @Bean
     public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
         return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());

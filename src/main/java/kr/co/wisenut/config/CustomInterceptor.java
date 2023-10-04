@@ -1,7 +1,9 @@
 package kr.co.wisenut.config;
 
+import kr.co.wisenut.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -14,6 +16,9 @@ import java.util.HashMap;
 public class CustomInterceptor implements HandlerInterceptor {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Autowired
+    UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
@@ -34,6 +39,15 @@ public class CustomInterceptor implements HandlerInterceptor {
 
         //이력저장 > 에외를 제외한 URL
         logger.info("preHandle : {} : {} : {} : {}", request.getRequestURI(), userId, userIp, params);
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("actionType", "INQUERY");
+        param.put("resourceId", "2001001");
+        param.put("resourceType", "USER_ACTION");
+        param.put("actionMsg", request.getRequestURI());
+        param.put("actionUser", userId);
+        param.put("params", params.toString());
+        param.put("userIp", userIp);
+        userService.insertActionHistory(param);
 
         return true;
     }

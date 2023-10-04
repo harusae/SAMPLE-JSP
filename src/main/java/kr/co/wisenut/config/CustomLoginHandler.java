@@ -1,7 +1,6 @@
 package kr.co.wisenut.config;
 
 import kr.co.wisenut.service.UserService;
-import org.apache.ibatis.binding.MapperMethod;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,18 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
 
         //이력저장 > 로그인 성공
         logger.info("login success : {} : {}, {}", request.getRequestURI(), authentication.getName(), request.getRemoteAddr());
+        HashMap<String, Object> param = new HashMap<>();
+        param.put("actionType", "LOGIN");
+        param.put("resourceId", "1001001");
+        param.put("resourceType", "LOGIN_SUCCESS");
+        param.put("actionMsg", "로그인 성공");
+        param.put("actionUser", authentication.getName());
+        param.put("params", "");
+        param.put("userIp", request.getRemoteAddr());
+        userService.insertActionHistory(param);
 
         //로그인 성공 후 로그인실패횟수 리셋처리
-        HashMap<String, Object> param = new HashMap<>();
+        param = new HashMap<>();
         param.put("userId", authentication.getName());
         userService.loginSuccess(param);
 

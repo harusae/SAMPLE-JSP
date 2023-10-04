@@ -36,6 +36,34 @@
         where USER_ID = #{userId}
     </update>
 
+    <insert id="insertActionHistory" parameterType="java.util.Map">
+        <selectKey keyProperty="seqActionHistory" resultType="java.lang.Integer" order="BEFORE">
+                   select SEQ_WISETM_ACTION_HISTORY.nextval from dual
+        </selectKey>
+        insert into WISETM_ACTION_HISTORY(
+            ACTION_ID
+            ,ACTION_DT
+            ,ACTION_TYPE
+            ,RESOURCE_ID
+            ,RESOURCE_TYPE
+            ,ACTION_MSG
+            ,ACTION_USER
+            ,PARAMS
+            ,USER_IP
+        )
+        values(
+            #{seqActionHistory}
+            ,sysdate
+            ,#{actionType}
+            ,#{resourceId}
+            ,#{resourceType}
+            ,#{actionMsg}
+            ,#{actionUser}
+            ,#{params}
+            ,#{userIp}
+        )
+    </insert>
+
     <select id="getUserList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
         select
             USER_ID

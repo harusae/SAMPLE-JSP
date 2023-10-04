@@ -4,7 +4,6 @@ import kr.co.wisenut.entity.MenuInfo;
 import kr.co.wisenut.entity.UserInfo;
 import kr.co.wisenut.mapper.MenuMapper;
 import kr.co.wisenut.mapper.UserMapper;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +38,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         UserInfo userInfo = userMapper.getLoginInfo(param);
 
         if(userInfo == null){
+            //설정을 바꾸지 않는 이상 BadCredentialsException 처리됨
             throw new UsernameNotFoundException("잘못된 사용자 정보입니다.");
         }
         else if(!("Y".equals(userInfo.getUseYn()) && "Y".equals(userInfo.getActiveYn()))){
