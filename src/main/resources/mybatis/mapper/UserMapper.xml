@@ -65,6 +65,20 @@
         )
     </insert>
 
+    <select id="getRecentlyPwList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserActionInfo">
+        SELECT *
+        FROM (
+            SELECT *
+            FROM WISETM_ACTION_HISTORY
+            WHERE action_user = #{userId}
+            AND RESOURCE_ID = 1001003
+            ORDER BY action_dt desc
+        )
+        <![CDATA[
+        WHERE rownum < 4
+        ]]>
+    </select>
+
     <update id="updateUserPw" parameterType="java.util.Map">
         update WISETM_USER_INFO
         set USER_PW = #{userPw},

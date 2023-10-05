@@ -27,6 +27,9 @@ public class CustomInterceptor implements HandlerInterceptor {
                 request.getRequestURI().startsWith("/fonts")
         ){return true;} //라이브러리 파일은 생략
 
+        //이력저장 시 예외처리가 필요한 케이스는 공통처리에서 제외
+        if(checkPassInterceptor(request.getRequestURI())){return true;}
+
         String userId = (request.getUserPrincipal() == null) ? "noSession" : request.getUserPrincipal().getName();
         String userIp = request.getRemoteAddr();
         HashMap<String, Object> params = new HashMap<>();
@@ -52,6 +55,15 @@ public class CustomInterceptor implements HandlerInterceptor {
         return true;
     }
 
+    private boolean checkPassInterceptor(String uri){
+        switch(uri){
+            case "/login/resetPw" : return true; //패스워드 변경 시 예외처리
+        };
+
+        return false;
+    }
+/*
+    //현재 일반적인 사용케이스에서는 request.getRemoteAddr() 로 처리가능
     public String getClientIP(HttpServletRequest request) {
         String ip = request.getHeader("X-Forwarded-For");
         logger.info("X-FORWARDED-FOR : " + ip);
@@ -80,4 +92,5 @@ public class CustomInterceptor implements HandlerInterceptor {
 
         return ip;
     }
+*/
 }

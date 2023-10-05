@@ -1,5 +1,6 @@
 package kr.co.wisenut.mapper;
 
+import kr.co.wisenut.entity.UserActionInfo;
 import kr.co.wisenut.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -15,6 +16,8 @@ public interface UserMapper {
     public int resetLoginFailCount(Map<String, Object> param);
 
     public int insertActionHistory(Map<String, Object> param);
+
+    public List<UserActionInfo> getRecentlyPwList(Map<String, Object> param);
 
     public int updateUserPw(Map<String, Object> param);
 

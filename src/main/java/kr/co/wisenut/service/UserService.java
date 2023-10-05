@@ -2,6 +2,7 @@ package kr.co.wisenut.service;
 
 import kr.co.wisenut.config.sub.AES256;
 import kr.co.wisenut.config.sub.SHA256;
+import kr.co.wisenut.entity.UserActionInfo;
 import kr.co.wisenut.entity.UserInfo;
 import kr.co.wisenut.mapper.UserMapper;
 import org.slf4j.Logger;
@@ -45,6 +46,19 @@ public class UserService {
         return res;
     }
 
+    public boolean checkRecentlyPw(HashMap<String, Object> param){
+        List<UserActionInfo> list = userMapper.getRecentlyPwList(param);
+        for(UserActionInfo userActionInfo: list){
+            //logger.info("checkRecentlyPw : {}", userActionInfo.getParams());
+            //logger.info("input PW : {}", param.toString());
+            if(userActionInfo.getParams().equals(param.toString())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public int updateUserPw(HashMap<String, Object> param) {
         logger.info("param : {}", param);
 
@@ -60,6 +74,13 @@ public class UserService {
             param.put("userPw", encoder.encode(param.get("password").toString()));
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
+        }
+        param.remove("password");   //미암호화 패스워드 삭제
+        param.remove("password2");  //미암호화 패스워드 삭제
+
+        //최근 3회 비밀번호와 동일한지 체크
+        if(checkRecentlyPw(param)){
+            return -2;
         }
 
         //비밀번호 변경 실행
