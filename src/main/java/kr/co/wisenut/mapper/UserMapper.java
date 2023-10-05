@@ -16,5 +16,7 @@ public interface UserMapper {
 
     public int insertActionHistory(Map<String, Object> param);
 
+    public int updateUserPw(Map<String, Object> param);
+
     public List<UserInfo> getUserList(Map<String, Object> param);
 }

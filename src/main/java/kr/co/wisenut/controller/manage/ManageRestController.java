@@ -1,6 +1,5 @@
 package kr.co.wisenut.controller.manage;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.wisenut.entity.MenuInfo;
 import kr.co.wisenut.entity.UserAuthInfo;
 import kr.co.wisenut.entity.UserInfo;
@@ -25,7 +24,6 @@ import java.util.Map;
 @RequestMapping("/manage")
 public class ManageRestController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private MenuService menuService;

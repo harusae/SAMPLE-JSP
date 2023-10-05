@@ -24,5 +24,7 @@ public class UserDetailsImpl implements UserDetails{
     List<MenuInfo> menuListAll;
     //사용자 별 메뉴 권한목록
     List<MenuInfo> menuList;
+    //패스워드 초기화 여부
+    private String resetYn;
 
 }

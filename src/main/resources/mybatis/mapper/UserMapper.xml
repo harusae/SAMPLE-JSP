@@ -14,6 +14,7 @@
             ,USE_YN
             ,ACTIVE_YN
             ,LOGIN_FAIL_CNT
+            ,RESET_YN
 
         from WISETM_USER_INFO
         where USER_ID = #{userId}
@@ -63,6 +64,14 @@
             ,#{userIp}
         )
     </insert>
+
+    <update id="updateUserPw" parameterType="java.util.Map">
+        update WISETM_USER_INFO
+        set USER_PW = #{userPw},
+            RESET_YN = 'N'
+        where USER_ID = #{userId}
+        and RESET_YN = 'Y'
+    </update>
 
     <select id="getUserList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
         select

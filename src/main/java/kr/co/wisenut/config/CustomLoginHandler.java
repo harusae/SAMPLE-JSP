@@ -1,5 +1,6 @@
 package kr.co.wisenut.config;
 
+import kr.co.wisenut.config.sub.UserDetailsImpl;
 import kr.co.wisenut.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +42,15 @@ public class CustomLoginHandler implements AuthenticationSuccessHandler {
         param.put("userId", authentication.getName());
         userService.loginSuccess(param);
 
-        response.sendRedirect("/");
+        //패스워드 초기화 대상자면 화면이동
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        logger.info("resetPw : {}", userDetails.getResetYn());
+        if("Y".equals(userDetails.getResetYn())){
+            response.sendRedirect("/login/reset");
+        }
+        else{
+            response.sendRedirect("/");
+        }
+
     }
 }

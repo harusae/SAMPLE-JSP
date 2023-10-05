@@ -14,5 +14,6 @@ public class UserInfo {
     private String useYn;
     private String activeYn;
     private int loginFailCnt;
+    private String resetYn;
 
 }
