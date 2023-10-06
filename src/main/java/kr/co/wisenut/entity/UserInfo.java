@@ -15,5 +15,6 @@ public class UserInfo {
     private String activeYn;
     private int loginFailCnt;
     private String resetYn;
+    private int pwChgDay;   //패스워드 변경 후 누적일 수 > 조회용으로 sql로 생성한 데이터
 
 }

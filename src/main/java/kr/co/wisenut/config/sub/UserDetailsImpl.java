@@ -26,5 +26,7 @@ public class UserDetailsImpl implements UserDetails{
     List<MenuInfo> menuList;
     //패스워드 초기화 여부
     private String resetYn;
+    //패스워드 변경 후 누적 일
+    private int pwChgDay;
 
 }

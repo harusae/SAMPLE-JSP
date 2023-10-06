@@ -120,6 +120,12 @@
             history.back();
         </script>
     </c:if>
+    <!-- 변경일 초과인 경우-->
+    <c:if test="${'Y' eq principal.resetYn && not empty resetMsg}">
+        <script>
+            alert('${resetMsg}');
+        </script>
+    </c:if>
 </div>
 
 </body>

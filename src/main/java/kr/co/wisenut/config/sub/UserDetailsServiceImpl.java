@@ -69,6 +69,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         userDetails.setMenuList(menuList);
 
         userDetails.setResetYn(userInfo.getResetYn());  //패스워드 초기화 여부
+        userDetails.setPwChgDay(userInfo.getPwChgDay());    //패스워드 변경 후 누적 일
 
 
         return userDetails;

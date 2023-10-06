@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -22,7 +21,7 @@ public class UserService {
     private UserMapper userMapper;
 
     public int loginFail(HashMap<String, Object> param){
-        logger.info("param : {}", param);
+        logger.info("loginFail param : {}", param);
         int res = 0;
         UserInfo userInfo = userMapper.getLoginInfo(param);
         if(userInfo != null){
@@ -33,14 +32,14 @@ public class UserService {
     }
 
     public int loginSuccess(HashMap<String, Object> param){
-        logger.info("param : {}", param);
+        logger.info("loginSuccess param : {}", param);
         int res = userMapper.resetLoginFailCount(param);
 
         return res;
     }
 
     public int insertActionHistory(HashMap<String, Object> param){
-        logger.info("param : {}", param);
+        logger.info("insertActionHistory param : {}", param);
         int res = userMapper.insertActionHistory(param);
 
         return res;
@@ -60,7 +59,7 @@ public class UserService {
     }
 
     public int updateUserPw(HashMap<String, Object> param) {
-        logger.info("param : {}", param);
+        logger.info("updateUserPw param : {}", param);
 
         //초기화 대상 확인
         UserInfo userInfo = userMapper.getLoginInfo(param);
@@ -87,6 +86,10 @@ public class UserService {
         int res = userMapper.updateUserPw(param);
 
         return res;
+    }
+
+    public int updateResetYn(HashMap<String, Object> param) {
+        return userMapper.updateResetYn(param);
     }
 
     public List<UserInfo> getUserList(HashMap<String, Object> param){
