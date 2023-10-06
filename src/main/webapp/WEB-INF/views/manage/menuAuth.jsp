@@ -20,7 +20,7 @@
         <h1>권한 별 메뉴 목록</h1>
         <div class="form-group" id="authMenuForm">
             <label >권한</label>
-            <select id="userAuth" name="userAuth" class="form-control" >
+            <select id="userAuthSelected" name="userAuthSelected" class="form-control" >
                 <option value="">권한을 선택하세요.</option>
             </select>
         </div>
@@ -83,11 +83,11 @@
     function registAuthMenu(){
         if(menuAuthFormCheck()){
             var param = {
-                'userAuth': $('#userAuth').val(),
+                'userAuth': $('#userAuthSelected').val(),
                 'userAuthMenu': $('#userAuthMenu').val()
             };
             commonAjax("/manage/menu/auth/regist", param, function(res){
-                    getMenuTree2($('#userAuth').val());
+                    getMenuTree2($('#userAuthSelected').val());
                     alert('등록되었습니다.');
                 },
                 function (error){
@@ -99,11 +99,11 @@
     function deleteAuthMenu(){
         if(menuAuthFormCheck()){
             var param = {
-                'userAuth': $('#userAuth').val(),
+                'userAuth': $('#userAuthSelected').val(),
                 'userAuthMenu': $('#userAuthMenu').val()
             };
             commonAjax("/manage/menu/auth/delete", param, function(res){
-                    getMenuTree2($('#userAuth').val());
+                    getMenuTree2($('#userAuthSelected').val());
                     alert('삭제되었습니다.');
                 },
                 function (error){
@@ -121,10 +121,10 @@
 
     function getUserAuthList() {
         commonAjax("/manage/menu/auth/userAuth", {}, function(res){
-            $('#userAuth').children('option:not(:first)').remove();
+            $('#userAuthSelected').children('option:not(:first)').remove();
             for(var i=0; i<res.length; i++){
                 //console.log('res['+i+'] : ', res[i]);
-                $('#userAuth').append('<option value="'+res[i].userAuth+'">'+res[i].userAuth+'</option>');
+                $('#userAuthSelected').append('<option value="'+res[i].userAuth+'">'+res[i].userAuth+'</option>');
             }
         });
     }
@@ -158,7 +158,7 @@
         $('#treeViewMenuAuth').treeview(options);
     }
     function menuAuthFormCheck(){
-        if($('#userAuth').val()== '' || $('#userAuthMenu').val()== '' ){
+        if($('#userAuthSelected').val()== '' || $('#userAuthMenu').val()== '' ){
             alert('권한과 메뉴명을 선택하세요.');
             return false;
         }
@@ -166,7 +166,7 @@
     }
 
     //select 변경 시 이벤트 처리
-    $('#userAuth').change(function(){
+    $('#userAuthSelected').change(function(){
        getMenuTree2(this.value);
     });
 
