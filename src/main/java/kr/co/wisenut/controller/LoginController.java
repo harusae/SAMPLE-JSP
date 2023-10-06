@@ -46,14 +46,16 @@ public class LoginController {
 
         String errorMsg = "";
         int result = userService.updateUserPw(param);
-
         switch(result) {
             case 0:
                 errorMsg = "변경실패";
+                break;
             case -1:
                 errorMsg = "변경 대상이 아닙니다.";
+                break;
             case -2:
                 errorMsg = "최근 3회 변경한 패스워드와 동일합니다.";
+                break;
         }
 
         //이력저장 예외 > 패스워드 변경 (파라미터 암호화)
