@@ -15,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -146,5 +147,44 @@ public class ManageRestController {
         List<UserInfo> list = userService.getUserList(param);
 
         return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/user/initPw")
+    @ResponseBody
+    public ResponseEntity initPw(@RequestParam HashMap<String, Object> param, Authentication auth, HttpServletRequest request){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("modUser", userDetails.getUsername());
+
+        String errorMsg = "";
+        int result = userService.initUserPw(param);
+        switch(result) {
+            case 0:
+                errorMsg = "초기화가 실패했습니다.";
+                break;
+        }
+
+        //이력저장 예외 > 패스워드 초기화 (파라미터 암호화)
+        HashMap<String, Object> historyParam = new HashMap<>();
+        historyParam.put("actionType", "LOGIN");
+        historyParam.put("resourceId", "1001005");  //패스워드 초기화 성공
+        historyParam.put("resourceType", "PASSWORD_RESET");
+        historyParam.put("actionMsg", "비밀번호 초기화");
+        historyParam.put("actionUser", param.get("modUser"));
+        historyParam.put("params", param.toString());
+        historyParam.put("userIp", request.getRemoteAddr());
+
+        if(result < 1){ //패스워드 초기화 실패 시
+            historyParam.put("resourceId", "1001006");  //패스워드 초기화 실패
+            historyParam.put("resourceType", "PASSWORD_RESET_FAIL");
+            historyParam.put("actionMsg", errorMsg);
+        }
+        userService.insertActionHistory(historyParam);
+
+        //초기화 실패 시 실패 리턴
+        if(result < 1) {
+            return new ResponseEntity(errorMsg, HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }

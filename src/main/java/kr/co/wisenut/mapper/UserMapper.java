@@ -24,4 +24,6 @@ public interface UserMapper {
     public int updateResetYn(Map<String, Object> param);
 
     public List<UserInfo> getUserList(Map<String, Object> param);
+
+    public int initUserPw(Map<String, Object> param);
 }

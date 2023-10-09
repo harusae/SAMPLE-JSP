@@ -15,10 +15,10 @@
             ,ACTIVE_YN
             ,LOGIN_FAIL_CNT
             ,RESET_YN
+            ,ALARM_YN
             ,sysdate - NVL(PW_CHG_DT, CRE_DT) AS PW_CHG_DAY
         from WISETM_USER_INFO
         where USER_ID = #{userId}
-
     </select>
 
     <update id="addLoginFailCount" parameterType="java.util.Map">
@@ -97,7 +97,6 @@
     </update>
 
 
-
     <select id="getUserList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
         select
             USER_ID
@@ -108,9 +107,19 @@
              ,USE_YN
              ,ACTIVE_YN
              ,LOGIN_FAIL_CNT
-
+             ,RESET_YN
+             ,ALARM_YN
+             ,sysdate - NVL(PW_CHG_DT, CRE_DT) AS PW_CHG_DAY
         from WISETM_USER_INFO
-
     </select>
+
+    <update id="initUserPw" parameterType="java.util.Map">
+        update WISETM_USER_INFO
+        set USER_PW = #{userPw},
+            RESET_YN = 'Y',
+            MOD_DT = sysdate,
+            MOD_USER = #{modUser}
+        where USER_ID = #{userId}
+    </update>
 
 </mapper>
