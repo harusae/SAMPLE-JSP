@@ -49,7 +49,7 @@
 <!-- script for chart/grid (오브젝트 아래위치에서 작성해야 동작) -->
 <script>
 /*
-    let dataMenuAuth = [
+    var dataMenuAuth = [
         ["사용자", "메뉴1", "/menu1", null],
         ["사용자", "메뉴1sub1", "/menu1/sub1", null],
         ["관리자", "메뉴1", "/menu1", null],

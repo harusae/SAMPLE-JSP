@@ -29,6 +29,9 @@
 <script src="/js/bootstrap-treeview.js"></script>
 <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
+
+<!--publish css-->
+<link href="/css/axboot.css" rel="stylesheet"/>
 <!--
   웹화면 작성 시 주의점
     > home.jsp를 메인페이지 + 타 페이지는 DIV로 하위페이지 형식으로 읽어오는 원페이지 형식의 구조인 관계로
@@ -42,7 +45,7 @@
   var divIdArray = [];
 
   //DIV에 하위페이지 로드/이동 처리
-  function navInit(id, url){
+  function navInit(id, name, url){
     //로그인 세션 체크
     commonAjax('/sessionChk', {}, function(res){
       //console.log('sessionChk : ', res);
@@ -51,6 +54,7 @@
     if(url != ''){ //이동URL이 있는 경우
       var findResult = divIdArray.indexOf(id);  //입력된 DIV ID가 있는지 검색
       if(findResult < 0){ //미생성화면 DIV ID인 경우
+        /*
         $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
         var html =
                 '<div class="navDiv" id="navDiv'+id+'">'
@@ -58,6 +62,15 @@
                 +'<span class="navDel" id="navDel'+id+'">[x]</span>' +
                 '</div>'; //새로운 DIV 네이게이션 생성
         $( "#navBar" ).append(html);  //네비게이션 추가
+        */
+
+        $("#content-frame-container").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
+        var html = '<span class="tab-item" style="min-width: 120px; width: auto;" id="navDiv'+id+'">'
+          + '<span data-toggle="tooltip" data-placement="bottom" class="navItem" id="navItem'+id+'">'+name+'</span>'
+          + '<i class="cqc-cancel3 on" data-tab-close="true" id="navDel'+id+'"></i>'
+          + '</span>';
+        $( "#navBar" ).append(html);  //네비게이션 추가
+
         divIdArray.push(id);  //생성한 DIV ID 저장
         try{
           $('#'+id).load(url);  //생성한 DIV에 페이지 로드
@@ -96,7 +109,7 @@
   }
 
   //네비게이션 바 > 메뉴명 선택 시
-  $(document).on('click', '.navItem', function() {
+  $(document).on('click', '.navItem', function() {  //class navItemXXX 선택 시
     //로그인 세션 체크
     commonAjax('/sessionChk', {}, function(res){
       //console.log('sessionChk : ', res);
@@ -107,7 +120,7 @@
     showOnlyDivInput(id);
   });
   //네비게이션 바 > 메뉴삭제 선택 시
-  $(document).on('click', '.navDel', function() {
+  $(document).on('click', '.cqc-cancel3', function() { //class cqc-cancel3XXX 선택 시
     var delItemId = $(this).attr("id");
     var id = delItemId.substring(6,delItemId.length);
     delDivInput(id);
@@ -142,29 +155,107 @@
 
 </script>
 
-<body>
-<div>
-  <div style="float:left;">
-    <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
-      <button type="button" class="${menu.upperMenuId==null?'btn btn-primary':'btn btn-secondary'}"
-              onclick="javascript:navInit('${menu.menuId}','${menu.menuUrl}');">
-          ${menu.menuName}</button>
-    </c:forEach>
-  </div>
-  <div style="float:right;">
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('HOME','/test');">HOME</button>
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('MENU','/manage/menu');">메뉴관리</button>
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('MENUAUTH','/manage/menu/auth');">권한 별 메뉴관리</button>
-    <button type="button" class="btn btn-primary" onclick="javascript:navInit('USER','/manage/user');">사용자관리</button>
-    <button type="button" class="btn btn-primary" onclick="javascript:location.href='/logout';">로그아웃</button>
-  </div>
-</div>
-<br>
-<hr>
+<body class="ax-body frame-set" onselectstart="return false;">
+<div id="ax-frame-root" class="" data-root-container="true">
 
-<div id="navBar">
+  <div id="content-frame-container" class="ax-frame-contents">
+    <!--
+    <div>
+      <div style="float:left;">
+        <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
+          <button type="button" class="${menu.upperMenuId==null?'btn btn-primary':'btn btn-secondary'}"
+                  onclick="javascript:navInit('${menu.menuId}','${menu.menuUrl}');">
+              ${menu.menuName}</button>
+        </c:forEach>
+      </div>
+    </div>
+    <hr>
+    <div id="navBar">
+    </div>
+    -->
+  </div>
+
+  <div class="ax-frame-header-tool">
+    <div class="ax-split-col" style="height: 100%;">
+      <div class="ax-split-panel text-align-left">
+      </div>
+      <div class="ax-split-panel text-align-right">
+        <div class="ax-split-col ax-frame-user-info">
+          <div class="ax-split-panel">
+            <a href="#">${principal.username}님 로그인</a>
+          </div>
+          <div class="panel-split"></div>
+          <div class="ax-split-panel">
+            <a href="#" class="ax-frame-logout" onclick="javascript:location.href='/logout';">
+              <i class="cqc-log-out"></i>
+              로그아웃
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ax-frame-header">
+    <div class="ax-split-col" style="height: 100%;">
+      <div class="ax-split-panel">&nbsp;</div>
+      <div class="ax-split-panel cell-logo">
+        <a href="#">
+          <img src="/img/header-logo-hanwha.png" width="100%">
+        </a>
+      </div>
+
+      <div id="ax-top-menu" class="ax-split-panel ax-split-flex">
+        <div class="ax5-ui-menubar axboot">
+          <div class="ax-menu-body">
+            <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
+              <div class="ax-menu-item" data-menu-item-index="0">
+              <span class="ax-menu-item-cell ax-menu-item-label" onclick="javascript:navInit('${menu.menuId}','${menu.menuName}','${menu.menuUrl}');">${menu.menuName}
+                <c:if test="${empty menu.menuUrl}"><i class="cqc-chevron-down"></i></c:if>
+              </span>
+              </div>
+            </c:forEach>
+          </div>
+        </div>
+      </div>
+
+      <div class="ax-split-panel cell-aside-handle" id="ax-fullscreen-handel">
+        <i class="cqc-expand icon-closed"></i>
+        <i class="cqc-collapse icon-opened"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="ax-frame-header-tab">
+    <div id="ax-frame-header-tab-container">
+      <div class="tab-item-holder" style="width: auto;" id="navBar">
+        <!--
+        <div class="tab-item-menu" data-tab-id=""></div>
+        <div class="tab-item on" data-tab-id="00-dashboard" style="min-width: 120px; width: auto;">
+          <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="홈">홈</span>
+        </div>
+
+        <div class="tab-item" data-tab-id="122" style="min-width: 120px; width: auto;">
+          <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="통합검색">통합검색</span>
+          <i class="cqc-cancel3 on" data-tab-close="true" data-tab-id="122"></i>
+        </div>
+        -->
+        <div class="tab-item-addon" data-tab-id=""></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ax-frame-foot">
+    <div class="ax-split-col" style="height: 100%;">
+      <div class="ax-split-panel text-align-left">   </div>
+      <div class="ax-split-panel text-align-right">
+        Last account activity <b id="account-activity-timer">00:29</b> ago.
+      </div>
+    </div>
+  </div>
+
 </div>
-<hr>
+
 
 </body>
 </html>

@@ -17,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 @Controller
@@ -41,6 +44,20 @@ public class HomeController {
 
     @RequestMapping("/home")
     public ModelAndView home() {
+        Date date = new Date();
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        String now = format.format(date);
+
+
+        ModelAndView view = new ModelAndView();
+        view.addObject("now", now);
+        view.setViewName("user/dashboard");
+
+        return view;
+    }
+
+    @RequestMapping("/test")
+    public ModelAndView sample() {
         int count = testService.getTest01Count();
 
         ModelAndView view = new ModelAndView();

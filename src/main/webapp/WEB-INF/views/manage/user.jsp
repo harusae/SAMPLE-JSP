@@ -82,7 +82,7 @@
 </div>
 </body>
 <script>
-    let dataUserList = [];
+    var dataUserList = [];
 
     function getUserList() {
         commonAjax("/manage/user/list", {}, function(res){
