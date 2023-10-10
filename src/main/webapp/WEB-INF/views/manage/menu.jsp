@@ -58,9 +58,7 @@
                     <div data-fit-height-aside="form-view-01">
                         <div class="ax-button-group">
                             <div class="left">
-                                <h2>
-                                    <i class="cqc-news"></i>
-                                    프로그램 설정 </h2>
+                                <h2><i class="cqc-news"></i>프로그램 설정 </h2>
                             </div>
                             <div class="right">
 

@@ -14,7 +14,86 @@
     <title>MENU</title>
 
 </head>
-<body>
+<body class="ax-body " data-page-auto-height="true" style="cursor: auto;">
+<div id="ax-base-root" data-root-container="true">
+    <div class="ax-base-title" role="page-title">
+        <h1 class="title"><i class="cqc-browser"></i>권한 별 메뉴 관리</h1>
+        <p class="desc"></p>
+    </div>
+
+    <div class="ax-base-content">
+        <div data-page-buttons="">
+            <div class="button-warp">
+                <button type="button" class="btn btn-info" data-page-btn="save" onclick="registAuthMenu();"><i class="cqc-save"></i>등록</button>
+                <button type="button" class="btn btn-info" data-page-btn="delete" onclick="deleteAuthMenu();"><i class="cqc-trash"></i>삭제</button>
+            </div>
+        </div>
+
+        <div role="page-header">
+            <form method="post" id="authMenuForm" >
+                <div data-ax-tbl="" id="" class="ax-search-tbl" style="">
+                    <div data-ax-tr="" id="" class="" style="">
+                        <div data-ax-td="" id="" class="" style=";width:300px">
+                            <div data-ax-td-label="" class="" style="">권한</div>
+                            <div data-ax-td-wrap="">
+                                <select id="userAuthSelected" name="userAuthSelected" class="form-control" >
+                                    <option value="">권한을 선택하세요.</option>
+                                </select></div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="H10"></div>
+        </div>
+
+        <div data-ax5layout="ax1" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 864px;">
+            <div data-split-panel="{width: &quot;300&quot;}" id="" class="split-panel-vertical" style="display: block; width: 300px; left: 0px;">
+                <div style="padding-right: 10px;" class="" data-split-panel-wrap="">
+                    <div class="ax-button-group" data-fit-height-aside="tree-view-01">
+                        <div class="left">
+                            <h2><i class="cqc-list"></i>권한 별 메뉴 목록 </h2>
+                        </div>
+                        <div class="right">
+                        </div>
+                    </div>
+                    <div id="treeViewMenuAuth"></div>
+                </div>
+            </div>
+
+            <div data-splitter="{}" class="split-panel-vertical" style="display: block; width: 7px; left: 300px;"></div>
+            <div data-split-panel="{width: &quot;*&quot;}" id="split-panel-form" class="split-panel-vertical" style="display: block; width: 864px; left: 307px;">
+                <div style="padding-left: 10px;" class="" data-split-panel-wrap="">
+                    <div data-fit-height-aside="form-view-01">
+                        <div class="ax-button-group">
+                            <div class="left">
+                                <h2><i class="cqc-news"></i>권한 별 메뉴 선택 </h2>
+                            </div>
+                            <div class="right">
+
+                            </div>
+                        </div>
+                        <form name="formView01" id="formView01" method="post" onsubmit="return false" style="">
+                            <div data-ax-tbl="" id="" class="ax-form-tbl" style="">
+                                <div data-ax-tr="" id="" class="" style="">
+                                    <div data-ax-td="" id="" class="" style=";width:100%">
+                                        <div data-ax-td-label="" class="" style=";width:150px">메뉴명</div>
+                                        <div data-ax-td-wrap="">
+                                            <select id="userAuthMenu" name="userAuthMenu" class="form-control" >
+                                                <option value="">메뉴를 선택하세요.</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
 <div class="wrapper">
     <div class="container" style="float:left">
         <h1>권한 별 메뉴 목록</h1>
@@ -24,9 +103,6 @@
                 <option value="">권한을 선택하세요.</option>
             </select>
         </div>
-        <!--
-        <div id="gridMenuAuth"></div>
-        -->
 
         <div id="treeViewMenuAuth" style="width:400px; height:500px; border:1px solid black; float:left"/>
         <br/>
@@ -45,40 +121,10 @@
         <br/>
     </div>
 </div>
+-->
 </body>
 <!-- script for chart/grid (오브젝트 아래위치에서 작성해야 동작) -->
 <script>
-/*
-    var dataMenuAuth = [
-        ["사용자", "메뉴1", "/menu1", null],
-        ["사용자", "메뉴1sub1", "/menu1/sub1", null],
-        ["관리자", "메뉴1", "/menu1", null],
-        ["관리자", "메뉴1sub1", "/menu1/sub1", null],
-        ["관리자", "관리메뉴1", "/manage/menu1", null],
-        ["관리자", "관리메뉴2", "/manage/menu2", null],
-
-    ];
-
-    const gridMenu = new gridjs.Grid({
-        columns: ["권한", "메뉴ID", "메뉴명",
-            {
-                name: '삭제',
-                formatter: (cell, row) => {
-                    return gridjs.h('button', {
-                        className: 'py-2 mb-4 px-4 border rounded-md text-white bg-blue-600',
-                        onClick: () => alert(row.cells[0].data +':'+row.cells[1].data)
-                    }, '삭제');
-                }
-            },],
-        data: dataMenuAuth,
-        pagination: {
-            limit: 10
-        },
-        resizable: true,
-        search: true,
-        sort: true
-    }).render(document.getElementById("gridMenuAuth"));
-*/
 
     function registAuthMenu(){
         if(menuAuthFormCheck()){
