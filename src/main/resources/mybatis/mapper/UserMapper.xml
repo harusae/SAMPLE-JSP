@@ -117,6 +117,7 @@
         update WISETM_USER_INFO
         set USER_PW = #{userPw},
             RESET_YN = 'Y',
+            LOGIN_FAIL_CNT = 0,
             MOD_DT = sysdate,
             MOD_USER = #{modUser}
         where USER_ID = #{userId}

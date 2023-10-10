@@ -29,7 +29,7 @@
             </div>
         </div>
         <div data-ax5layout="ax1" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 879px;">
-            <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 600.4px; left: 0px;">
+            <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 600px; left: 0px;">
                 <div style="padding-right: 10px;" class="" data-split-panel-wrap="">
                     <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                         <div class="left">
@@ -44,8 +44,8 @@
                     </div>
                 </div>
             </div>
-            <div data-splitter="{}" class="split-panel-vertical" style="display: block; width: 7px; left: 600.4px;"></div>
-            <div data-split-panel="{width: &quot;*&quot;}"  class="split-panel-vertical" style="display: block; width: 932.6px; left: 607.4px;">
+            <div data-splitter="{}" class="split-panel-vertical" style="display: block; width: 7px; left: 600px;"></div>
+            <div data-split-panel="{width: &quot;*&quot;}"  class="split-panel-vertical" style="display: block; width:800px; left: 607px;">
                 <div style="padding-left: 10px;" class="" data-split-panel-wrap="scroll">
                     <div class="ax-button-group" role="panel-header">
                         <div class="left">
@@ -192,73 +192,6 @@
         </div>
     </div>
 </div>
-<!--
-<div class="wrapper">
-    <div class="container" style="float:left; width:60%;">
-        <h1>사용자 관리</h1>
-        <div id="gridMenuAuth"></div>
-        <br/>
-    </div>
-
-    <div class="container2" style="float:left">
-        <h1>사용자 정보</h1>
-        <form method="post" id="userForm">
-            <div class="form-group">
-                <label >사용자 명</label>
-                <input type="text" id="userName" name="userName" class="form-control">
-            </div>
-            <div class="form-group">
-                <label >ID</label>
-                <input type="text" id="userId" name="userId" class="form-control">
-            </div>
-            <div class="form-group">
-                <label >비밀번호</label>
-                <input type="password" id="password" name="password" class="form-control">
-            </div>
-            <div class="form-group">
-                <label >비밀번호 확인</label>
-                <input type="password" id="password2" name="password2" class="form-control">
-                <input type="checkbox" id="pwChange" name="pwChange">비밀번호 변경
-                <input type="checkbox" id="pwInit" name="pwReset">비밀번호 초기화
-            </div>
-            <div class="form-group">
-                <label >사용여부</label>
-                <select id="useYn" name="useYn" class="form-control" >
-                    <option value="Y">사용</option>
-                    <option value="N">사용안함</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label >계정상태</label>
-                <select id="activeYn" name="activeYn" class="form-control" >
-                    <option value="Y">활성</option>
-                    <option value="N">잠김</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label >비고</label>
-                <input type="text" id="" name="" class="form-control">
-            </div>
-            <div class="form-group">
-                <label >메뉴그룹</label>
-                <select id="userAuth" name="userAuth" class="form-control" >
-                    <option value="">권한을 선택하세요.</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label >알림권한</label>
-                <select id="alarmYn" name="alarmYn" class="form-control" >
-                    <option value="Y">사용</option>
-                    <option value="N">사용안함</option>
-                </select>
-            </div>
-        </form>
-        <button class="btn btn-primary" onclick="">등록</button>
-        <button class="btn btn-primary" onclick="">저장</button>
-        <br/>
-    </div>
-</div>
--->
 </body>
 <script>
     var dataUserList = [];
@@ -291,17 +224,40 @@
                 $('#activeYn').val(dataUserList[i].activeYn);
                 $('#userAuth').val(dataUserList[i].userAuth);
                 $('#alarmYn').val(dataUserList[i].alarmYn);
+                console.log('pwInit : ', dataUserList[i].resetYn);
+                if(dataUserList[i].resetYn != null && dataUserList[i].resetYn == 'Y'){
+                    $('#pwInit').prop('checked', true);
+                }
+                else{
+                    $('#pwInit').prop('checked', false);
+                }
 
             }
         }
     }
 
     function initUserPw(checkValue){
-        console.log('checkValue : ', checkValue);
-        console.log('checked : ', $('#pwInit').is(":checked"));
-        console.log('userId : ', $('#userId').val());
+        //console.log('checkValue : ', checkValue);
+        //console.log('checked : ', $('#pwInit').is(":checked"));
+        //console.log('userId : ', $('#userId').val());
         if(!$('#pwInit').is(":checked")){
-            alert('실행한 초기화는 취소할 수 없습니다.');
+            if(confirm('다시 초기화를 실행하겠습니까?')){
+                var param = {
+                    'userId': $('#userId').val()
+                };
+                commonAjax("/manage/user/initPw", param, function(res){
+                        alert('재초기화되었습니다.');
+                    },
+                    function (error){
+                        if(error.responseText != ''){
+                            alert(error.responseText);
+                        }
+                        else{
+                            alert('실행 실패');
+                        }
+                    }
+                );
+            };
             $('#pwInit').prop('checked', true);
         }else if($('#userId').val() == ''){
             alert('비밀번호 초기화할 사용자를 선택하세요.');
@@ -324,6 +280,9 @@
                     $('#pwInit').prop('checked', false);
                 }
             );
+        }
+        else{
+            $('#pwInit').prop('checked', false);
         }
 
     }
