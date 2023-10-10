@@ -78,6 +78,10 @@ public class ManageRestController {
         param.put("modUser", userDetails.getUsername());
 
         int result = menuService.updateMenu(param);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("변경실패", HttpStatus.BAD_REQUEST);
+        }
 
         return new ResponseEntity(result, HttpStatus.OK);
     }

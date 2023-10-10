@@ -179,7 +179,8 @@
             $('#userAuthMenu').children('option:not(:first)').remove();
             for(var i=0; i<res.length; i++){
                 //console.log('res['+i+'] : ', res[i]);
-                $('#userAuthMenu').append('<option value="'+res[i].menuId+'">'+res[i].menuName+'</option>');
+                var menuName = res[i].upperMenuId ? '- '+res[i].menuName : res[i].menuName;
+                $('#userAuthMenu').append('<option value="'+res[i].menuId+'">'+menuName+'</option>');
             }
         });
     }
