@@ -111,6 +111,10 @@ public class UserService {
         return list;
     }
 
+    public int updateUser(HashMap<String, Object> param) {
+        return userMapper.updateUser(param);
+    }
+
     public int initUserPw(HashMap<String, Object> param) {
 
         //초기화 password 암호화

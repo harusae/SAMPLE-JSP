@@ -35,7 +35,7 @@
         </div>
 
         <div data-ax5layout="ax1" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 864px;">
-            <div data-split-panel="{width: &quot;300&quot;}" id="" class="split-panel-vertical" style="display: block; width: 300px; left: 0px;">
+            <div data-split-panel="{width: &quot;300&quot;}" class="split-panel-vertical" style="display: block; width: 300px; left: 0px;">
                 <div style="padding-right: 10px;" class="" data-split-panel-wrap="">
                     <div class="ax-button-group" data-fit-height-aside="tree-view-01">
                         <div class="left">
@@ -110,16 +110,16 @@
                                     </div>
                                 </div>
                                 <!--
-                                <div data-ax-tr="" id="" class="" style="">
-                                    <div data-ax-td="" id="" class="" style=";width:100%">
+                                <div data-ax-tr="" class="" style="">
+                                    <div data-ax-td="" class="" style=";width:100%">
                                         <div data-ax-td-label="" class="" style=";width:150px">메뉴ID</div>
                                         <div data-ax-td-wrap="">
                                             <input type="text" data-ax-path="progCd" class="form-control" value="" readonly="readonly">
                                         </div>
                                     </div>
                                 </div>
-                                <div data-ax-tr="" id="" class="" style="">
-                                    <div data-ax-td="" id="" class="" style=";width:100%">
+                                <div data-ax-tr="" class="" style="">
+                                    <div data-ax-td="" class="" style=";width:100%">
                                         <div data-ax-td-label="" class="" style=";width:150px">다국어 설정</div>
                                         <div data-ax-td-wrap="">
                                             <div class="form-inline">
@@ -135,8 +135,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div data-ax-tr="" id="" class="" style="">
-                                    <div data-ax-td="" id="" class="" style=";width:100%">
+                                <div data-ax-tr="" class="" style="">
+                                    <div data-ax-td="" class="" style=";width:100%">
                                         <div data-ax-td-label="" class="" style=";width:150px">프로그램 명</div>
                                         <div data-ax-td-wrap="">
 

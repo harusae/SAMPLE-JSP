@@ -153,6 +153,23 @@ public class ManageRestController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @RequestMapping(method= RequestMethod.POST, value="/user/modify")
+    @ResponseBody
+    public ResponseEntity updateUser(@RequestParam HashMap<String, Object> param, Authentication auth){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("modUser", userDetails.getUsername());
+
+        logger.info("updateUser param : {}", param);
+
+        int result = userService.updateUser(param);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("변경실패", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
     @RequestMapping(method= RequestMethod.POST, value="/user/initPw")
     @ResponseBody
     public ResponseEntity initPw(@RequestParam HashMap<String, Object> param, Authentication auth, HttpServletRequest request){

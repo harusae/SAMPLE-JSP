@@ -24,8 +24,8 @@
         <div data-page-buttons="">
             <div class="button-warp">
                 <button type="button" class="btn btn-default" data-page-btn="reload" onclick="window.location.reload();"><i class="cqc-cw"></i></button>
-                <button type="button" class="btn btn-info" data-page-btn="search"><i class="cqc-magnifier"></i> 조회 </button>
-                <button type="button" class="btn btn-info" data-page-btn="save"><i class="cqc-save"></i> 저장</button>
+                <button type="button" class="btn btn-info" data-page-btn="save" onclick="alert('구현예정');"><i class="cqc-save"></i>등록</button>
+                <button type="button" class="btn btn-info" data-page-btn="update" onclick="modifyUser()"><i class="cqc-upload"></i>수정</button>
             </div>
         </div>
         <div data-ax5layout="ax1" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 879px;">
@@ -60,7 +60,7 @@
                             </button>
                         </div>
                     </div>
-                    <form name="formView01" id="formView01" method="post" onsubmit="return false" style="">
+                    <form name="manageUserForm" id="manageUserForm" method="post" onsubmit="return false" style="">
 
                         <input type="hidden" name="act_tp" id="act_tp" value="">
                         <div data-ax-tbl="" class="ax-form-tbl" style="">
@@ -74,7 +74,7 @@
                                 <div data-ax-td="" class="" style=";width:220px">
                                     <div data-ax-td-label="" class="" style=";width:120px">아이디</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="text" id="userId" name="userId"  class="av-required form-control W150">
+                                        <input type="text" id="userId" name="userId"  class="av-required form-control W150" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -82,13 +82,13 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style=";width:120px">비밀번호</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="password" id="password" name="password" class="form-control W120" value="" readonly="readonly">
+                                        <input type="password" id="password" name="password" class="form-control W120" readonly="readonly">
                                     </div>
                                 </div>
                                 <div data-ax-td="" class="" style=";width:460px">
                                     <div data-ax-td-label="" class="" style=";width:120px">비밀번호 확인</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="password" id="password2" name="password2" class="form-control inline-block W120" value="" readonly="readonly">
+                                        <input type="password" id="password2" name="password2" class="form-control inline-block W120" readonly="readonly">
                                         &nbsp;
                                         <label>
                                             <input type="checkbox" id="pwChange" name="pwChange" value="Y">
@@ -194,12 +194,13 @@
 </div>
 </body>
 <script>
+    var gridUserList;
     var dataUserList = [];
 
     function getUserList() {
         commonAjax("/manage/user/list", {}, function(res){
             dataUserList = res;
-            initUserGrid(dataUserList);
+            updateUserGrid(dataUserList);
         });
     }
 
@@ -224,7 +225,6 @@
                 $('#activeYn').val(dataUserList[i].activeYn);
                 $('#userAuth').val(dataUserList[i].userAuth);
                 $('#alarmYn').val(dataUserList[i].alarmYn);
-                console.log('pwInit : ', dataUserList[i].resetYn);
                 if(dataUserList[i].resetYn != null && dataUserList[i].resetYn == 'Y'){
                     $('#pwInit').prop('checked', true);
                 }
@@ -232,6 +232,21 @@
                     $('#pwInit').prop('checked', false);
                 }
 
+            }
+        }
+    }
+
+    function modifyUser(){
+        if(manageUserFormCheck()){
+            if(confirm('변경하겠습니까?')){
+                commonAjax("/manage/user/modify", $("#manageUserForm").serialize(), function(res){
+                        alert('변경되었습니다.');
+                        getUserList();
+                    },
+                    function (error){
+                        alert('변경실패');
+                    }
+                );
             }
         }
     }
@@ -288,7 +303,7 @@
     }
 
     function initUserGrid(data){
-        const gridUserList = new gridjs.Grid({
+        gridUserList = new gridjs.Grid({
             columns:[
                 {id: 'userId',name:'ID'},
                 {id: 'userName',name:'사용자 명'},
@@ -325,6 +340,25 @@
             */
             setUserInfo(args[1]._cells[0].data);
         });
+
+    }
+
+    function updateUserGrid(data){
+        gridUserList.updateConfig({
+            data: data
+        }).forceRender();
+    }
+
+    function manageUserFormCheck(){
+        if(
+            $('#userId').val() == ''||
+            $('#userName').val()== ''
+        ){
+            alert('아이디/사용자 명은 필수입력입니다.');
+            return false;
+        }
+
+        return true;
     }
 
     $('#pwInit').change(function(){
@@ -333,6 +367,7 @@
 
     //초기화
     $(function() {
+        initUserGrid(dataUserList);
         getUserList();
         getUserAuthList1();
     });

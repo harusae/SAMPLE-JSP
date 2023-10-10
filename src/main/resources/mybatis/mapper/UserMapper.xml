@@ -113,6 +113,18 @@
         from WISETM_USER_INFO
     </select>
 
+    <update id="updateUser" parameterType="java.util.Map">
+        update WISETM_USER_INFO
+        set USER_NAME = #{userName}
+            ,USE_YN = #{useYn}
+            ,ACTIVE_YN = #{activeYn}
+            ,USER_AUTH = #{userAuth}
+            ,ALARM_YN = #{alarmYn}
+            ,MOD_USER = #{modUser}
+            ,MOD_DT = sysdate
+        where USER_ID = #{userId}
+    </update>
+
     <update id="initUserPw" parameterType="java.util.Map">
         update WISETM_USER_INFO
         set USER_PW = #{userPw},
