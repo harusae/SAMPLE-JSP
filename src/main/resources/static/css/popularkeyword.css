@@ -1,0 +1,60 @@
+#wrapa{width: 100%; height: 100%; background: #eceef3;} /*//높이100%*/
+.content{width: 100%; height: 100%; background: url(/img/bg.png); }
+section{ height: 100%; /*border: 1px solid red;*/ display: inline-block; background: #fff; background: url(/img/t_b.png) no-repeat #fff; background-position: top left;}
+section:nth-child(1){ width: 100%; position: absolute; top:5%; left: 1%;} /*그리드 맨위 간격 */
+section:nth-child(2){ width: 100%;position: absolute; top:10%; right: 1%;}
+
+section h1{font-size: 10px; padding: 10px 0 0 20px; letter-spacing:-1px;}
+section h2{font-size: 14px; padding: 7px 0 3px 1.5%; }
+section .all{width: 97%; height: 95%; margin: 1px 4px 1px 10px; background: #eeeeed; } /* margin: 6px 4px 6px 10px; */
+section .all1{width: 96%; height: 95%; margin: 1px 4px 1px 10px; background: #eeeeed; } /* margin: 6px 4px 6px 10px; */
+section.major p{font-size: 12px; letter-spacing:-1px;} /* 소분류명 */
+section.major strong{font-size: 14.2px; } /* 숫자 사이즈 */
+section .tt_r{color: #e71f19;}
+section .tt_g{color: #32b16c;}
+section .tt_o{color: #f4a038;}
+section .tt_b{color: #556fb5;}
+section .tt_s{color: #2fbbdb;}
+
+section .all ul{width: 100%; margin-left: 0.1%; }
+section .all li{ display: inline-block; width: 13.7%; padding: 0.7% 0; text-align: center; background: #fff;  border: 1px solid #e3e3e3; }
+#tit_1 li{height:25px;  background: #655c4f; padding-top: 4px; color: #fff; font-size: 13px; font-family: Nanum Gothic;} /* 맨위박스 */
+
+#nb p{border-radius : 0px 20px 20px 0px; background: #655c4f; width: 100%; height: 35px; color: #fff; padding: 10px 0 0 5px; font-size: 14px; font-weight: bold;"}
+/* 좌측 연번 */
+
+
+.today table{width: 96%; height: 95%;  font-size: 12px; margin:0 2%; text-align: center; }
+.today td:nth-child(1){width: 15%; }
+.today td:nth-child(2){width: 35%}
+.today td:nth-child(3){width: 25%}
+.today td:nth-child(4){width: 25%}
+.today tr:nth-child(2n+1){background: #fff;}
+.today tr:nth-child(1){background: #524d3f; color: #fff; text-align: center;}
+.today tr{height: 9%;}
+.today .date{text-align: right; padding-right: 5%;  font-size: 11px; /*border: 1px solid red;*/}
+.red{color: red;}
+.blue{color: blue;}
+.t_center{text-align: center;}
+.t_right{text-align: right; padding-right: 5%;}
+.t_left{padding-left: 5%;}
+
+
+.k_word ul{width: 96%;  height: 10%; /*border: 1px solid red;*/  margin: 6px 4px 6px 10px;}
+.k_word .titl li{display: inline-block; padding: 1% 0; font-weight: bold;}
+.k_word ul li:nth-child(1){background: #eeeeed;  border: none; width: 20%; padding-left: 3%;}
+.k_word ul li:nth-child(2){background: #eeeeed;  border: none; width: 79%; text-align: center;}  
+
+.k_word table{ font-size: 12px; width: 96%; margin-left: 2%;}
+.k_word td{padding-left: 3%;  padding: 0.86% 3%;}
+.k_word td:nth-child(1){width: 20%; }
+.k_word td:nth-child(2){width: 79%}
+
+
+section .all3{width: 97%; height: 87.5%; margin: 6px 4px 6px 10px; background: #eeeeed; padding: 5% 5% 7% 5%; /*border: 1px solid red;*/ }
+.con_box1 {width: 30%; height: 50%;  text-align: center; background: #fff; border: 1px solid #e3e3e3; padding: 3% 3%; display: inline-block; }
+.con_box1 p{font-size: 24px; color: #556fb5;}
+.con_box1 span{font-size: 12px;}
+.con_box1 h4{font-size: 12px; color: #e71f19; display: inline;}
+.con_box1:nth-child(2){margin: 0 3.6%;}
+.con_box1:nth-child(5){margin: 3.6% 3.6% 03.6%;}

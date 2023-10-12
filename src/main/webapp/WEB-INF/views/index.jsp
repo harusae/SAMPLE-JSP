@@ -32,6 +32,7 @@
 
 <!--publish css-->
 <link href="/css/axboot.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="/css/popularkeyword.css">
 <!--
   웹화면 작성 시 주의점
     > home.jsp를 메인페이지 + 타 페이지는 DIV로 하위페이지 형식으로 읽어오는 원페이지 형식의 구조인 관계로
@@ -64,6 +65,7 @@
         $( "#navBar" ).append(html);  //네비게이션 추가
         */
 
+        //입력된 menuid 가 html element id로 입력 > menuid가 기존 element id와 겹치면 동작이상 발생
         $("#content-frame-container").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
         var html = '<span class="tab-item" style="min-width: 120px; width: auto;" id="navDiv'+id+'">'
           + '<span data-toggle="tooltip" data-placement="bottom" class="navItem" id="navItem'+id+'">'+name+'</span>'

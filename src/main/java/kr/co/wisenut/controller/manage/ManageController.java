@@ -2,6 +2,7 @@ package kr.co.wisenut.controller.manage;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import kr.co.wisenut.config.sub.AES256;
+import kr.co.wisenut.config.sub.SHA256;
 import kr.co.wisenut.service.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import kr.co.wisenut.config.sub.SHA256;
 
 @Controller
 @RequestMapping("/manage")
@@ -50,5 +50,9 @@ public class ManageController {
 
 
         return "manage/user";
+    }
+    @RequestMapping("/keyword")
+    public String keyword(Model model){
+        return "manage/keyword";
     }
 }
