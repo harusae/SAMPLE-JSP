@@ -21,6 +21,13 @@ public class KeywordService {
     public List<KeywordInfo> getKeywordList(Map<String, Object> param){
         return keywordMapper.getKeywordList(param);
     }
+
+    public int insertKeyword(Map<String, Object> param){
+        return keywordMapper.insertKeyword(param);
+    }
+    public int updateKeyword(Map<String, Object> param){
+        return keywordMapper.updateKeyword(param);
+    }
     @Transactional
     public int deleteKeyword(List<String> paramList){
         int res = 0;

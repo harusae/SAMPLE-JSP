@@ -59,6 +59,7 @@ public class CustomInterceptor implements HandlerInterceptor {
     private boolean checkPassInterceptor(String uri){
         switch(uri){
             case "/login/resetPw" : return true; //패스워드 변경 시 예외처리
+            case "/sessionChk" : return true; //세션체크 호출 시 예외처리
         };
 
         return false;

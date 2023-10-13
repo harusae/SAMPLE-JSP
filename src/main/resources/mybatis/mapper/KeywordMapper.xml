@@ -20,7 +20,44 @@
         <if test="searchDicType != null and searchDicType != ''">
         and DIC_TYPE = #{searchDicType}
         </if>
+        order by SORT_ORDER
     </select>
+
+    <insert id="insertKeyword" parameterType="java.util.Map">
+        <selectKey keyProperty="seqKeyword" resultType="java.lang.Integer" order="BEFORE">
+            select SEQ_TB_WTM_IS_DICTIONARIES.nextval from dual
+        </selectKey>
+        insert into TB_WTM_IS_DICTIONARIES(
+            DIC_ID,
+            DIC_TYPE,
+            KEYWORD,
+            USE_YN,
+            SORT_ORDER,
+            REG_DT,
+            REG_USER_ID
+        )
+        values(
+            #{seqKeyword},
+            #{dicType},
+            #{keyword},
+            #{keywordUseYn},
+            #{keywordSortOrder},
+            sysdate,
+            #{creUser}
+        )
+    </insert>
+
+    <update id="updateKeyword" parameterType="java.util.Map">
+        update TB_WTM_IS_DICTIONARIES
+        set
+            DIC_TYPE = #{dicType},
+            KEYWORD = #{keyword},
+            USE_YN = #{keywordUseYn},
+            SORT_ORDER = #{keywordSortOrder},
+            MOD_DT = sysdate,
+            MOD_USER_ID = #{modUser}
+        where DIC_ID = #{dicId}
+    </update>
 
     <delete id="deleteKeyword" parameterType="java.util.List">
         delete from TB_WTM_IS_DICTIONARIES

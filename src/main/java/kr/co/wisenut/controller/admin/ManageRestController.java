@@ -222,6 +222,34 @@ public class ManageRestController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @RequestMapping(method= RequestMethod.POST, value="/keyword/regist")
+    @ResponseBody
+    public ResponseEntity insertKeyword(@RequestParam HashMap<String, Object> param, Authentication auth){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("creUser", userDetails.getUsername());
+        logger.info("insertKeyword param : {}", param);
+
+        int result = keywordService.insertKeyword(param);
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/keyword/modify")
+    @ResponseBody
+    public ResponseEntity updateKeyword(@RequestParam HashMap<String, Object> param, Authentication auth){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("modUser", userDetails.getUsername());
+        //logger.info("updateKeyword param : {}", param);
+
+        int result = keywordService.updateKeyword(param);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("변경실패", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
     @RequestMapping(method= RequestMethod.POST, value="/keyword/delete")
     @ResponseBody
     public ResponseEntity deleteKeyword(@RequestParam HashMap<String, Object> param, Authentication auth){

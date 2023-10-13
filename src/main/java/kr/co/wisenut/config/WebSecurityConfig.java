@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
                 .httpBasic().disable()
                 .csrf().disable()
                 .authorizeRequests()
-                //.anyRequest().authenticated()     //전체페이지 로그인인증만 체크
+                //.anyRequest().authenticated()     //전체페이지 로그인만 체크
                 .antMatchers("/login/reset").authenticated()        //권한메뉴체크 예외 > 비밀번호 변경페이지(로그인만 체크)
                 .antMatchers("/login/resetPw").authenticated()      //권한메뉴체크 예외 > 비밀번호 변경API(로그인만 체크)
                 .anyRequest().access("@authrorizationChecker.check(request, authentication)")   //전체페이지 권한메뉴+하위api 체크

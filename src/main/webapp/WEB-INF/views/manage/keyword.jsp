@@ -25,7 +25,8 @@
             <div class="button-warp">
                 <button type="button" class="btn btn-default" data-page-btn="reload" onclick="window.location.reload();"><i class="cqc-cw"></i></button>
                 <button type="button" class="btn btn-info" data-page-btn="search" onclick="getKeywordList();"><i class="cqc-magnifier"></i> 조회 </button>
-                <button type="button" class="btn btn-info" data-page-btn="save"><i class="cqc-save"></i> 저장</button>
+                <button type="button" class="btn btn-info" data-page-btn="save" onclick="registManageKeyword();"><i class="cqc-save"></i>등록</button>
+                <button type="button" class="btn btn-info" data-page-btn="update" onclick="modifyManageKeyword();"><i class="cqc-upload"></i>수정</button>
                 <button type="button" class="btn btn-info" data-page-btn="excel" onclick="onBtnExport();"><i class="cqc-file-excel-o"></i> 엑셀</button>
                 <button type="button" class="btn btn-fn1" data-page-btn="fn1" onclick="deleteManageKeyword();"><i class="cqc-minus"></i> 삭제</button>
             </div>
@@ -88,21 +89,23 @@
                                 상세정보
                             </h2>
                         </div>
+                        <!--
                         <div class="right">
                             <button type="button" class="btn btn-default" data-form-view-01-btn="form-clear">
                                 <i class="cqc-erase"></i>
                                 신규
                             </button>
                         </div>
+                        -->
                     </div>
 
-                    <form name="formView01" id="formView01" method="post" onsubmit="return false" style="">
+                    <form id="manageKeywordForm" name="manageKeywordForm" method="post" onsubmit="return false">
                         <div data-ax-tbl="" class="ax-form-tbl" style="">
                             <div data-ax-tr="" class="" style="">
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style="">ID</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="text" id="dicId" name="dicId" data-ax-path="id" class="form-control" readonly="readonly">
+                                        <input type="text" id="dicId" name="dicId" class="form-control" readonly="readonly" placeholder="자동입력">
                                     </div>
                                 </div>
                             </div>
@@ -110,7 +113,7 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style="">키워드유형</div>
                                     <div data-ax-td-wrap="">
-                                        <select id="dicType" name="dicType" class="form-control form-control W100 " data-ax-path="keywordType">
+                                        <select id="dicType" name="dicType" class="form-control form-control W100 ">
                                             <option value="INTEREST">관심키워드</option>
                                             <option value="ISSUE">이슈키워드</option>
                                         </select>
@@ -121,7 +124,7 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style="">키워드</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="text" id="keyword" name="keyword" data-ax-path="keyword" class="form-control">
+                                        <input type="text" id="keyword" name="keyword" data-ax-path="keyword" class="form-control" placeholder="키워드 입력해주세요">
                                     </div>
                                 </div>
                             </div>
@@ -129,7 +132,7 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style="">사용여부</div>
                                     <div data-ax-td-wrap="">
-                                        <select id="keywordUseYn" name="keywordUseYn" class="form-control form-control W100 " data-ax-path="useYn">
+                                        <select id="keywordUseYn" name="keywordUseYn" class="form-control form-control W100">
                                             <option value="Y">사용</option>
                                             <option value="N">사용안함</option>
                                         </select>
@@ -140,7 +143,7 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style="">정렬순서</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="text" id="keywordSortOrder" name="sortOrder" data-ax-path="threshold" maxlength="15" title="정렬순서" class="form-control" value="">
+                                        <input type="number" id="keywordSortOrder" name="keywordSortOrder" class="form-control" placeholder="키워드 순서 입력해주세요">
                                     </div>
                                 </div>
                             </div>
@@ -180,8 +183,41 @@
         }
     }
 
+    function registManageKeyword(){
+        if($('#dicId').val() != ''){
+            clearManageKeywordForm();
+        }
+        else if(manageKeywordFormCheck()){
+            commonAjax("/manage/keyword/regist", $("#manageKeywordForm").serialize(), function(res){
+                    getKeywordList();
+                    clearManageKeywordForm();
+                    alert('등록되었습니다.');
+                },
+                function (error){
+                    alert('등록실패');
+                }
+            );
+        }
+    }
+    function modifyManageKeyword() {
+        if($('#dicId').val() == ''){
+            alert('수정할 키워드를 선택하세요.');
+            return false;
+        }
+
+        if (manageKeywordFormCheck()) {
+            commonAjax("/manage/keyword/modify", $("#manageKeywordForm").serialize(), function(res){
+                    getKeywordList();
+                    clearManageKeywordForm();
+                    alert('변경되었습니다.');
+                },
+                function (error){
+                    alert('변경실패');
+                }
+            );
+        }
+    }
     function deleteManageKeyword(){
-        console.log("deleteKeywordTargetList : ", deleteKeywordTargetList);
         if(deleteKeywordTargetList.length < 1){
             alert("삭제할 키워드를 선택하세요.");
             return false;
@@ -192,6 +228,7 @@
             };
             commonAjax("/manage/keyword/delete", param, function(res){
                     getKeywordList();
+                    clearManageKeywordForm();
                     alert('삭제되었습니다.');
                 },
                 function (error){
@@ -304,6 +341,25 @@
                     );
                 });
         }
+    }
+
+    function manageKeywordFormCheck(){
+        if(
+            $('#keyword').val() == '' ||
+            $('#keywordSortOrder').val() == ''
+        ){
+            alert('키워드/정렬순서를 입력해주세요.');
+            return false;
+        }
+        return true;
+    }
+    function clearManageKeywordForm(){
+        //트리에서 데이터틑 선택한 경우 입력폼 초기화 + menuId 입력가능처리
+        $('#dicId').val('');
+        $('#dicType').val('INTEREST');
+        $('#keyword').val('');
+        $('#keywordUseYn').val('Y');
+        $('#keywordSortOrder').val('');
     }
 
     //초기화

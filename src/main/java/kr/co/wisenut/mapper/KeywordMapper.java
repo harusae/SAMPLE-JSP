@@ -9,5 +9,7 @@ import java.util.Map;
 @Mapper
 public interface KeywordMapper {
     public List<KeywordInfo> getKeywordList(Map<String, Object> param);
+    public int insertKeyword(Map<String, Object> param);
+    public int updateKeyword(Map<String, Object> param);
     public int deleteKeyword(List<String> paramList);
 }

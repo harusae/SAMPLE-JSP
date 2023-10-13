@@ -64,6 +64,7 @@
 
                             </div>
                         </div>
+
                         <form method="post" id="menuForm" onsubmit="return false" style="">
                             <div data-ax-tbl="" class="ax-form-tbl" style="">
 
@@ -109,56 +110,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--
-                                <div data-ax-tr="" class="" style="">
-                                    <div data-ax-td="" class="" style=";width:100%">
-                                        <div data-ax-td-label="" class="" style=";width:150px">메뉴ID</div>
-                                        <div data-ax-td-wrap="">
-                                            <input type="text" data-ax-path="progCd" class="form-control" value="" readonly="readonly">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div data-ax-tr="" class="" style="">
-                                    <div data-ax-td="" class="" style=";width:100%">
-                                        <div data-ax-td-label="" class="" style=";width:150px">다국어 설정</div>
-                                        <div data-ax-td-wrap="">
-                                            <div class="form-inline">
-                                                <div class="form-group">
-                                                    <label>한국어</label>
-                                                    <input type="text" data-ax-path="multiLanguageJson.ko" class="form-control ">
-                                                </div>
-                                                <div class="form-group">
-                                                    <label>English</label>
-                                                    <input type="text" data-ax-path="multiLanguageJson.en" class="form-control ">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div data-ax-tr="" class="" style="">
-                                    <div data-ax-td="" class="" style=";width:100%">
-                                        <div data-ax-td-label="" class="" style=";width:150px">프로그램 명</div>
-                                        <div data-ax-td-wrap="">
-
-                                            <input type="hidden" data-ax-path="menuId" class="form-control" value="122">
-                                            <input type="hidden" data-ax-path="progNm" class="form-control" value="키워드 검색">
-                                            <div class="form-group">
-                                                <div data-ax5combobox="progCd" data-ax5combobox-config="{size: &quot;&quot;, editable: false, multiple: false}"><select tabindex="-1" class="form-control " name="progCd"><option value=""></option><option value="api">API(api)</option><option value="ax5ui-sample">UI 템플릿(ax5ui-sample)</option><option value="axboot-js">[API]axboot.js(axboot-js)</option><option value="category_total">감성분석 현황(category_total)</option><option value="system-config-common-code">공통코드 관리(system-config-common-code)</option><option value="keyword_monitoring">관심키워드분석(keyword_monitoring)</option><option value="notSessionUser">권한없음(notSessionUser)</option><option value="sense_analysis">긍부정 업무(소분류/대분류/전체)(sense_analysis)</option><option value="basic">기본 템플릿(basic)</option><option value="large_neg_call">대분류별부정콜추이(large_neg_call)</option><option value="dashboard">대시보드(dashboard)</option><option value="login">로그인(login)</option><option value="counsel_type_compare">리스크분석(counsel_type_compare)</option><option value="system-config-menu">메뉴 관리(system-config-menu)</option><option value="customer_shout">민원 멀티스크린 연계(customer_shout)</option><option value="sense_analysis_neg">부정 키워드/부정문장(sense_analysis_neg)</option><option value="category_pos_call">분류별 긍정콜 현황(category_pos_call)</option><option value="category_neg_call">분류별 부정콜 현황(category_neg_call)</option><option value="system-auth-user">사용자 관리(system-auth-user)</option><option value="dictionary_mng">사전관리(dictionary_mng)</option><option value="counsel_qa_mng">상담품질관리(counsel_qa_mng)</option><option value="counsel_qa_statistics">상담품질통계(counsel_qa_statistics)</option><option value="horizontal-layout">상하 레이아웃(horizontal-layout)</option><option value="realtime_view_popup">실시간 전광판_팝업(realtime_view_popup)</option><option value="realtime_keyword">실시간급상승키워드(realtime_keyword)</option><option value="realtime_view">실시간전광판(realtime_view)</option><option value="realtime_view_sum">실시간전광판썸뱅크(realtime_view_sum)</option><option value="rule_pass_ob">아웃바운드규정준수(rule_pass_ob)</option><option value="popkeyword_analysis">업무별인기키워드분석(popkeyword_analysis)</option><option value="system-operation-log">에러로그 관리(system-operation-log)</option><option value="sales_lead_cs">영업점연계_CS(sales_lead_cs)</option><option value="biz_branch">영업점연계_영업점(biz_branch)</option><option value="kind_emp">우수상담직원(kind_emp)</option><option value="analysis_subcate_ib">인바운드 상담시간별 소분류분석(analysis_subcate_ib)</option><option value="rule_pass_ib">인바운드규정준수(rule_pass_ib)</option><option value="common_jijum_modal">점번검색(common_jijum_modal)</option><option value="vertical-layout">좌우 레이아웃(vertical-layout)</option><option value="customer_shout_sales">주요 민원 현황(customer_shout_sales)</option><option value="small_count">주요업무분석(small_count)</option><option value="small_count_sum">주요업무분석썸뱅크(small_count_sum)</option><option value="chart_sample">차트 샘플(chart_sample)</option><option value="keyword_search" selected="selected">키워드 검색(keyword_search)</option><option value="keyword_mng">키워드 관리(keyword_mng)</option><option value="tab-layout">탭 레이아웃(tab-layout)</option><option value="page-structure">페이지 구조(page-structure)</option><option value="system-config-program">프로그램 관리(system-config-program)</option></select><div class="form-control  ax5combobox-display default" data-ax5combobox-display="ax5combobox-42" data-ax5combobox-instance="8" style="min-width: 964px;">
-                                                    <div class="ax5combobox-display-table" data-els="display-table">
-                                                        <div data-ax5combobox-display="label-holder">
-                                                            <a data-ax5combobox-display="label" spellcheck="false"><div tabindex="-1" data-ax5combobox-selected-label="0" data-ax5combobox-selected-text="키워드 검색(keyword_search)"><div data-ax5combobox-remove="true" data-ax5combobox-remove-index="0"><i class="cqc-cancel3"></i></div><span>키워드 검색(keyword_search)</span></div><input type="text" data-ax5combobox-display="input" style="border:0 none;"></a>
-                                                        </div>
-                                                        <div data-ax5combobox-display="addon">
-                                                            <span class="addon-icon-closed"><span class="addon-icon-arrow"></span></span>
-                                                            <span class="addon-icon-opened"><span class="addon-icon-arrow"></span></span>
-                                                        </div>
-                                                    </div>
-                                                </div></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                -->
 
                             </div>
                         </form>
@@ -169,48 +120,6 @@
         </div>
     </div>
 </div>
-<!--
-<div class="wrapper">
-    <div class="container" style="float:left">
-        <h1>메뉴목록</h1>
-        <p></p>
-        <div id="treeViewMenu" style="width:400px; height:500px; border:1px solid black; float:left"/>
-        <br/>
-    </div>
-
-    <div class="container2" style="float:right">
-        <h1>메뉴 관리</h1>
-        <form method="post" id="menuForm">
-            <div class="form-group">
-                <label >메뉴ID</label>
-                <input type="text" id="menuId" name="menuId" class="form-control" placeholder="아이디 입력해주세요">
-            </div>
-            <div class="form-group">
-                <label >메뉴명</label>
-                <input type="text" id="menuName" name="menuName" class="form-control" placeholder="메뉴명 입력해주세요">
-            </div>
-            <div class="form-group">
-                <label >메뉴URL</label>
-                <input type="text" id="menuUrl" name="menuUrl" class="form-control" placeholder="메뉴URL 입력해주세요">
-            </div>
-            <div class="form-group">
-                <label >상위메뉴</label>
-                <select id="upperMenuId" name="upperMenuId" class="form-control" >
-                    <option value="">상위메뉴없음(최상위메뉴)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label >메뉴 표시 순서</label>
-                <input type="number" id="menuOrder" name="menuOrder" class="form-control" placeholder="메뉴순서 입력해주세요">
-            </div>
-        </form>
-        <button class="btn btn-primary" onclick="registMenu();">등록</button>
-        <button class="btn btn-primary" onclick="modifyMenu();">수정</button>
-        <button class="btn btn-primary" onclick="deleteMenu();">삭제</button>
-        <br/>
-    </div>
-</div>
--->
 </body>
 <script>
     var menuList = [];
