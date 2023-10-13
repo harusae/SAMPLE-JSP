@@ -40,7 +40,7 @@
                         <div class="right"></div>
                     </div>
                     <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 839px;">
-                        <div id="gridMenuAuth"></div>
+                        <div id="gridManageUser"></div>
                     </div>
                 </div>
             </div>
@@ -124,6 +124,7 @@
                                 </div>
                             </div>
 
+                            <!--
                             <div data-ax-tr="" class="" style="">
                                 <div data-ax-td="" class="" style=";width:100%">
                                     <div data-ax-td-label="" class="" style=";width:120px">비고</div>
@@ -132,6 +133,7 @@
                                     </div>
                                 </div>
                             </div>
+                            -->
                         </div>
 
                         <div class="H5"></div>
@@ -327,7 +329,7 @@
             resizable: true,
             search: true,
             sort: true
-        }).render(document.getElementById("gridMenuAuth"));
+        }).render(document.getElementById("gridManageUser"));
         gridUserList.on('rowClick', (...args) => {
             /*
             console.log(Object.keys(args[1]));
@@ -345,6 +347,8 @@
 
     function updateUserGrid(data){
         gridUserList.updateConfig({
+            search: false,
+            pagination: false,
             data: data
         }).forceRender();
     }

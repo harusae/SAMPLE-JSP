@@ -6,13 +6,13 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class MenuInfo {
-    String menuId;
-    String menuName;
-    String menuUrl;
-    String upperMenuId;
-    int menuOrder;
-    String creDt;
-    String creUser;
-    String modDt;
-    String modUser;
+    private String menuId;
+    private String menuName;
+    private String menuUrl;
+    private String upperMenuId;
+    private int menuOrder;
+    private String creDt;
+    private String creUser;
+    private String modDt;
+    private String modUser;
 }

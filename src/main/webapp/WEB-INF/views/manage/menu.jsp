@@ -87,7 +87,7 @@
                                     <div data-ax-td="" class="" style=";width:100%">
                                         <div data-ax-td-label="" class="" style=";width:150px">메뉴URL</div>
                                         <div data-ax-td-wrap="">
-                                            <input type="text" id="menuUrl" name="menuUrl" class="form-control" placeholder="메뉴URL 입력해주세요">
+                                            <input type="text" id="menuUrl" name="menuUrl" class="form-control" placeholder="하위메뉴가 있는 최상위메뉴인 경우 미입력으로 비워주세요.">
                                         </div>
                                     </div>
                                 </div>

@@ -1,4 +1,4 @@
-package kr.co.wisenut.controller;
+package kr.co.wisenut.controller.user;
 
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

@@ -20,6 +20,7 @@
 <script src="/js/datalabels.js"></script>
 <!--grid.js-->
 <script src="/js/gridjs.umd.js"></script>
+<script src="/js/selection.umd.js"></script>
 <link href="/css/mermaid.min.css" rel="stylesheet"/>
 <!--excel.js-->
 <script src="/js/exceljs.min.js"></script>
@@ -65,7 +66,7 @@
         $( "#navBar" ).append(html);  //네비게이션 추가
         */
 
-        //입력된 menuid 가 html element id로 입력 > menuid가 기존 element id와 겹치면 동작이상 발생
+        //입력된 menuid를 html element id로 생성 > menuid가 기존 element id와 겹치면 동작이상 발생
         $("#content-frame-container").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
         var html = '<span class="tab-item" style="min-width: 120px; width: auto;" id="navDiv'+id+'">'
           + '<span data-toggle="tooltip" data-placement="bottom" class="navItem" id="navItem'+id+'">'+name+'</span>'
@@ -161,20 +162,6 @@
 <div id="ax-frame-root" class="" data-root-container="true">
 
   <div id="content-frame-container" class="ax-frame-contents">
-    <!--
-    <div>
-      <div style="float:left;">
-        <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
-          <button type="button" class="${menu.upperMenuId==null?'btn btn-primary':'btn btn-secondary'}"
-                  onclick="javascript:navInit('${menu.menuId}','${menu.menuUrl}');">
-              ${menu.menuName}</button>
-        </c:forEach>
-      </div>
-    </div>
-    <hr>
-    <div id="navBar">
-    </div>
-    -->
   </div>
 
   <div class="ax-frame-header-tool">
@@ -251,7 +238,7 @@
     <div class="ax-split-col" style="height: 100%;">
       <div class="ax-split-panel text-align-left">   </div>
       <div class="ax-split-panel text-align-right">
-        Last account activity <b id="account-activity-timer">00:29</b> ago.
+        <b id="account-activity-timer">00:29</b>
       </div>
     </div>
   </div>

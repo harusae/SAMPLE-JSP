@@ -1,8 +1,10 @@
-package kr.co.wisenut.controller.manage;
+package kr.co.wisenut.controller.admin;
 
+import kr.co.wisenut.entity.KeywordInfo;
 import kr.co.wisenut.entity.MenuInfo;
 import kr.co.wisenut.entity.UserAuthInfo;
 import kr.co.wisenut.entity.UserInfo;
+import kr.co.wisenut.service.KeywordService;
 import kr.co.wisenut.service.MenuService;
 import kr.co.wisenut.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,9 @@ public class ManageRestController {
     private MenuService menuService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private KeywordService keywordService;
+
 
     @RequestMapping(method= RequestMethod.POST, value="/menu/list")
     @ResponseBody
@@ -207,5 +212,15 @@ public class ManageRestController {
         }
 
         return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method= RequestMethod.POST, value="/keyword/list")
+    @ResponseBody
+    public ResponseEntity getKeywordList(@RequestParam HashMap<String, Object> param){
+
+        List<KeywordInfo> list = keywordService.getKeywordList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 }

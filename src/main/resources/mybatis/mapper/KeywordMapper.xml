@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.KeywordMapper">
+    <select id="getKeywordList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.KeywordInfo" >
+        select
+            DIC_ID,
+            DIC_NAME,
+            DIC_TYPE,
+            DIC_DESC,
+            KEYWORD,
+            USE_YN,
+            SORT_ORDER
+        from TB_WTM_IS_DICTIONARIES
+        where DIC_TYPE in ('INTEREST', 'ISSUE')
+        <if test="searchKeyword != null and searchKeyword != ''">
+        and KEYWORD like '%'|| #{searchKeyword} ||'%'
+        </if>
+        <if test="searchDicType != null and searchDicType != ''">
+        and DIC_TYPE = #{searchDicType}
+        </if>
+    </select>
+
+</mapper>
