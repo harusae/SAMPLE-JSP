@@ -68,7 +68,7 @@ public class UserService {
 
         //초기화 대상 확인
         UserInfo userInfo = userMapper.getLoginInfo(param);
-        if(userInfo == null || !"Y".equals(userInfo.getResetYn())){
+        if(userInfo == null || !"Y".equals(userInfo.getInitYn())){
             return -1;
         }
 

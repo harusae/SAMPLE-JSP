@@ -14,7 +14,7 @@
             ,USE_YN
             ,ACTIVE_YN
             ,LOGIN_FAIL_CNT
-            ,RESET_YN
+            ,INIT_YN
             ,ALARM_YN
             ,sysdate - NVL(PW_CHG_DT, CRE_DT) AS PW_CHG_DAY
         from WISETM_USER_INFO
@@ -82,15 +82,15 @@
     <update id="updateUserPw" parameterType="java.util.Map">
         update WISETM_USER_INFO
         set USER_PW = #{userPw},
-            RESET_YN = 'N',
+            INIT_YN = 'N',
             PW_CHG_DT = sysdate
         where USER_ID = #{userId}
-        and RESET_YN = 'Y'
+        and INIT_YN = 'Y'
     </update>
 
     <update id="updateResetYn" parameterType="java.util.Map">
         update WISETM_USER_INFO
-        set RESET_YN = 'Y',
+        set INIT_YN = 'Y',
             MOD_DT = sysdate,
             MOD_USER = 'SYSTEM'
         where USER_ID = #{userId}
@@ -107,7 +107,7 @@
              ,USE_YN
              ,ACTIVE_YN
              ,LOGIN_FAIL_CNT
-             ,RESET_YN
+             ,INIT_YN
              ,ALARM_YN
              ,sysdate - NVL(PW_CHG_DT, CRE_DT) AS PW_CHG_DAY
         from WISETM_USER_INFO
@@ -128,7 +128,7 @@
     <update id="initUserPw" parameterType="java.util.Map">
         update WISETM_USER_INFO
         set USER_PW = #{userPw},
-            RESET_YN = 'Y',
+            INIT_YN = 'Y',
             LOGIN_FAIL_CNT = 0,
             MOD_DT = sysdate,
             MOD_USER = #{modUser}

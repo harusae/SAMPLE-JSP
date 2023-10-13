@@ -95,7 +95,7 @@
                                             비밀번호 변경
                                         </label>
                                         <label>
-                                            <input type="checkbox" id="pwInit" name="pwReset" value="Y">
+                                            <input type="checkbox" id="pwInit" name="pwInit" value="Y">
                                             비밀번호 초기화
                                         </label>
                                     </div>
@@ -227,7 +227,7 @@
                 $('#activeYn').val(dataUserList[i].activeYn);
                 $('#userAuth').val(dataUserList[i].userAuth);
                 $('#alarmYn').val(dataUserList[i].alarmYn);
-                if(dataUserList[i].resetYn != null && dataUserList[i].resetYn == 'Y'){
+                if(dataUserList[i].initYn != null && dataUserList[i].initYn == 'Y'){
                     $('#pwInit').prop('checked', true);
                 }
                 else{
@@ -263,6 +263,7 @@
                     'userId': $('#userId').val()
                 };
                 commonAjax("/manage/user/initPw", param, function(res){
+                        getUserList();
                         alert('재초기화되었습니다.');
                     },
                     function (error){
@@ -285,6 +286,7 @@
                 'userId': $('#userId').val()
             };
             commonAjax("/manage/user/initPw", param, function(res){
+                    getUserList();
                     alert('초기화되었습니다.');
                 },
                 function (error){

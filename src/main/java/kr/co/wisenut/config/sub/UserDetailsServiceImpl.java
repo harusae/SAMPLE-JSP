@@ -68,7 +68,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<MenuInfo> menuList = menuMapper.getMenuList(menuParam);    //권한 별 메뉴 목록
         userDetails.setMenuList(menuList);
 
-        userDetails.setResetYn(userInfo.getResetYn());  //패스워드 초기화 여부
+        userDetails.setResetYn(userInfo.getInitYn());  //패스워드 초기화 여부
         userDetails.setPwChgDay(userInfo.getPwChgDay());    //패스워드 변경 후 누적 일
 
 
