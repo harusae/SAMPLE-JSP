@@ -46,7 +46,7 @@
                             <div data-ax-td="" class="" style=";width:300px">
                                 <div data-ax-td-label="" class="" style="">키워드유형</div>
                                 <div data-ax-td-wrap="">
-                                    <select id="searchDicType" name="searchDicType" data-ax-path="keyType" class="form-control W100">
+                                    <select id="searchDicType" name="searchDicType" data-ax-path="keyType" class="form-control W140">
                                         <option value="">전체</option>
                                         <option value="INTEREST">관심키워드</option>
                                         <option value="ISSUE">이슈키워드</option>
@@ -113,7 +113,7 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style="">키워드유형</div>
                                     <div data-ax-td-wrap="">
-                                        <select id="dicType" name="dicType" class="form-control form-control W100 ">
+                                        <select id="dicType" name="dicType" class="form-control form-control W140 ">
                                             <option value="INTEREST">관심키워드</option>
                                             <option value="ISSUE">이슈키워드</option>
                                         </select>
@@ -159,6 +159,21 @@
     var gridManageKeywordList;
     var dataKeywordList = [];
     var deleteKeywordTargetList = [];
+
+    function getDicTypeList() {
+        var param = {
+            'groupCd': 'TADIC'
+        };
+        commonAjax("/manage/keyword/code", param, function(res){
+            $('#searchDicType').children('option:not(:first)').remove();
+            $('#dicType').children('option:not(:first)').remove();
+            for(var i=0; i<res.length; i++){
+                //console.log('res['+i+'] : ', res[i]);
+                $('#searchDicType').append('<option value="'+res[i].code+'">'+res[i].name+'</option>');
+                $('#dicType').append('<option value="'+res[i].code+'">'+res[i].name+'</option>');
+            }
+        });
+    }
 
     function getKeywordList() {
         var param = {
@@ -365,6 +380,7 @@
     //초기화
     $(function() {
         initGridManageKeyword(dataKeywordList);
+        getDicTypeList();
         getKeywordList();
     });
 </script>

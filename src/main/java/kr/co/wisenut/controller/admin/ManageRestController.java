@@ -1,9 +1,7 @@
 package kr.co.wisenut.controller.admin;
 
-import kr.co.wisenut.entity.KeywordInfo;
-import kr.co.wisenut.entity.MenuInfo;
-import kr.co.wisenut.entity.UserAuthInfo;
-import kr.co.wisenut.entity.UserInfo;
+import kr.co.wisenut.entity.*;
+import kr.co.wisenut.service.CommonService;
 import kr.co.wisenut.service.KeywordService;
 import kr.co.wisenut.service.MenuService;
 import kr.co.wisenut.service.UserService;
@@ -26,6 +24,8 @@ import java.util.*;
 public class ManageRestController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Autowired
+    private CommonService commonService;
     @Autowired
     private MenuService menuService;
     @Autowired
@@ -218,6 +218,17 @@ public class ManageRestController {
     public ResponseEntity getKeywordList(@RequestParam HashMap<String, Object> param){
 
         List<KeywordInfo> list = keywordService.getKeywordList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method= RequestMethod.POST, value="/keyword/code")
+    @ResponseBody
+    public ResponseEntity getKeywordCodeList(@RequestParam HashMap<String, Object> param){
+        logger.info("getKeywordCodeList param : {}", param);
+
+        List<CodeInfo> list = commonService.getCodeList(param);
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
