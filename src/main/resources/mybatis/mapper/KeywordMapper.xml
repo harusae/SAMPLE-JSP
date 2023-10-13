@@ -22,4 +22,12 @@
         </if>
     </select>
 
+    <delete id="deleteKeyword" parameterType="java.util.List">
+        delete from TB_WTM_IS_DICTIONARIES
+        where DIC_ID in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

@@ -187,7 +187,22 @@
             return false;
         }
         if(confirm(deleteKeywordTargetList.length+"개의 키워드를 삭제하겠습니까?")){
-
+            var param = {
+                'deleteKeywordTargetList': deleteKeywordTargetList.toString()
+            };
+            commonAjax("/manage/keyword/delete", param, function(res){
+                    getKeywordList();
+                    alert('삭제되었습니다.');
+                },
+                function (error){
+                    if(error.responseText != ''){
+                        alert(error.responseText);
+                    }
+                    else{
+                        alert('삭제실패');
+                    }
+                }
+            );
         }
     }
 

@@ -18,9 +18,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -222,5 +220,23 @@ public class ManageRestController {
         List<KeywordInfo> list = keywordService.getKeywordList(param);
 
         return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/keyword/delete")
+    @ResponseBody
+    public ResponseEntity deleteKeyword(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("deleteKeyword param : {}", param);
+        //다중삭제용 리스트 파라미터
+        ArrayList<String> paramList = new ArrayList<>();
+        String[] tmp = param.get("deleteKeywordTargetList").toString().split(",");
+        paramList.addAll(Arrays.asList(tmp));
+
+        int result = keywordService.deleteKeyword(paramList);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("삭제실패", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }
