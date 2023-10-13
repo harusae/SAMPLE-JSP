@@ -24,6 +24,7 @@ public class CustomInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler){
         if(     request.getRequestURI().startsWith("/js") ||
                 request.getRequestURI().startsWith("/css") ||
+                request.getRequestURI().startsWith("/img") ||
                 request.getRequestURI().startsWith("/fonts")
         ){return true;} //라이브러리 파일은 생략
 
