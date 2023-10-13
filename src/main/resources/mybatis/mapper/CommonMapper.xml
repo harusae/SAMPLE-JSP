@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.CommonMapper">
+
+    <select id="getCodeList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.CodeInfo">
+        select
+            GROUP_CD
+            ,GROUP_NM
+            ,CODE
+            ,NAME
+            ,USE_YN
+            ,SORT_ORDER
+        from TB_WTM_IS_CODE
+        <where>
+            <if test="groupCd != null and groupCd != ''">
+                AND GROUP_CD = #{groupCd}
+            </if>
+        </where>
+        order by GROUP_CD, SORT_ORDER
+    </select>
+
+</mapper>
