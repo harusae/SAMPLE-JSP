@@ -112,6 +112,9 @@ public class UserService {
     }
 
     public int updateUser(HashMap<String, Object> param) {
+        AES256 aes256 = new AES256();
+        param.put("userName", aes256.encode(param.get("userName").toString()));
+
         return userMapper.updateUser(param);
     }
 
