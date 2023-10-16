@@ -138,6 +138,7 @@
     <select id="getUserAuthList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserAuthInfo" >
         select
             CODE AS USER_AUTH
+            ,NAME AS USER_AUTH_NAME
         from TB_WTM_IS_CODE
         where GROUP_CD = 'USER_AUTH'
     </select>

@@ -211,7 +211,7 @@
             $('#userAuth').children('option:not(:first)').remove();
             for(var i=0; i<res.length; i++){
                 //console.log('res['+i+'] : ', res[i]);
-                $('#userAuth').append('<option value="'+res[i].userAuth+'">'+res[i].userAuth+'</option>');
+                $('#userAuth').append('<option value="'+res[i].userAuth+'">'+res[i].userAuthName+'</option>');
             }
         });
     }
