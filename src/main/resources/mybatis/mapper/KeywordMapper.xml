@@ -5,14 +5,16 @@
 <mapper namespace="kr.co.wisenut.mapper.KeywordMapper">
     <select id="getKeywordList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.KeywordInfo" >
         select
-            DIC_ID,
-            DIC_NAME,
-            DIC_TYPE,
-            DIC_DESC,
-            KEYWORD,
-            USE_YN,
-            SORT_ORDER
-        from TB_WTM_IS_DICTIONARIES
+            A.DIC_ID,
+            A.DIC_NAME,
+            A.DIC_TYPE,
+            B.name as DIC_TYPE_NAME,
+            A.DIC_DESC,
+            A.KEYWORD,
+            A.USE_YN,
+            A.SORT_ORDER
+        from TB_WTM_IS_DICTIONARIES A
+        LEFT OUTER JOIN TB_WTM_IS_CODE B ON A.DIC_TYPE = B.CODE
         where DIC_TYPE in ('INTEREST', 'ISSUE')
         <if test="searchKeyword != null and searchKeyword != ''">
         and KEYWORD like '%'|| #{searchKeyword} ||'%'

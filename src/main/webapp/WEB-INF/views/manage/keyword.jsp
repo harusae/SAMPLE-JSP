@@ -272,7 +272,7 @@
                 },
                 {id: 'dicId',name:'ID', hidden: true},
                 {id: 'keyword',name:'키워드'},
-                {id: 'dicType',name:'키워드유형'},
+                {id: 'dicTypeName',name:'키워드유형'},
                 {id: 'useYn',name:'사용여부'},
                 {id: 'sortOrder',name:'정렬순서'},
             ],

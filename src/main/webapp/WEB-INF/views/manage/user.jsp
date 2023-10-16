@@ -311,7 +311,7 @@
             columns:[
                 {id: 'userId',name:'ID'},
                 {id: 'userName',name:'사용자 명'},
-                {id: 'userAuth',name:'권한'},
+                {id: 'userAuthName',name:'권한'},
                 {id: 'useYn',name:'사용여부'},
                 {id: 'activeYn',name:'계정상태'},
                 /*{

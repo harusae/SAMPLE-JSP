@@ -11,6 +11,7 @@
             ,USER_NAME
             ,USER_EMAIL
             ,USER_AUTH
+            ,'' as USER_AUTH_NAME
             ,USE_YN
             ,ACTIVE_YN
             ,LOGIN_FAIL_CNT
@@ -99,18 +100,20 @@
 
     <select id="getUserList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
         select
-            USER_ID
+            A.USER_ID
              ,'' as USER_PW
-             ,USER_NAME
-             ,USER_EMAIL
-             ,USER_AUTH
-             ,USE_YN
-             ,ACTIVE_YN
-             ,LOGIN_FAIL_CNT
-             ,INIT_YN
-             ,ALARM_YN
-             ,sysdate - NVL(PW_CHG_DT, CRE_DT) AS PW_CHG_DAY
-        from WISETM_USER_INFO
+             ,A.USER_NAME
+             ,A.USER_EMAIL
+             ,A.USER_AUTH
+             ,B.NAME as USER_AUTH_NAME
+             ,A.USE_YN
+             ,A.ACTIVE_YN
+             ,A.LOGIN_FAIL_CNT
+             ,A.INIT_YN
+             ,A.ALARM_YN
+             ,sysdate - NVL(A.PW_CHG_DT, A.CRE_DT) as PW_CHG_DAY
+        from WISETM_USER_INFO A
+        left outer join TB_WTM_IS_CODE B on A.USER_AUTH = B.CODE
     </select>
 
     <update id="updateUser" parameterType="java.util.Map">
