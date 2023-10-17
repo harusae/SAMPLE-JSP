@@ -2,6 +2,7 @@ package kr.co.wisenut.service;
 
 import kr.co.wisenut.config.sub.AES256;
 import kr.co.wisenut.config.sub.SHA256;
+import kr.co.wisenut.entity.SsoUsrInfo;
 import kr.co.wisenut.entity.UserActionInfo;
 import kr.co.wisenut.entity.UserInfo;
 import kr.co.wisenut.mapper.UserMapper;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class UserService {
@@ -134,6 +136,24 @@ public class UserService {
         int res = userMapper.initUserPw(param);
 
         return res;
+    }
+
+    public SsoUsrInfo getSsoUsrInfo(Map<String, Object> param){
+        return userMapper.getSsoUsrInfo(param);
+    }
+
+    public int registUser(Map<String, Object> param){
+
+        //초기화 password 암호화
+        SHA256 encoder = new SHA256();
+        try {
+            param.put("userPw", encoder.encode(pwInit));
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        logger.info("registUser param : {}", param);
+
+        return userMapper.registUser(param);
     }
 
 }

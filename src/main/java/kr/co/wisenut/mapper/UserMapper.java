@@ -1,5 +1,6 @@
 package kr.co.wisenut.mapper;
 
+import kr.co.wisenut.entity.SsoUsrInfo;
 import kr.co.wisenut.entity.UserActionInfo;
 import kr.co.wisenut.entity.UserInfo;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,4 +29,8 @@ public interface UserMapper {
     public int updateUser(Map<String, Object> param);
 
     public int initUserPw(Map<String, Object> param);
+
+    public SsoUsrInfo getSsoUsrInfo(Map<String, Object> param);
+
+    public int registUser(Map<String, Object> param);
 }

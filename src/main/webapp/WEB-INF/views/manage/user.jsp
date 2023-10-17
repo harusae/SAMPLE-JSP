@@ -24,7 +24,7 @@
         <div data-page-buttons="">
             <div class="button-warp">
                 <button type="button" class="btn btn-default" data-page-btn="reload" onclick="window.location.reload();"><i class="cqc-cw"></i></button>
-                <button type="button" class="btn btn-info" data-page-btn="save" onclick="alert('구현예정');"><i class="cqc-save"></i>등록</button>
+                <button type="button" class="btn btn-info" data-page-btn="save" onclick="registUser()"><i class="cqc-save"></i>등록</button>
                 <button type="button" class="btn btn-info" data-page-btn="update" onclick="modifyUser()"><i class="cqc-upload"></i>수정</button>
             </div>
         </div>
@@ -54,15 +54,16 @@
                             </h2>
                         </div>
                         <div class="right">
-                            <button type="button" class="btn btn-default" data-form-view-01-btn="form-clear">
+                            <button type="button" class="btn btn-default" id="chkSsoUsrBtn" onclick="chkSsoUsr()">
                                 <i class="cqc-erase"></i>
-                                신규
+                                SSO연동확인
                             </button>
                         </div>
                     </div>
                     <form name="manageUserForm" id="manageUserForm" method="post" onsubmit="return false" style="">
+                        <input type="hidden" id="blntBrno" name="blntBrno"/>
+                        <input type="hidden" id="hlfcDscd" name="hlfcDscd"/>
 
-                        <input type="hidden" name="act_tp" id="act_tp" value="">
                         <div data-ax-tbl="" class="ax-form-tbl" style="">
                             <div data-ax-tr="" class="" style="">
                                 <div data-ax-td="" class="" style=";width:300px">
@@ -74,7 +75,8 @@
                                 <div data-ax-td="" class="" style=";width:220px">
                                     <div data-ax-td-label="" class="" style=";width:120px">아이디</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="text" id="userId" name="userId"  class="av-required form-control W150" readonly="readonly">
+                                        <input type="text" id="userId" name="userId"  class="av-required form-control W150">
+                                        <input type="hidden" id="ssoChk" readonly="readonly">
                                     </div>
                                 </div>
                             </div>
@@ -82,20 +84,8 @@
                                 <div data-ax-td="" class="" style=";width:300px">
                                     <div data-ax-td-label="" class="" style=";width:120px">비밀번호</div>
                                     <div data-ax-td-wrap="">
-                                        <input type="password" id="password" name="password" class="form-control W120" readonly="readonly">
-                                    </div>
-                                </div>
-                                <div data-ax-td="" class="" style=";width:460px">
-                                    <div data-ax-td-label="" class="" style=";width:120px">비밀번호 확인</div>
-                                    <div data-ax-td-wrap="">
-                                        <input type="password" id="password2" name="password2" class="form-control inline-block W120" readonly="readonly">
-                                        &nbsp;
                                         <label>
-                                            <input type="checkbox" id="pwChange" name="pwChange" value="Y">
-                                            비밀번호 변경
-                                        </label>
-                                        <label>
-                                            <input type="checkbox" id="pwInit" name="pwInit" value="Y">
+                                            <input type="checkbox" id="pwInit" name="pwInit" value="Y" checked>
                                             비밀번호 초기화
                                         </label>
                                     </div>
@@ -124,16 +114,6 @@
                                 </div>
                             </div>
 
-                            <!--
-                            <div data-ax-tr="" class="" style="">
-                                <div data-ax-td="" class="" style=";width:100%">
-                                    <div data-ax-td-label="" class="" style=";width:120px">비고</div>
-                                    <div data-ax-td-wrap="">
-                                        <input type="text" name="remark" data-ax-path="remark" maxlength="100" class="form-control" value="">
-                                    </div>
-                                </div>
-                            </div>
-                            -->
                         </div>
 
                         <div class="H5"></div>
@@ -205,7 +185,6 @@
             updateUserGrid(dataUserList);
         });
     }
-
     function getUserAuthList1() {
         commonAjax("/manage/menu/auth/userAuth", {}, function(res){
             $('#userAuth').children('option:not(:first)').remove();
@@ -215,30 +194,12 @@
             }
         });
     }
-
-    function setUserInfo(userId){
-        //console.log('setUserInfo : ', userId);
-        for(var i=0; i<dataUserList.length; i++){
-            if(dataUserList[i].userId == userId){
-                //console.log('dataUserList[i] : ', dataUserList[i]);
-                $('#userName').val(dataUserList[i].userName);
-                $('#userId').val(dataUserList[i].userId);
-                $('#useYn').val(dataUserList[i].useYn);
-                $('#activeYn').val(dataUserList[i].activeYn);
-                $('#userAuth').val(dataUserList[i].userAuth);
-                $('#alarmYn').val(dataUserList[i].alarmYn);
-                if(dataUserList[i].initYn != null && dataUserList[i].initYn == 'Y'){
-                    $('#pwInit').prop('checked', true);
-                }
-                else{
-                    $('#pwInit').prop('checked', false);
-                }
-
-            }
-        }
-    }
-
     function modifyUser(){
+        if(!$('#userId').attr('readonly')){
+            alert('수정할 사용자정보를 선택하세요.');
+            return false;
+        }
+
         if(manageUserFormCheck()){
             if(confirm('변경하겠습니까?')){
                 commonAjax("/manage/user/modify", $("#manageUserForm").serialize(), function(res){
@@ -252,11 +213,81 @@
             }
         }
     }
+    function chkSsoUsr(){
+        if($('#userId').attr('readonly')){  //사용자 수정을 선택했던 경우 > 입력리셋
+            $('#userId').attr('readonly', false);
+            $('#userId').val('');
+            $('#userName').val('');
+            $('#useYn').val('Y');
+            $('#activeYn').val('Y');
+            $('#userAuth').val('');
+            $('#alarmYn').val('Y');
+            $('#pwInit').prop('checked', true);
+            return false;
+        }
+
+        if($('#userId').val() == ''){
+            alert('등록할 ID를 입력하세요.');
+        }
+        else if($('#ssoChk').val() !='checked'){
+            var param = {
+                'userId': $('#userId').val()
+            };
+            commonAjax("/manage/user/ssoUsr", param, function(res){
+                    $('#userName').val(res.usrNm);
+                    $('#blntBrno').val(res.blntBrno);
+                    $('#hlfcDscd').val(res.hlfcDscd);
+                    alert('등록가능한 사용자입니다.');
+                    $('#ssoChk').val('checked');
+                    $('#chkSsoUsrBtn').html('<i class="cqc-erase"></i> SSO연동확인(확인완료)');
+                },
+                function (error){
+                    $('#ssoChk').val('failed');
+                    $('#chkSsoUsrBtn').html('<i class="cqc-erase"></i> SSO연동확인');
+                    if(error.responseText != ''){
+                        alert(error.responseText);
+                    }
+                    else{
+                        alert('조회 실패');
+                    }
+                }
+            );
+        }
+        else{
+            alert('등록준비 완료');
+        }
+    }
+    function registUser(){
+        if($('#ssoChk').val() !='checked'){
+            alert("SSO연동확인을 실행해주세요.");
+            return false;
+        }
+
+        if(manageUserFormCheck()){
+            if(confirm('등록하겠습니까?')){
+                commonAjax("/manage/user/regist", $("#manageUserForm").serialize(), function(res){
+                        alert('등록되었습니다.');
+                        getUserList();
+                    },
+                    function (error){
+                        alert('등록실패');
+                    }
+                );
+            }
+        }
+
+    }
 
     function initUserPw(checkValue){
         //console.log('checkValue : ', checkValue);
         //console.log('checked : ', $('#pwInit').is(":checked"));
         //console.log('userId : ', $('#userId').val());
+
+        if(!$('#userId').attr('readonly')) {  //사용자 등록인 경우 초기화실행으로 고정
+            $('#pwInit').prop('checked', true);
+            return false;
+        }
+
         if(!$('#pwInit').is(":checked")){
             if(confirm('다시 초기화를 실행하겠습니까?')){
                 var param = {
@@ -305,7 +336,43 @@
         }
 
     }
+    function manageUserFormCheck(){
+        if(
+            $('#userId').val() == ''||
+            $('#userName').val() == ''||
+            $('#userAuth').val()== ''
+        ){
+            alert('아이디/사용자 명/메뉴그룹은 필수입력입니다.');
+            return false;
+        }
 
+        return true;
+    }
+
+    function setUserInfo(userId){
+        //console.log('setUserInfo : ', userId);
+        for(var i=0; i<dataUserList.length; i++){
+            if(dataUserList[i].userId == userId){
+                //console.log('dataUserList[i] : ', dataUserList[i]);
+                $('#userName').val(dataUserList[i].userName);
+                $('#userId').val(dataUserList[i].userId);
+                $('#useYn').val(dataUserList[i].useYn);
+                $('#activeYn').val(dataUserList[i].activeYn);
+                $('#userAuth').val(dataUserList[i].userAuth);
+                $('#alarmYn').val(dataUserList[i].alarmYn);
+                if(dataUserList[i].initYn != null && dataUserList[i].initYn == 'Y'){
+                    $('#pwInit').prop('checked', true);
+                }
+                else{
+                    $('#pwInit').prop('checked', false);
+                }
+
+                $('#userId').attr('readonly', true);
+                $('#ssoChk').val('');
+                $('#chkSsoUsrBtn').html('<i class="cqc-erase"></i> SSO연동확인');
+            }
+        }
+    }
     function initUserGrid(data){
         gridUserList = new gridjs.Grid({
             columns:[
@@ -346,7 +413,6 @@
         });
 
     }
-
     function updateUserGrid(data){
         gridUserList.updateConfig({
             search: false,
@@ -355,21 +421,13 @@
         }).forceRender();
     }
 
-    function manageUserFormCheck(){
-        if(
-            $('#userId').val() == ''||
-            $('#userName').val()== ''
-        ){
-            alert('아이디/사용자 명은 필수입력입니다.');
-            return false;
-        }
-
-        return true;
-    }
-
     $('#pwInit').change(function(){
         initUserPw(this.value);
     });
+    $('#userId').change(function(){
+        $('#ssoChk').val('changed');
+        $('#chkSsoUsrBtn').html('<i class="cqc-erase"></i> SSO연동확인');
+    })
 
     //초기화
     $(function() {

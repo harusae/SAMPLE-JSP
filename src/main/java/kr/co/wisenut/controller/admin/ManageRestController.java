@@ -212,6 +212,38 @@ public class ManageRestController {
         return new ResponseEntity(result, HttpStatus.OK);
     }
 
+    @RequestMapping(method= RequestMethod.POST, value="/user/ssoUsr")
+    @ResponseBody
+    public ResponseEntity getSsoUsrInfo(@RequestParam HashMap<String, Object> param){
+
+        SsoUsrInfo result = userService.getSsoUsrInfo(param);
+        if(result == null){
+            return new ResponseEntity("등록할 수 없는 사용자입니다.", HttpStatus.BAD_REQUEST);
+        }
+        else if(!result.getHlfcDscd().equals("1")){
+            return new ResponseEntity("재직 중인 사용자가 아닙니다.", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/user/regist")
+    @ResponseBody
+    public ResponseEntity registUser(@RequestParam HashMap<String, Object> param, Authentication auth){
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        param.put("creUser", userDetails.getUsername());
+
+        logger.info("registUser param : {}", param);
+
+        int result = userService.registUser(param);
+        switch(result) {
+            case 0:
+                return new ResponseEntity("등록실패", HttpStatus.BAD_REQUEST);
+        }
+
+        return new ResponseEntity(result, HttpStatus.OK);
+    }
+
 
     @RequestMapping(method= RequestMethod.POST, value="/keyword/list")
     @ResponseBody
