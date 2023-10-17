@@ -48,8 +48,6 @@
                                 <div data-ax-td-wrap="">
                                     <select id="searchDicType" name="searchDicType" data-ax-path="keyType" class="form-control W140">
                                         <option value="">전체</option>
-                                        <option value="INTEREST">관심키워드</option>
-                                        <option value="ISSUE">이슈키워드</option>
                                     </select>
                                 </div>
                             </div>
@@ -114,8 +112,6 @@
                                     <div data-ax-td-label="" class="" style="">키워드유형</div>
                                     <div data-ax-td-wrap="">
                                         <select id="dicType" name="dicType" class="form-control form-control W140 ">
-                                            <option value="INTEREST">관심키워드</option>
-                                            <option value="ISSUE">이슈키워드</option>
                                         </select>
                                     </div>
                                 </div>
@@ -174,7 +170,6 @@
             }
         });
     }
-
     function getKeywordList() {
         var param = {
             'searchKeyword': $('#searchKeyword').val(),
@@ -185,7 +180,6 @@
             updateGridManageKeyword(dataKeywordList);
         });
     }
-
     function setManageKeywordInfo(dicId){
         for(var i=0; i<dataKeywordList.length; i++){
             if(dataKeywordList[i].dicId == dicId){
@@ -203,15 +197,17 @@
             clearManageKeywordForm();
         }
         else if(manageKeywordFormCheck()){
-            commonAjax("/manage/keyword/regist", $("#manageKeywordForm").serialize(), function(res){
-                    getKeywordList();
-                    clearManageKeywordForm();
-                    alert('등록되었습니다.');
-                },
-                function (error){
-                    alert('등록실패');
-                }
-            );
+            if(confirm('등록하겠습니까?')){
+                commonAjax("/manage/keyword/regist", $("#manageKeywordForm").serialize(), function(res){
+                        getKeywordList();
+                        clearManageKeywordForm();
+                        alert('등록되었습니다.');
+                    },
+                    function (error){
+                        alert('등록실패');
+                    }
+                );
+            }
         }
     }
     function modifyManageKeyword() {
@@ -221,15 +217,17 @@
         }
 
         if (manageKeywordFormCheck()) {
-            commonAjax("/manage/keyword/modify", $("#manageKeywordForm").serialize(), function(res){
-                    getKeywordList();
-                    clearManageKeywordForm();
-                    alert('변경되었습니다.');
-                },
-                function (error){
-                    alert('변경실패');
-                }
-            );
+            if(confirm('변경하겠습니까?')){
+                commonAjax("/manage/keyword/modify", $("#manageKeywordForm").serialize(), function(res){
+                        getKeywordList();
+                        clearManageKeywordForm();
+                        alert('변경되었습니다.');
+                    },
+                    function (error){
+                        alert('변경실패');
+                    }
+                );
+            }
         }
     }
     function deleteManageKeyword(){
@@ -255,6 +253,55 @@
                     }
                 }
             );
+        }
+    }
+    function onBtnExport() {
+        if(confirm('엑셀 다운로드하겠습니까?')){
+            var wb = new ExcelJS.Workbook();
+            var workbookName = "keyword.xlsx";
+            var worksheetName = "키워드 목록";
+            var ws = wb.addWorksheet(worksheetName,
+                {
+                    properties: {
+                        tabColor: {argb:'FFFF0000'}
+                    }
+                }
+            );
+            ws.columns = [
+                {
+                    key: "keyword",
+                    header: "키워드",
+                    width: 20
+                },
+                {
+                    key: "dicType",
+                    header: "키워드유형",
+                    width: 15,
+                    style: { numFmt: '"£"#,##0.00;[Red]-"£"#,##0.00' }
+                },
+                {
+                    key: "useYn",
+                    header: "사용여부",
+                    width: 10,
+                    outlineLevel: 1 ,
+                    hidden: false
+                },
+                {
+                    key: "sortOrder",
+                    header: "정렬순서",
+                    width: 10,
+                    outlineLevel: 1 ,
+                    hidden: false
+                },
+            ];
+            ws.addRows(dataKeywordList);
+            wb.xlsx.writeBuffer()
+                .then(function(buffer) {
+                    saveAs(
+                        new Blob([buffer], { type: "application/octet-stream" }),
+                        workbookName
+                    );
+                });
         }
     }
 
@@ -307,55 +354,6 @@
     function updateGridManageKeyword(data){
         $('#gridManageKeywordSub').remove();
         initGridManageKeyword(data);
-    }
-    function onBtnExport() {
-        if(confirm('다운로드하겠습니까?')){
-            var wb = new ExcelJS.Workbook();
-            var workbookName = "keyword.xlsx";
-            var worksheetName = "키워드 목록";
-            var ws = wb.addWorksheet(worksheetName,
-                {
-                    properties: {
-                        tabColor: {argb:'FFFF0000'}
-                    }
-                }
-            );
-            ws.columns = [
-                {
-                    key: "keyword",
-                    header: "키워드",
-                    width: 20
-                },
-                {
-                    key: "dicType",
-                    header: "키워드유형",
-                    width: 15,
-                    style: { numFmt: '"£"#,##0.00;[Red]-"£"#,##0.00' }
-                },
-                {
-                    key: "useYn",
-                    header: "사용여부",
-                    width: 10,
-                    outlineLevel: 1 ,
-                    hidden: false
-                },
-                {
-                    key: "sortOrder",
-                    header: "정렬순서",
-                    width: 10,
-                    outlineLevel: 1 ,
-                    hidden: false
-                },
-            ];
-            ws.addRows(dataKeywordList);
-            wb.xlsx.writeBuffer()
-                .then(function(buffer) {
-                    saveAs(
-                        new Blob([buffer], { type: "application/octet-stream" }),
-                        workbookName
-                    );
-                });
-        }
     }
 
     function manageKeywordFormCheck(){

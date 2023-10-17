@@ -127,33 +127,37 @@
     function registMenu(){
         if($("#menuId").attr("readonly") == 'readonly'){clearMenuForm();}
         else if(menuFormCheck()){
-            commonAjax("/manage/menu/regist", $("#menuForm").serialize(), function(res){
-                    getMenuList1();
-                    getMenuTree1();
-                    getTopMenuList();
-                    clearMenuForm();
-                    alert('등록되었습니다.');
-                },
-                function (error){
-                    alert('등록실패');
-                }
-            );
+            if(confirm('등록하겠습니까?')){
+                commonAjax("/manage/menu/regist", $("#menuForm").serialize(), function(res){
+                        getMenuList1();
+                        getMenuTree1();
+                        getTopMenuList();
+                        clearMenuForm();
+                        alert('등록되었습니다.');
+                    },
+                    function (error){
+                        alert('등록실패');
+                    }
+                );
+            }
         }
     }
     function modifyMenu() {
         if (menuFormCheck()) {
-            $("#upperMenuId").removeAttr("disabled");
-            commonAjax("/manage/menu/modify", $("#menuForm").serialize(), function(res){
-                    getMenuList1();
-                    getMenuTree1();
-                    getTopMenuList();
-                    clearMenuForm();
-                    alert('변경되었습니다.');
-                },
-                function (error){
-                    alert('변경실패');
-                }
-            );
+            if(confirm('변경하겠습니까?')){
+                $("#upperMenuId").removeAttr("disabled");
+                commonAjax("/manage/menu/modify", $("#menuForm").serialize(), function(res){
+                        getMenuList1();
+                        getMenuTree1();
+                        getTopMenuList();
+                        clearMenuForm();
+                        alert('변경되었습니다.');
+                    },
+                    function (error){
+                        alert('변경실패');
+                    }
+                );
+            }
         }
     }
     function deleteMenu() {
