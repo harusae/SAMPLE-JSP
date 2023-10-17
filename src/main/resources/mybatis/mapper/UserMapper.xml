@@ -117,13 +117,15 @@
 
     <update id="updateUser" parameterType="java.util.Map">
         update WISETM_USER_INFO
-        set USER_NAME = #{userName}
-            ,USE_YN = #{useYn}
-            ,ACTIVE_YN = #{activeYn}
-            ,USER_AUTH = #{userAuth}
-            ,ALARM_YN = #{alarmYn}
-            ,MOD_USER = #{modUser}
-            ,MOD_DT = sysdate
+        <set>
+            <if test="userName != null">USER_NAME = #{userName},</if>
+            <if test="useYn != null">USE_YN = #{useYn},</if>
+            <if test="activeYn != null">ACTIVE_YN = #{activeYn},</if>
+            <if test="userAuth != null">USER_AUTH = #{userAuth},</if>
+            <if test="alarmYn != null">ALARM_YN = #{alarmYn},</if>
+            <if test="modUser != null">MOD_USER = #{modUser},</if>
+            <if test="1 == 1">MOD_DT = sysdate,</if>
+        </set>
         where USER_ID = #{userId}
     </update>
 
@@ -177,5 +179,32 @@
             #{creUser}
         )
     </insert>
+
+    <select id="getMyPageInfo" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.UserInfo">
+        select
+            A.USER_ID
+             ,'' as USER_PW
+             ,A.USER_NAME
+             ,A.USER_EMAIL
+             ,A.USER_AUTH
+             ,B.NAME as USER_AUTH_NAME
+             ,A.USE_YN
+             ,A.ACTIVE_YN
+             ,A.LOGIN_FAIL_CNT
+             ,A.INIT_YN
+             ,A.ALARM_YN
+             ,sysdate - NVL(A.PW_CHG_DT, A.CRE_DT) as PW_CHG_DAY
+        from WISETM_USER_INFO A
+            left outer join TB_WTM_IS_CODE B on A.USER_AUTH = B.CODE
+        where A.USER_ID = #{userId}
+    </select>
+
+    <update id="updateMyPassword" parameterType="java.util.Map">
+        update WISETM_USER_INFO
+        set USER_PW = #{userPw},
+            INIT_YN = 'N',
+            PW_CHG_DT = sysdate
+        where USER_ID = #{userId}
+    </update>
 
 </mapper>

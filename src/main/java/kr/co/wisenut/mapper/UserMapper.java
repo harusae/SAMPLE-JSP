@@ -33,4 +33,8 @@ public interface UserMapper {
     public SsoUsrInfo getSsoUsrInfo(Map<String, Object> param);
 
     public int registUser(Map<String, Object> param);
+
+    public UserInfo getMyPageInfo(Map<String, Object> param);
+
+    public int updateMyPassword(Map<String, Object> param);
 }

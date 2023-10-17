@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
@@ -53,10 +54,11 @@ public class UserService {
     }
 
     public boolean checkRecentlyPw(HashMap<String, Object> param){
+        //param = userId, userPw 2가지만 저장된 형태로 비교함
         List<UserActionInfo> list = userMapper.getRecentlyPwList(param);
         for(UserActionInfo userActionInfo: list){
             //logger.info("checkRecentlyPw : {}", userActionInfo.getParams());
-            //logger.info("input PW : {}", param.toString());
+            //logger.info("       input PW : {}", param.toString());
             if(userActionInfo.getParams().equals(param.toString())){
                 return true;
             }
@@ -156,4 +158,54 @@ public class UserService {
         return userMapper.registUser(param);
     }
 
+    public UserInfo getMyPageInfo(Map<String, Object> param){
+        return userMapper.getMyPageInfo(param);
+    }
+
+    @Transactional
+    public int changeInfo(HashMap<String, Object> param) {
+
+        //파라미터 명 변경
+        param.put("alarmYn", param.get("myPageAlarmYn"));
+        int res = userMapper.updateUser(param);
+        //변경 실패 시
+        if(res < 1){
+            return -3;
+        }
+
+        if(param.containsKey("myPagePwChange") && param.get("myPagePwChange").toString().equals("Y")){
+            //password 암호화
+            SHA256 encoder = new SHA256();
+            try {
+                //기존 패스워드 일치여부 확인
+                UserInfo userInfo = userMapper.getLoginInfo(param);
+                if(!encoder.matches(param.get("myPagePassword").toString(), userInfo.getUserPw())){
+                    return -1;
+                }
+                //변경 패스워드 암호화
+                param.put("userPw", encoder.encode(param.get("myPagePassword1").toString()));
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException(e);
+            }
+            //비암호화 패스워드 + 비밀번호 변경이력 저장에 불필요한 데이터 삭제
+            param.remove("myPagePassword");
+            param.remove("myPagePassword1");
+            param.remove("myPagePassword2");
+            param.remove("myPagePwChange");
+            param.remove("myPageAlarmYn");
+            param.remove("alarmYn");
+
+            //최근 3회 비밀번호와 동일한지 체크
+            if(checkRecentlyPw(param)){
+                return -2;
+            }
+
+            //내 비밀번호 변경 실행
+            res = userMapper.updateMyPassword(param);
+        }
+
+
+
+        return res;
+    }
 }

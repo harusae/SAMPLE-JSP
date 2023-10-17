@@ -66,4 +66,13 @@ public class UserController {
 
         return view;
     }
+
+    @RequestMapping("/myPage")
+    public ModelAndView myPage() {
+
+        ModelAndView view = new ModelAndView();
+        view.setViewName("user/myPage");
+
+        return view;
+    }
 }
