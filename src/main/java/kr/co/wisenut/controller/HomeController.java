@@ -1,8 +1,9 @@
 package kr.co.wisenut.controller;
 
-import kr.co.wisenut.entity.UserInfo;
+import kr.co.wisenut.entity.*;
 import kr.co.wisenut.mapper.TestMapper;
 import kr.co.wisenut.mapper.UserMapper;
+import kr.co.wisenut.service.DashboardService;
 import kr.co.wisenut.service.TestService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -21,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,6 +32,8 @@ public class HomeController {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private DashboardService dashboardService;
 
     @RequestMapping("/")
     public String home(Model model, Authentication auth) {
@@ -40,6 +44,14 @@ public class HomeController {
 
         model.addAttribute("count", count);
         return "index";
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/sessionChk")
+    @ResponseBody
+    public ResponseEntity chk(Authentication auth){
+        //logger.info("sessionChk : {}", auth.isAuthenticated());
+
+        return new ResponseEntity(auth.isAuthenticated(), HttpStatus.OK);
     }
 
     @RequestMapping("/home")
@@ -55,23 +67,28 @@ public class HomeController {
 
         return view;
     }
-
-    @RequestMapping("/test")
-    public ModelAndView sample() {
-        int count = testService.getTest01Count();
-
-        ModelAndView view = new ModelAndView();
-        view.addObject("count", count);
-        view.setViewName("test/test");
-
-        return view;
-    }
-
-    @RequestMapping(method= RequestMethod.POST, value="/sessionChk")
+    @RequestMapping(method= RequestMethod.POST, value="/home/dashboard1")
     @ResponseBody
-    public ResponseEntity chk(Authentication auth){
-        //logger.info("sessionChk : {}", auth.isAuthenticated());
+    public ResponseEntity getDashboard1List(@RequestParam HashMap<String, Object> param){
 
-        return new ResponseEntity(auth.isAuthenticated(), HttpStatus.OK);
+        List<DashboardInfo1> list = dashboardService.getDashboard1List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+    @RequestMapping(method= RequestMethod.POST, value="/home/dashboard2")
+    @ResponseBody
+    public ResponseEntity getDashboard2List(@RequestParam HashMap<String, Object> param){
+
+        List<DashboardInfo2> list = dashboardService.getDashboard2List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+    @RequestMapping(method= RequestMethod.POST, value="/home/dashboard3")
+    @ResponseBody
+    public ResponseEntity getDashboard3List(@RequestParam HashMap<String, Object> param){
+
+        List<DashboardInfo3> list = dashboardService.getDashboard3List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
     }
 }

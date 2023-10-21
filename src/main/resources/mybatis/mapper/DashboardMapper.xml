@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.DashboardMapper">
+    <select id="getDashboard1List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.DashboardInfo1">
+        SELECT
+            D.CSELTYPENM AS LV1_NM
+            ,C.CSELTYPENM AS LV2_NM
+            ,B.CSELTYPENM AS LV3_NM
+            ,A.CLS_LABEL
+            ,A.SUM_COUNT
+        FROM (
+                 SELECT CLS_LABEL, sum(COUNT) AS SUM_COUNT
+                 FROM TB_WTM_STAT_KEYWORD A1, TB_WTM_IS_CLSCODE B1
+                 WHERE A1.CLS_LABEL = B1.CSELTYPECD
+                   AND A1.DIV= 'TS'
+                   AND B1.CSELTYPEDEPTH = '3'
+                   --AND A1.YEAR = to_number(to_char(sysdate, 'yyyy'))
+                   --AND A1.MONTH = to_number(to_char(sysdate, 'mm'))
+                   --AND A1.DAY = to_number(to_char(sysdate, 'dd'))
+                 GROUP BY CLS_LABEL
+                 ORDER BY sum(COUNT) desc
+             ) A
+        LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+            ON A.CLS_LABEL = B. CSELTYPECD
+        LEFT OUTER JOIN TB_WTM_IS_CLSCODE C
+            ON B.PARCSELTYPECD = C.CSELTYPECD
+        LEFT OUTER JOIN TB_WTM_IS_CLSCODE D
+            ON C.PARCSELTYPECD = D.CSELTYPECD
+    </select>
+
+    <select id="getDashboard2List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.DashboardInfo2">
+        SELECT
+            A.KEYWORD,
+            sum(A.count) AS SUM_COUNT
+        FROM TB_WTM_STAT_KEYWORD A
+        WHERE 1=1
+          --AND A.YEAR = to_number(to_char(sysdate, 'yyyy'))
+          --AND A.MONTH = to_number(to_char(sysdate, 'mm'))
+          --AND A.DAY = to_number(to_char(sysdate, 'dd'))
+          --AND A.HOUR = to_number(to_char(sysdate, 'hh24'))
+          --AND A.MINUTE = to_number(to_char(sysdate, 'mi'))
+          AND A.YEAR = 2023
+          AND A.MONTH = 9
+          AND A.DAY = 1
+          AND A.HOUR = 1
+          AND A.MINUTE = 30
+        GROUP BY KEYWORD
+        ORDER BY SUM_COUNT DESC
+
+    </select>
+
+    <select id="getDashboard3List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.DashboardInfo3">
+        SELECT
+            B.CSELTYPENM AS LV3_NM
+            ,A.CLS_LABEL
+            ,A.SUM_COUNT
+        FROM (
+                 SELECT CLS_LABEL, sum(COUNT) AS SUM_COUNT
+                 FROM TB_WTM_STAT_CLASS A1, TB_WTM_IS_CLSCODE B1
+                 WHERE A1.CLS_LABEL = B1.CSELTYPECD
+                   AND A1.DIV= 'TS'
+                   AND B1.CSELTYPEDEPTH = '3'
+                   AND A1.SENT_CLS_CD = '300002'
+                   --AND A1.YEAR = to_number(to_char(sysdate, 'yyyy'))
+                   --AND A1.MONTH = to_number(to_char(sysdate, 'mm'))
+                   --AND A1.DAY = to_number(to_char(sysdate, 'dd'))
+                 GROUP BY CLS_LABEL
+                 ORDER BY sum(COUNT) desc
+             ) A
+                 LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+                                 ON A.CLS_LABEL = B. CSELTYPECD
+    </select>
+</mapper>

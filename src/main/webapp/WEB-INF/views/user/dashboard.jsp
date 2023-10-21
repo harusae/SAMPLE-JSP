@@ -140,6 +140,10 @@
 
 <!-- script for chart/grid (오브젝트 아래위치에서 작성해야 동작) -->
 <script>
+    var dataDashboard1List = [];
+    var dataDashboard2List = [];
+    var dataDashboard3List = [];
+    var dataDashboard4List = [];
 
     var dataTest = [
         ["존", "john@example.com", "(353) 01 222 3333"],
@@ -203,36 +207,6 @@
     }
 
 
-    var gridTest1home = new gridjs.Grid({
-        columns: ["Name", "Email", "Phone Number"],
-        data: dataTest,
-        pagination: {
-            limit: 3
-        },
-        resizable: true,
-        search: true,
-        sort: true
-    }).render(document.getElementById("grid1home"));
-    var gridTest2home = new gridjs.Grid({
-        columns: ["Name", "Email", "Phone Number"],
-        data: dataTest,
-        pagination: {
-            limit: 3
-        },
-        resizable: true,
-        search: true,
-        sort: true
-    }).render(document.getElementById("grid2home"));
-    var gridTest3home = new gridjs.Grid({
-        columns: ["Name", "Email", "Phone Number"],
-        data: dataTest,
-        pagination: {
-            limit: 3
-        },
-        resizable: true,
-        search: true,
-        sort: true
-    }).render(document.getElementById("grid3home"));
     var gridTest4home = new gridjs.Grid({
         columns: ["Name", "Email", "Phone Number"],
         data: dataTest,
@@ -240,198 +214,11 @@
             limit: 3
         },
         resizable: true,
-        search: true,
         sort: true
     }).render(document.getElementById("grid4home"));
 
 
-    // 차트를 그럴 영역을 dom요소로 가져온다.
-    var chartArea1home = document.getElementById('test1home').getContext('2d');
-    // 차트를 생성한다.
-    var testChart1home = new Chart(chartArea1home, {
-        // ①차트의 종류(String)
-        //type: 'bar',
-        type: 'doughnut',
-        // ②차트의 데이터(Object)
-        data: {
-            // ③x축에 들어갈 이름들(Array)
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
-            datasets: [{
-                // ⑤dataset의 이름(String)
-                label: 'test1',
-                // ⑥dataset값(Array)
-                data: [12, 19, 3, 5, 2, 3],
-                // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                backgroundColor: [
-                    //색상
-                    'rgba(255, 99, 132, 0.5)',
-                    'rgba(54, 162, 235, 0.5)',
-                    'rgba(255, 206, 86, 0.5)',
-                    'rgba(75, 192, 192, 0.5)',
-                    'rgba(153, 102, 255, 0.5)',
-                    'rgba(255, 159, 64, 0.5)'
-                ],
-                // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                //borderColor: 'rgba(255, 99, 132, 1)',
-                // ⑨dataset의 선 두께(Number)
-                borderWidth: 1
-            }]
-        },
-        // ⑩차트의 설정(Object)
-        options: {
-            responsive: true,
-            //미입력시 X축이 default
-            plugins: {
-                legend: {
-                    //미입력 시 top이 default
-                    position: 'bottom',
-                },
-                // 미입력시 검은색이 default
-                datalabels: {
-                    color: '#FE777B'
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
 
-    // 차트를 그럴 영역을 dom요소로 가져온다.
-    var chartArea2home = document.getElementById('test2home').getContext('2d');
-    // 차트를 생성한다.
-    var testChart2home = new Chart(chartArea2home, {
-        // ①차트의 종류(String)
-        type: 'bar',
-        // ②차트의 데이터(Object)
-        data: {
-            // ③x축에 들어갈 이름들(Array)
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
-            datasets: [{
-                // ⑤dataset의 이름(String)
-                label: 'test2',
-                // ⑥dataset값(Array)
-                data: [12, 19, 3, 5, 2, 3],
-                // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                backgroundColor: [
-                    //색상
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                //borderColor: 'rgba(255, 99, 132, 1)',
-                // ⑨dataset의 선 두께(Number)
-                borderWidth: 1
-            }]
-        },
-        // ⑩차트의 설정(Object)
-        options: {
-            responsive: true,
-            //미입력시 X축이 default
-            //indexAxis: 'y',
-            plugins: {
-                legend: {
-                    //미입력 시 top이 default
-                    position: 'bottom',
-                },
-                // 미입력시 검은색이 default
-                datalabels: {
-                    color: '#FE777B'
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
-
-
-    // 차트를 그럴 영역을 dom요소로 가져온다.
-    var chartArea3home = document.getElementById('test3home').getContext('2d');
-    // 차트를 생성한다.
-    var testChart3home = new Chart(chartArea3home, {
-        // ①차트의 종류(String)
-        type: 'bar',
-        // ②차트의 데이터(Object)
-        data: {
-            // ③x축에 들어갈 이름들(Array)
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
-            datasets: [
-                {
-                    // ⑤dataset의 이름(String)
-                    label: 'test3a',
-                    // ⑥dataset값(Array)
-                    data: [12, 19, 3, 5, 2, 3],
-                    // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                    backgroundColor: [
-                        //색상
-                        'rgba(255, 99, 132, 0.2)',
-                    ],
-                    // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                    //borderColor: 'rgba(255, 99, 132, 1)',
-                    // ⑨dataset의 선 두께(Number)
-                    borderWidth: 1
-                },
-                {
-                    // ⑤dataset의 이름(String)
-                    label: 'test3b',
-                    // ⑥dataset값(Array)
-                    data: [8, 1, 9, 11, -2, -4],
-                    // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                    backgroundColor: [
-                        //색상
-                        'rgba(54, 162, 235, 0.2)',
-                    ],
-                    // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                    //borderColor: 'rgba(255, 99, 132, 1)',
-                    // ⑨dataset의 선 두께(Number)
-                    borderWidth: 1
-                }
-            ]
-        },
-        // ⑩차트의 설정(Object)
-        options: {
-            responsive: true,
-            scales: {
-                x: {
-                    stacked: true,
-                },
-                y: {
-                    stacked: true
-                }
-            },
-            //미입력시 X축이 default
-            indexAxis: 'y',
-            plugins: {
-                legend: {
-                    //미입력 시 top이 default
-                    position: 'bottom',
-                },
-                // 미입력시 검은색이 default
-                datalabels: {
-                    color: '#FE777B'
-                }
-            }
-        },
-        plugins: [ChartDataLabels]
-    });
-    // onclick 이벤트 처리
-    document.getElementById('test3home').onclick = function(evt) {
-        var points = testChart3home.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
-
-        if (points.length) {
-            var firstPoint = points[0];
-            var label = testChart3.data.labels[firstPoint.index];
-            var value = testChart3.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
-
-            //console.log(label);
-            //console.log(value);
-            alert(label);
-        }
-    };
 
 
     function addZero(i) {
@@ -499,6 +286,295 @@
                 }
             }
         }
+    });
+
+    function getDashboard1List() {
+        commonAjax("/home/dashboard1", {}, function(res){
+            dataDashboard1List = res;
+            var grid1home = new gridjs.Grid({
+                columns:[
+                    {id: 'lv1Nm',name:'대분류'},
+                    {id: 'lv2Nm',name:'중분류'},
+                    {id: 'lv3Nm',name:'소분류'},
+                    {id: 'sumCount',name:'Count'},
+                ],
+                data: dataDashboard1List,
+                pagination: {
+                    limit: 3
+                },
+                resizable: true,
+                sort: true
+            }).render(document.getElementById("grid1home"));
+
+            var chartLabels = [];
+            var chartData = [];
+            var listLength =dataDashboard1List.length < 10 ? dataDashboard1List.length : 10;
+            for(var i=0; i<listLength ; i++){
+                chartLabels.push(dataDashboard1List[i].lv3Nm);
+                chartData.push(dataDashboard1List[i].sumCount);
+            }
+            // 차트를 그럴 영역을 dom요소로 가져온다.
+            var chartArea1home = document.getElementById('test1home').getContext('2d');
+            // 차트를 생성한다.
+            var chart1home = new Chart(chartArea1home, {
+                // ①차트의 종류(String)
+                //type: 'bar',
+                type: 'doughnut',
+                // ②차트의 데이터(Object)
+                data: {
+                    // ③x축에 들어갈 이름들(Array)
+                    labels: chartLabels,
+                    // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
+                    datasets: [{
+                        // ⑤dataset의 이름(String)
+                        label: 'test1',
+                        // ⑥dataset값(Array)
+                        data: chartData,
+                        // ⑦dataset의 배경색(rgba값을 String으로 표현)
+                        backgroundColor: [
+                            //색상
+                            'rgba(255, 99, 132, 0.5)',
+                            'rgba(54, 162, 235, 0.5)',
+                            'rgba(255, 206, 86, 0.5)',
+                            'rgba(75, 192, 192, 0.5)',
+                            'rgba(153, 102, 255, 0.5)',
+                            'rgba(255, 159, 64, 0.5)'
+                        ],
+                        // ⑧dataset의 선 색(rgba값을 String으로 표현)
+                        //borderColor: 'rgba(255, 99, 132, 1)',
+                        // ⑨dataset의 선 두께(Number)
+                        borderWidth: 1
+                    }]
+                },
+                // ⑩차트의 설정(Object)
+                options: {
+                    responsive: true,
+                    //미입력시 X축이 default
+                    plugins: {
+                        legend: {
+                            //미입력 시 top이 default
+                            position: 'bottom',
+                        },
+                        // 미입력시 검은색이 default
+                        datalabels: {
+                            color: '#FE777B'
+                        },
+                        title: {
+                            display: true,
+                            text: '소분류 별'
+                        }
+                    }
+                }
+            });
+
+        });
+    }
+
+    function getDashboard2List() {
+        commonAjax("/home/dashboard2", {}, function(res){
+            dataDashboard2List = res;
+            var gridTest2home = new gridjs.Grid({
+                columns:[
+                    {id: 'keyword',name:'키워드'},
+                    {id: 'sumCount',name:'상승폭'},
+                ],
+                data: dataDashboard2List,
+                pagination: {
+                    limit: 4
+                },
+                resizable: true,
+                sort: true
+            }).render(document.getElementById("grid2home"));
+
+            var chartLabels = [];
+            var chartData = [];
+            var listLength =dataDashboard2List.length < 10 ? dataDashboard2List.length : 10;
+            for(var i=0; i<listLength ; i++){
+                chartLabels.push(dataDashboard2List[i].keyword);
+                chartData.push(dataDashboard2List[i].sumCount);
+            }
+
+            // 차트를 그럴 영역을 dom요소로 가져온다.
+            var chartArea2home = document.getElementById('test2home').getContext('2d');
+            // 차트를 생성한다.
+            var chart2home = new Chart(chartArea2home, {
+                // ①차트의 종류(String)
+                type: 'bar',
+                // ②차트의 데이터(Object)
+                data: {
+                    // ③x축에 들어갈 이름들(Array)
+                    labels: chartLabels,
+                    // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
+                    datasets: [{
+                        // ⑤dataset의 이름(String)
+                        label: '급상승 키워드',
+                        // ⑥dataset값(Array)
+                        data: chartData,
+                        // ⑦dataset의 배경색(rgba값을 String으로 표현)
+                        backgroundColor: [
+                            //색상
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        // ⑧dataset의 선 색(rgba값을 String으로 표현)
+                        //borderColor: 'rgba(255, 99, 132, 1)',
+                        // ⑨dataset의 선 두께(Number)
+                        borderWidth: 1
+                    }]
+                },
+                // ⑩차트의 설정(Object)
+                options: {
+                    responsive: true,
+                    //미입력시 X축이 default
+                    //indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            //미입력 시 top이 default
+                            position: 'bottom',
+                        },
+                        // 미입력시 검은색이 default
+                        datalabels: {
+                            color: '#FE777B'
+                        },
+                        title: {
+                            display: true,
+                            text: '급상승 키워드 상위10위'
+                        }
+                    }
+                }
+            });
+
+        });
+    }
+
+    function getDashboard3List() {
+        commonAjax("/home/dashboard3", {}, function(res){
+            dataDashboard3List = res;
+            console.log('dataDashboard3List : ', dataDashboard3List);
+            var gridTest3home = new gridjs.Grid({
+                columns:[
+                    {id: 'lv3Nm',name:'소분류'},
+                    {id: 'sumCount',name:'Count'},
+                ],
+                data: dataDashboard3List,
+                pagination: {
+                    limit: 3
+                },
+                resizable: true,
+                sort: true
+            }).render(document.getElementById("grid3home"));
+
+            var chartLabels = [];
+            var chartData = [];
+            var listLength =dataDashboard3List.length < 10 ? dataDashboard3List.length : 10;
+            for(var i=0; i<listLength ; i++){
+                chartLabels.push(dataDashboard3List[i].lv3Nm);
+                chartData.push(dataDashboard3List[i].sumCount);
+            }
+            // 차트를 그럴 영역을 dom요소로 가져온다.
+            var chartArea3home = document.getElementById('test3home').getContext('2d');
+            // 차트를 생성한다.
+            var chart3home = new Chart(chartArea3home, {
+                // ①차트의 종류(String)
+                type: 'bar',
+                // ②차트의 데이터(Object)
+                data: {
+                    // ③x축에 들어갈 이름들(Array)
+                    labels: chartLabels,
+                    // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
+                    datasets: [
+                        {
+                            // ⑤dataset의 이름(String)
+                            label: '소분류 별 부정 콜',
+                            // ⑥dataset값(Array)
+                            data: chartData,
+                            // ⑦dataset의 배경색(rgba값을 String으로 표현)
+                            backgroundColor: [
+                                //색상
+                                'rgba(255, 99, 132, 0.2)',
+                            ],
+                            // ⑧dataset의 선 색(rgba값을 String으로 표현)
+                            //borderColor: 'rgba(255, 99, 132, 1)',
+                            // ⑨dataset의 선 두께(Number)
+                            borderWidth: 1
+                        }
+                        /*
+                        ,{
+                            // ⑤dataset의 이름(String)
+                            label: 'test3b',
+                            // ⑥dataset값(Array)
+                            data: [8, 1, 9, 11, -2, -4],
+                            // ⑦dataset의 배경색(rgba값을 String으로 표현)
+                            backgroundColor: [
+                                //색상
+                                'rgba(54, 162, 235, 0.2)',
+                            ],
+                            // ⑧dataset의 선 색(rgba값을 String으로 표현)
+                            //borderColor: 'rgba(255, 99, 132, 1)',
+                            // ⑨dataset의 선 두께(Number)
+                            borderWidth: 1
+                        }
+                        */
+                    ]
+                },
+                // ⑩차트의 설정(Object)
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: {
+                            stacked: true,
+                        },
+                        y: {
+                            stacked: true
+                        }
+                    },
+                    //미입력시 X축이 default
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            //미입력 시 top이 default
+                            position: 'bottom',
+                        },
+                        // 미입력시 검은색이 default
+                        datalabels: {
+                            color: '#FE777B'
+                        },
+                        title: {
+                            display: true,
+                            text: '소분류 별 부정 콜'
+                        }
+                    }
+                },
+            });
+
+            /*
+            document.getElementById('test3home').onclick = function(evt) {
+                var points = chart3home.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
+
+                if (points.length) {
+                    var firstPoint = points[0];
+                    var label = chart3home.data.labels[firstPoint.index];
+                    var value = chart3home.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+
+                    //console.log(label);
+                    //console.log(value);
+                    alert(label);
+                }
+            };
+            */
+        });
+    }
+
+    // onclick 이벤트 처리
+    //초기화
+    $(function() {
+        getDashboard1List();
+        getDashboard2List();
+        getDashboard3List();
     });
 </script>
 
