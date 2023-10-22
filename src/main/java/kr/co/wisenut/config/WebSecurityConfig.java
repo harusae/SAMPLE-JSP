@@ -82,7 +82,9 @@ public class WebSecurityConfig extends WebMvcConfigurerAdapter {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         // 정적 리소스들이 보안필터를 통과하도록 처리
-        return (web) -> web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/font/**");
+        return (web) -> web.ignoring().antMatchers(
+                "/css/**", "/js/**", "/img/**", "/font/**", "/fonts/**", "/font-awesome/**"
+        );
     }
 /*
     //기본암호화 BCrypt로 password 처리

@@ -23,6 +23,149 @@
     <div class="ax-base-content">
         <div data-page-buttons="">
             <div class="button-warp">
+                <!-- https://chequer-io.github.io/chequer-icon/demo.html -->
+                <button type="button" class="btn btn-default" data-page-btn="reload" onclick="window.location.reload();"><i class="cqc-cw"></i></button>
+                <button type="button" class="btn btn-default" data-page-btn="search">조회</button>
+            </div>
+        </div>
+        <div role="page-header">
+        </div>
+
+        <!-- 2310 table 클래스 수정 및 영역 추가 -->
+        <table border="0" width="100%" height="90%">
+            <tbody>
+            <tr height="50%">
+                <td width="50%">
+                    <table border="0" width="100%" height="100%" class="tbl_area">
+                        <tbody>
+                        <tr height="5">
+                            <td colspan="2">
+                                <div class="ax-button-group" data-fit-height-aside="grid-view-01">
+                                    <div class="left">
+                                        <h3><i class="cqc-list"></i> 업무별순위</h3>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <canvas id="test1home"></canvas>
+                                </div>
+                            </td>
+                            <td width="1%"></td>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <div id="grid1home" style="height: 360px;" class="ag-theme-alpine" ></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="20"> </td>
+                <td>
+                    <table border="0" width="100%" height="100%" class="tbl_area">
+                        <tbody>
+                        <tr height="5">
+                            <td colspan="2">
+                                <div class="ax-button-group" data-fit-height-aside="grid-view-01">
+                                    <div class="left">
+                                        <h3><i class="cqc-list"></i>실시간 급상승분석</h3>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <canvas id="test2home"></canvas>
+                                </div>
+                            </td>
+                            <td width="1%"></td>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <div id="grid2home" style="height: 360px;" class="ag-theme-alpine" ></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            <tr height="50%">
+                <td width="50%">
+                    <table border="0" width="100%" height="100%" class="tbl_area mt20">
+                        <tbody>
+                        <tr height="5">
+                            <td colspan="2">
+                                <div class="ax-button-group" data-fit-height-aside="grid-view-01">
+                                    <div class="left">
+                                        <h3><i class="cqc-list"></i>소분류별 부정 콜</h3>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <canvas id="test3home"></canvas>
+                                </div>
+                            </td>
+                            <td width="1%"></td>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <div id="grid3home" style="height: 360px;" class="ag-theme-alpine" ></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td width="20"> </td>
+                <td>
+                    <table border="0" width="100%" height="100%" class="tbl_area mt20">
+                        <tbody>
+                        <tr height="5">
+                            <td colspan="2">
+                                <div class="ax-button-group" data-fit-height-aside="grid-view-01">
+                                    <div class="left">
+                                        <h3><i class="cqc-list"></i>부정 키워드</h3>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box" style="height: 360px;">
+                                    <canvas id="test4home"></canvas>
+                                </div>
+                            </td>
+                            <td width="1%"></td>
+                            <td align="center" valign="center" class="area_box">
+                                <div class="chart_box">
+                                    <div id="grid4home" style="height: 360px;" class="ag-theme-alpine" ></div>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+    </div>
+</div>
+<!--
+<div id="ax-base-root" data-root-container="true">
+    <div class="ax-base-title" role="page-title">
+        <h1 class="title" id="title">${now} 대시보드</h1>
+    </div>
+    <div class="ax-base-content">
+        <div data-page-buttons="">
+            <div class="button-warp">
                 <button type="button" class="btn btn-default" data-page-btn="reload" onclick="window.location.reload();"><i class="cqc-cw"></i></button>
                 <button type="button" class="btn btn-default" data-page-btn="search">조회</button>
             </div>
@@ -122,9 +265,7 @@
                                 </div>
                             </td>
                             <td align="center" valign="top">
-                                <div data-ax5grid="grid-view-04" data-fit-height-content="grid-view-04" style="width:100%; height:355px;">
-                                    <div id="grid4home"></div>
-                                </div>
+                                <div id="grid4home"style="height: 330px;" class="ag-theme-alpine" ></div>
                             </td>
                         </tr>
                         </tbody></table>
@@ -135,7 +276,7 @@
 
     </div>
 </div>
-
+-->
 </body>
 
 <!-- script for chart/grid (오브젝트 아래위치에서 작성해야 동작) -->
@@ -144,81 +285,6 @@
     var dataDashboard2List = [];
     var dataDashboard3List = [];
     var dataDashboard4List = [];
-
-    var dataTest = [
-        ["존", "john@example.com", "(353) 01 222 3333"],
-        ["마크", "mark@gmail.com", "(01) 22 888 4444"],
-        ["eoin", "eoin@gmail.com", "0097 22 654 00033"],
-        ["sarah", "sarahcdd@gmail.com", "+322 876 1233"],
-        ["afshin", "afshin@mail.com", "(353) 22 87 8356"],
-        ["존2", "john@example.com", "(353) 01 222 3333"],
-        ["마크2", "mark@gmail.com", "(01) 22 888 4444"],
-        ["eoin2", "eoin@gmail.com", "0097 22 654 00033"],
-        ["sarah2", "sarahcdd@gmail.com", "+322 876 1233"],
-        ["afshin2", "afshin@mail.com", "(353) 22 87 8356"],
-        ["존3", "john@example.com", "(353) 01 222 3333"],
-        ["마크3", "mark@gmail.com", "(01) 22 888 4444"],
-        ["eoin3", "eoin@gmail.com", "0097 22 654 00033"],
-        ["sarah3", "sarahcdd@gmail.com", "+322 876 1233"],
-        ["afshin3", "afshin@mail.com", "(353) 22 87 8356"]
-    ];
-
-    function onBtnExport() {
-
-        var wb = new ExcelJS.Workbook();
-        var workbookName = "Sample Workbook Generated by ExcelJS.xlsx";
-        var worksheetName = "Demo Worksheet";
-        var ws = wb.addWorksheet(worksheetName,
-            {
-                properties: {
-                    tabColor: {argb:'FFFF0000'}
-                }
-            }
-        );
-        ws.columns = [
-            {
-                key: "이름 ",
-                header: "이름",
-                width: 20
-            },
-            {
-                key: "이메일",
-                header: "이메일",
-                width: 15,
-                style: { numFmt: '"£"#,##0.00;[Red]-"£"#,##0.00' }
-            },
-            {
-                key: "연락처",
-                header: "연락처",
-                width: 30,
-                outlineLevel: 1 ,
-                hidden: false
-            },
-        ];
-        ws.addRows(dataTest);
-        wb.xlsx.writeBuffer()
-            .then(function(buffer) {
-                saveAs(
-                    new Blob([buffer], { type: "application/octet-stream" }),
-                    workbookName
-                );
-            });
-
-    }
-
-
-    var gridTest4home = new gridjs.Grid({
-        columns: ["Name", "Email", "Phone Number"],
-        data: dataTest,
-        pagination: {
-            limit: 3
-        },
-        resizable: true,
-        sort: true
-    }).render(document.getElementById("grid4home"));
-
-
-
 
 
     function addZero(i) {
@@ -291,20 +357,33 @@
     function getDashboard1List() {
         commonAjax("/home/dashboard1", {}, function(res){
             dataDashboard1List = res;
-            var grid1home = new gridjs.Grid({
-                columns:[
-                    {id: 'lv1Nm',name:'대분류'},
-                    {id: 'lv2Nm',name:'중분류'},
-                    {id: 'lv3Nm',name:'소분류'},
-                    {id: 'sumCount',name:'Count'},
-                ],
-                data: dataDashboard1List,
-                pagination: {
-                    limit: 3
+
+            //start ag-grid
+            var columnDefs = [
+                { headerName: '대분류', field: "lv1Nm", width: 130 },
+                { headerName: '중분류', field: "lv2Nm", width: 110 },
+                { headerName: '소분류', field: "lv3Nm", width: 130 },
+                { headerName: 'Count', field: "sumCount", width: 80 }
+            ];
+            // let the grid know which columns and what data to use
+            var gridOptions = {
+                columnDefs: columnDefs,
+                rowData: dataDashboard1List,
+                pagination: true,
+                paginationAutoPageSize: true,
+                //paginationPageSize: 10,
+                defaultColDef: {
+                    width: 110,
+                    sortable: true,
+                    resizable: true,
+                    //enableRowGroup: true,
+                    //enablePivot: true,
+                    //enableValue: true,
                 },
-                resizable: true,
-                sort: true
-            }).render(document.getElementById("grid1home"));
+            };
+            var gridDiv = document.querySelector('#grid1home');
+            new agGrid.Grid(gridDiv, gridOptions);
+            //end ag-grid
 
             var chartLabels = [];
             var chartData = [];
@@ -373,18 +452,31 @@
     function getDashboard2List() {
         commonAjax("/home/dashboard2", {}, function(res){
             dataDashboard2List = res;
-            var gridTest2home = new gridjs.Grid({
-                columns:[
-                    {id: 'keyword',name:'키워드'},
-                    {id: 'sumCount',name:'상승폭'},
-                ],
-                data: dataDashboard2List,
-                pagination: {
-                    limit: 4
+
+            //start ag-grid
+            var columnDefs = [
+                { headerName: '키워드', field: "keyword" },
+                { headerName: '상승폭', field: "sumCount" },
+            ];
+            // let the grid know which columns and what data to use
+            var gridOptions = {
+                columnDefs: columnDefs,
+                rowData: dataDashboard2List,
+                pagination: true,
+                paginationAutoPageSize: true,
+                //paginationPageSize: 10,
+                defaultColDef: {
+                    width: 200,
+                    sortable: true,
+                    resizable: true,
+                    //enableRowGroup: true,
+                    //enablePivot: true,
+                    //enableValue: true,
                 },
-                resizable: true,
-                sort: true
-            }).render(document.getElementById("grid2home"));
+            };
+            var gridDiv = document.querySelector('#grid2home');
+            new agGrid.Grid(gridDiv, gridOptions);
+            //end ag-grid
 
             var chartLabels = [];
             var chartData = [];
@@ -454,19 +546,32 @@
     function getDashboard3List() {
         commonAjax("/home/dashboard3", {}, function(res){
             dataDashboard3List = res;
-            console.log('dataDashboard3List : ', dataDashboard3List);
-            var gridTest3home = new gridjs.Grid({
-                columns:[
-                    {id: 'lv3Nm',name:'소분류'},
-                    {id: 'sumCount',name:'Count'},
-                ],
-                data: dataDashboard3List,
-                pagination: {
-                    limit: 3
+
+            //start ag-grid
+            var columnDefs = [
+                { headerName: '소분류', field: "lv3Nm" },
+                { headerName: 'Count', field: "sumCount" },
+            ];
+            // let the grid know which columns and what data to use
+            var gridOptions = {
+                columnDefs: columnDefs,
+                rowData: dataDashboard3List,
+                pagination: true,
+                paginationAutoPageSize: true,
+                //paginationPageSize: 10,
+                defaultColDef: {
+                    width: 200,
+                    sortable: true,
+                    resizable: true,
+                    //enableRowGroup: true,
+                    //enablePivot: true,
+                    //enableValue: true,
                 },
-                resizable: true,
-                sort: true
-            }).render(document.getElementById("grid3home"));
+            };
+            var gridDiv = document.querySelector('#grid3home');
+            new agGrid.Grid(gridDiv, gridOptions);
+            //end ag-grid
+
 
             var chartLabels = [];
             var chartData = [];
@@ -575,6 +680,7 @@
         getDashboard1List();
         getDashboard2List();
         getDashboard3List();
+
     });
 </script>
 

@@ -30,10 +30,19 @@
 <script src="/js/bootstrap-treeview.js"></script>
 <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
+<!--aggrid-->
+<script src="/js/ag-grid-community.min.js"></script>
+<link rel="stylesheet" href="/css/ag-grid.css"/>
+<link rel="stylesheet" href="/css/ag-theme-alpine.css"/>
 
 <!--publish css-->
-<link href="/css/axboot.css" rel="stylesheet"/>
+<link rel="stylesheet" href="/css/axboot.css"/>
 <link rel="stylesheet" type="text/css" href="/css/popularkeyword.css">
+<link rel="stylesheet" type="text/css" href="css/default.css">
+<link rel="stylesheet" type="text/css" href="css/new_page.css">
+<link rel="stylesheet" href="font-awesome/css/all.min.css">
+
+
 <!--
   웹화면 작성 시 주의점
     > home.jsp를 메인페이지 + 타 페이지는 DIV로 하위페이지 형식으로 읽어오는 원페이지 형식의 구조인 관계로
@@ -48,6 +57,7 @@
 
   //DIV에 하위페이지 로드/이동 처리
   function navInit(id, name, url){
+    $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
     //로그인 세션 체크
     commonAjax('/sessionChk', {}, function(res){
       //console.log('sessionChk : ', res);
@@ -56,23 +66,26 @@
     if(url != ''){ //이동URL이 있는 경우
       var findResult = divIdArray.indexOf(id);  //입력된 DIV ID가 있는지 검색
       if(findResult < 0){ //미생성화면 DIV ID인 경우
-        /*
-        $("body").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
-        var html =
-                '<div class="navDiv" id="navDiv'+id+'">'
-                +'<div class="navItem" id="navItem'+id+'">'+id+'</div>'
-                +'<span class="navDel" id="navDel'+id+'">[x]</span>' +
-                '</div>'; //새로운 DIV 네이게이션 생성
-        $( "#navBar" ).append(html);  //네비게이션 추가
-        */
 
         //입력된 menuid를 html element id로 생성 > menuid가 기존 element id와 겹치면 동작이상 발생
         $("#content-frame-container").append("<div class='dynamicDiv' id='"+id+"'>div "+id+"</div>"); //새로운 DIV 생성 + 추가
+        /*
         var html = '<span class="tab-item" style="min-width: 120px; width: auto;" id="navDiv'+id+'">'
           + '<span data-toggle="tooltip" data-placement="bottom" class="navItem" id="navItem'+id+'">'+name+'</span>'
           + '<i class="cqc-cancel3 on" data-tab-close="true" id="navDel'+id+'"></i>'
           + '</span>';
         $( "#navBar" ).append(html);  //네비게이션 추가
+        */
+        var tmpLi =
+            '<li id="navDiv'+id+'">' +
+            '<a href="#" class="tab_link">' +
+            '<span class="navItem" id="navItem'+id+'">'+name+'</span>' +
+            '<i class="fas fa-times" id="navDel'+id+'"></i>' +
+            '</a>' +
+            '</li>';
+
+        $( "#navBar1" ).append(tmpLi);
+
 
         divIdArray.push(id);  //생성한 DIV ID 저장
         try{
@@ -88,6 +101,7 @@
   }
   //선택한 ID의 DIV만 표시
   function showOnlyDivInput(id){
+    $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
     for(var i=0; i<divIdArray.length; i++ ){
       if(id == divIdArray[i]){
         $('#'+ divIdArray[i]).show();
@@ -111,24 +125,49 @@
     }
   }
 
+
+  //메뉴 > 상위메뉴 선택 시
+  $(document).on('click', '.depth01', function() { //class depth01 선택 시
+      var menuBarMenuId = $(this).attr("id");
+      var menuBarUlId = menuBarMenuId.substring(7,menuBarMenuId.length);
+      var ulFlag = $('#depth2_'+menuBarUlId).css('display');
+      console.log('ulFlag : ', ulFlag);
+
+      $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
+      if ( ulFlag === 'none' ) {
+          $('#depth2_'+menuBarUlId).show();
+      } else {
+          $('#depth2_'+menuBarUlId).hide();
+      }
+  });
+
   //네비게이션 바 > 메뉴명 선택 시
   $(document).on('click', '.navItem', function() {  //class navItemXXX 선택 시
-    //로그인 세션 체크
     commonAjax('/sessionChk', {}, function(res){
       //console.log('sessionChk : ', res);
     });
+    console.log($(this).attr("id"));
 
     var navItemId = $(this).attr("id");
     var id = navItemId.substring(7,navItemId.length);
     showOnlyDivInput(id);
   });
   //네비게이션 바 > 메뉴삭제 선택 시
-  $(document).on('click', '.cqc-cancel3', function() { //class cqc-cancel3XXX 선택 시
-    var delItemId = $(this).attr("id");
-    var id = delItemId.substring(6,delItemId.length);
-    delDivInput(id);
+  $(document).on('click', '.fas.fa-times', function() { //class fas fa-times 선택 시
+      console.log($(this).attr("id"));
+      var delItemId = $(this).attr("id");
+      var id = delItemId.substring(6,delItemId.length);
+      delDivInput(id);
   });
-
+  /*
+  //네비게이션 바 > 메뉴삭제 선택 시
+  $(document).on('click', '.cqc-cancel3', function() { //class cqc-cancel3XXX 선택 시
+      console.log($(this).attr("id"));
+      var delItemId = $(this).attr("id");
+      var id = delItemId.substring(6,delItemId.length);
+      delDivInput(id);
+  });
+  */
   //비동기통신 시 세션체크필요 > 공통모듈로 호출
   function commonAjax(url, param, callback, errCallback){
     $.ajax({
@@ -157,94 +196,93 @@
   }
 
 </script>
+<body class="ax-body frame-set">
 
-<body class="ax-body frame-set" onselectstart="return false;">
-<div id="ax-frame-root" class="" data-root-container="true">
-
-  <div id="content-frame-container" class="ax-frame-contents">
-  </div>
-
-  <div class="ax-frame-header-tool">
-    <div class="ax-split-col" style="height: 100%;">
-      <div class="ax-split-panel text-align-left">
-      </div>
-      <div class="ax-split-panel text-align-right">
-        <div class="ax-split-col ax-frame-user-info">
-          <div class="ax-split-panel">
-            <a href="#">${principal.username}님 로그인</a>
-          </div>
-          <div class="panel-split"></div>
-          <div class="ax-split-panel">
-            <a href="#" class="ax-frame-logout" onclick="javascript:location.href='/logout';">
-              <i class="cqc-log-out"></i>
-              로그아웃
-            </a>
-          </div>
+    <div class="wrap">
+        <div class="util_area">
+            <ul class="util_box" onclick="javascript:location.href='/logout';">
+                <li><a href="#" class="txt"><span class="fw">${principal.username} </span>님 로그인</a></li>
+                <li>
+                    <a href="#" class="btn logout"><i class="fas fa-sign-in-alt"></i>로그아웃</a>
+                </li>
+            </ul>
         </div>
-      </div>
-    </div>
-  </div>
+        <div class="header">
+            <h1 class="h_logo"><a href="#"><img src="img/header_logo.png" alt="wisenut"></a></h1>
+            <div class="menu_total_wrap">
+                <ul class="gnb_menu">
+                    <c:set var="firstLi" value="Y"/>
+                    <c:set var="lastLi" value="Y"/>
+                    <c:set var="firstUl" value="N"/>
+                    <c:set var="lastUl" value="N"/>
+                    <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
+                    <c:if test="${menu.upperMenuId == null and lastUl == 'Y'}">
+                </ul>
+                </li>
+                <c:set var="firstLi" value="Y"/>
+                </c:if>
 
-  <div class="ax-frame-header">
-    <div class="ax-split-col" style="height: 100%;">
-      <div class="ax-split-panel">&nbsp;</div>
-      <div class="ax-split-panel cell-logo">
-        <a href="#">
-          <img src="/img/header-logo-hanwha.png" width="100%">
-        </a>
-      </div>
+                <c:if test="${firstLi == 'Y'}">
+                <li>
+                    </c:if>
 
-      <div id="ax-top-menu" class="ax-split-panel ax-split-flex">
-        <div class="ax5-ui-menubar axboot">
-          <div class="ax-menu-body">
-            <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
-              <div class="ax-menu-item" data-menu-item-index="0">
-              <span class="ax-menu-item-cell ax-menu-item-label" onclick="javascript:navInit('${menu.menuId}','${menu.menuName}','${menu.menuUrl}');">${menu.menuName}
-                <c:if test="${empty menu.menuUrl}"><i class="cqc-chevron-down"></i></c:if>
-              </span>
-              </div>
-            </c:forEach>
-          </div>
+                    <c:if test="${menu.upperMenuId == null and menu.menuUrl != null}">
+                    <!-- 최상위메뉴 + 하위메뉴가 없는 경우 -->
+                    <a href="#" class="depth01" onclick="javascript:navInit('${menu.menuId}','${menu.menuName}','${menu.menuUrl}');">${menu.menuName}</a>
+                    </c:if>
+
+                    <c:if test="${menu.upperMenuId == null and menu.menuUrl == null}">
+                    <!-- 최상위메뉴 + 하위메뉴가 있는 경우 -->
+                        <c:set var="firstLi" value="N"/>
+                        <c:set var="lastLi" value="N"/>
+                        <c:set var="firstUl" value="Y"/>
+                        <c:set var="lastUl" value="N"/>
+                    <a href="#" class="depth01" id="depth1_${menu.menuId}" onclick="javascript:navInit('${menu.menuId}','${menu.menuName}','${menu.menuUrl}');">${menu.menuName}</a>
+                    </c:if>
+
+                    <c:if test="${menu.upperMenuId != null}">
+                    <!-- 하위메뉴인 경우 -->
+                    <c:if test="${firstUl == 'Y'}">
+                        <c:set var="firstUl" value="N"/>
+                        <c:set var="lastUl" value="Y"/>
+                    <ul class="depth02_list m02" id="depth2_${menu.upperMenuId}" style="display:none">
+                        </c:if>
+                        <li><a href="#" class="depth02_link" onclick="javascript:navInit('${menu.menuId}','${menu.menuName}','${menu.menuUrl}');">${menu.menuName}</a></li>
+                        </c:if>
+
+
+                        <c:if test="${lastLi == 'Y'}">
+                            </li>
+                        </c:if>
+                        </c:forEach>
+                        <!--
+                        <li>
+                            <a href="#" class="depth01 on">상담현황<i class="fas fa-angle-up"></i></a>
+                            <ul class="depth02_list m02">
+                                <li><a href="#" class="depth02_link on">실시간 키워드 순위</a></li>
+                                <li><a href="#" class="depth02_link">관심 키워드 분석</a></li>
+                            </ul>
+                        </li>
+                        -->
+                    </ul>
+            </div>
         </div>
-      </div>
-
-      <div class="ax-split-panel cell-aside-handle" id="ax-fullscreen-handel">
-        <i class="cqc-expand icon-closed"></i>
-        <i class="cqc-collapse icon-opened"></i>
-      </div>
-    </div>
-  </div>
-
-  <div class="ax-frame-header-tab">
-    <div id="ax-frame-header-tab-container">
-      <div class="tab-item-holder" style="width: auto;" id="navBar">
-        <!--
-        <div class="tab-item-menu" data-tab-id=""></div>
-        <div class="tab-item on" data-tab-id="00-dashboard" style="min-width: 120px; width: auto;">
-          <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="홈">홈</span>
+        <div class="header_tab">
+            <ul class="tab_list" id="navBar1">
+                <!--
+                <li><a href="#" class="tab_link"><span>홈</span></a></li>
+                <li>
+                    <a href="#" class="tab_link on">
+                        <span>실시간 키워드 순위</span><i class="fas fa-times"></i>
+                    </a>
+                </li>
+                -->
+            </ul>
         </div>
-
-        <div class="tab-item" data-tab-id="122" style="min-width: 120px; width: auto;">
-          <span data-toggle="tooltip" data-placement="bottom" title="" data-original-title="통합검색">통합검색</span>
-          <i class="cqc-cancel3 on" data-tab-close="true" data-tab-id="122"></i>
-        </div>
-        -->
-        <div class="tab-item-addon" data-tab-id=""></div>
-      </div>
     </div>
-  </div>
 
-  <div class="ax-frame-foot">
-    <div class="ax-split-col" style="height: 100%;">
-      <div class="ax-split-panel text-align-left">   </div>
-      <div class="ax-split-panel text-align-right">
-        <b id="account-activity-timer">00:29</b>
-      </div>
+    <div id="content-frame-container" class="ax-frame-contents">
     </div>
-  </div>
-
-</div>
-
 
 </body>
 </html>
