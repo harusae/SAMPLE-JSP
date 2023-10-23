@@ -31,7 +31,7 @@ public class AuthrorizationChecker {
             return true;
         }
         //font는 예외
-        else if(request.getRequestURI().startsWith("/fonts")){
+        else if(request.getRequestURI().startsWith("/font")){
             return true;
         }
 

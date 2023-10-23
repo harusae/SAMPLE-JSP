@@ -1,6 +1,9 @@
 package kr.co.wisenut.controller.user;
 
+import kr.co.wisenut.entity.Lv1Info;
+import kr.co.wisenut.entity.RealtimeKeywordChartInfo;
 import kr.co.wisenut.entity.UserInfo;
+import kr.co.wisenut.service.RealtimeKeywordService;
 import kr.co.wisenut.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +26,8 @@ public class UserRestController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private RealtimeKeywordService realtimeKeywordService;
 
     @RequestMapping(method= RequestMethod.POST, value="/myPage/info")
     @ResponseBody
@@ -98,4 +104,36 @@ public class UserRestController {
 
         return new ResponseEntity(result, HttpStatus.OK);
     }
+
+
+    @RequestMapping(method= RequestMethod.POST, value="/realtimeKeyword/lv1List")
+    @ResponseBody
+    public ResponseEntity getLv1List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getLv1List param : {}", param);
+
+        List<Lv1Info> list = realtimeKeywordService.getLv1ClsList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/realtimeKeyword/getData")
+    @ResponseBody
+    public ResponseEntity getRealtimeKeywordData(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getRealtimeKeywordData param : {}", param);
+
+        List<List<List<Object>>> list = realtimeKeywordService.getRealtimeKeywordList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/realtimeKeyword/lv1ChartList")
+    @ResponseBody
+    public ResponseEntity getLv1ChartList(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getLv1ChartList param : {}", param);
+
+        List<RealtimeKeywordChartInfo> list = realtimeKeywordService.getLv1ChartList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
 }

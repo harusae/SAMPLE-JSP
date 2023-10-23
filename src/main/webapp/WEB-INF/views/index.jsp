@@ -37,7 +37,6 @@
 
 <!--publish css-->
 <link rel="stylesheet" href="/css/axboot.css"/>
-<link rel="stylesheet" type="text/css" href="/css/popularkeyword.css">
 <link rel="stylesheet" type="text/css" href="css/default.css">
 <link rel="stylesheet" type="text/css" href="css/new_page.css">
 <link rel="stylesheet" href="font-awesome/css/all.min.css">
@@ -131,7 +130,7 @@
       var menuBarMenuId = $(this).attr("id");
       var menuBarUlId = menuBarMenuId.substring(7,menuBarMenuId.length);
       var ulFlag = $('#depth2_'+menuBarUlId).css('display');
-      console.log('ulFlag : ', ulFlag);
+      //console.log('ulFlag : ', ulFlag);
 
       $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
       if ( ulFlag === 'none' ) {
@@ -196,7 +195,7 @@
   }
 
 </script>
-<body class="ax-body frame-set">
+<body class="ax-body " data-page-auto-height="true">
 
     <div class="wrap">
         <div class="util_area">
@@ -281,7 +280,7 @@
         </div>
     </div>
 
-    <div id="content-frame-container" class="ax-frame-contents">
+    <div id="content-frame-container">
     </div>
 
 </body>

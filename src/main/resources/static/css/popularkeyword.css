@@ -1,6 +1,6 @@
 #wrapa{width: 100%; height: 100%; background: #eceef3;} /*//높이100%*/
-.content{width: 100%; height: 100%; background: url(/img/bg.png); }
-section{ height: 100%; /*border: 1px solid red;*/ display: inline-block; background: #fff; background: url(/img/t_b.png) no-repeat #fff; background-position: top left;}
+.content{width: 100%; height: 100%;  }
+section{ height: 100%; /*border: 1px solid red;*/ display: inline-block; background: #fff; background: no-repeat #fff; background-position: top left;}
 section:nth-child(1){ width: 100%; position: absolute; top:5%; left: 1%;} /*그리드 맨위 간격 */
 section:nth-child(2){ width: 100%;position: absolute; top:10%; right: 1%;}
 
@@ -17,7 +17,7 @@ section .tt_b{color: #556fb5;}
 section .tt_s{color: #2fbbdb;}
 
 section .all ul{width: 100%; margin-left: 0.1%; }
-section .all li{ display: inline-block; width: 13.7%; padding: 0.7% 0; text-align: center; background: #fff;  border: 1px solid #e3e3e3; }
+section .all li{ display: inline-block; width: 10%; padding: 0.7% 0; text-align: center; background: #fff;  border: 1px solid #e3e3e3; }
 #tit_1 li{height:25px;  background: #655c4f; padding-top: 4px; color: #fff; font-size: 13px; font-family: Nanum Gothic;} /* 맨위박스 */
 
 #nb p{border-radius : 0px 20px 20px 0px; background: #655c4f; width: 100%; height: 35px; color: #fff; padding: 10px 0 0 5px; font-size: 14px; font-weight: bold;"}
