@@ -7,7 +7,13 @@ import lombok.Data;
 @AllArgsConstructor
 public class DashboardInfo4 {
     private String keyword;
-    private int sumCountBeforeWeek;
-    private int sumCountYesterday;
     private int sumCountToday;
+    private int sumCountTodayBefore1;
+    private int sumCountTodayBefore2;
+    private int sumCountTodayBefore3;
+    private int sumCountTodayBefore4;
+    private int sumCountTodayBefore5;
+    private int sumCountTodayBefore6;
+    private int sumCountTodayBefore7;
+    private int sumCountTodayBefore8;
 }

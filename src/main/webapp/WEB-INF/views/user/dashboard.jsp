@@ -615,10 +615,16 @@
             console.log('dataDashboard4List : ', dataDashboard4List);
             //start ag-grid
             var columnDefs = [
-                { headerName: '키워드', field: "keyword", width: 110  },
-                { headerName: '금일', field: "sumCountToday", width: 110  },
-                { headerName: '전일', field: "sumCountYesterday", width: 110  },
-                { headerName: '전주', field: "sumCountBeforeWeek", width: 110  },
+                { headerName: '키워드', field: "keyword", width: 80  },
+                { headerName: '금일', field: "sumCountToday", width: 70  },
+                { headerName: 'D-1', field: "sumCountTodayBefore1", width: 70  },
+                { headerName: 'D-2', field: "sumCountTodayBefore2", width: 70  },
+                { headerName: 'D-3', field: "sumCountTodayBefore3", width: 70  },
+                { headerName: 'D-4', field: "sumCountTodayBefore4", width: 70  },
+                { headerName: 'D-5', field: "sumCountTodayBefore5", width: 70  },
+                { headerName: 'D-6', field: "sumCountTodayBefore6", width: 70  },
+                { headerName: 'D-7', field: "sumCountTodayBefore7", width: 70  },
+                { headerName: 'D-8', field: "sumCountTodayBefore8", width: 70  },
             ];
             // let the grid know which columns and what data to use
             var gridOptions = {
@@ -640,15 +646,21 @@
             new agGrid.Grid(gridDiv, gridOptions);
             //end ag-grid
 
-            var chartLabels = ['전주', '전일', '금일'];
+            var chartLabels = ['D-8','D-7','D-6','D-5','D-4','D-3','D-2', 'D-1', '금일'];
             var chartDataSets = [];
             var listLength =dataDashboard4List.length < 10 ? dataDashboard4List.length : 10;
             for(var i=0; i<listLength ; i++){
                 var dataset = {
                     label: dataDashboard4List[i].keyword,
                     data: [
-                        dataDashboard4List[i].sumCountBeforeWeek,
-                        dataDashboard4List[i].sumCountYesterday,
+                        dataDashboard4List[i].sumCountTodayBefore8,
+                        dataDashboard4List[i].sumCountTodayBefore7,
+                        dataDashboard4List[i].sumCountTodayBefore6,
+                        dataDashboard4List[i].sumCountTodayBefore5,
+                        dataDashboard4List[i].sumCountTodayBefore4,
+                        dataDashboard4List[i].sumCountTodayBefore3,
+                        dataDashboard4List[i].sumCountTodayBefore2,
+                        dataDashboard4List[i].sumCountTodayBefore1,
                         dataDashboard4List[i].sumCountToday
                     ]
                 }
