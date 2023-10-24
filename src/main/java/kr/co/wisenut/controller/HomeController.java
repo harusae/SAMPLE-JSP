@@ -91,4 +91,12 @@ public class HomeController {
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
+    @RequestMapping(method= RequestMethod.POST, value="/home/dashboard4")
+    @ResponseBody
+    public ResponseEntity getDashboard4List(@RequestParam HashMap<String, Object> param){
+
+        List<DashboardInfo4> list = dashboardService.getDashboard4List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 }

@@ -287,72 +287,6 @@
     var dataDashboard4List = [];
 
 
-    function addZero(i) {
-        var rtn = i + 100;
-        return rtn.toString().substr(1, 3);
-    }
-
-    var monthList = [];
-    var monthData = [50,60,70,45,50,66];
-
-    var dt = new Date();
-    var year = dt.getFullYear();
-    var mon = addZero(eval(dt.getMonth()+1));
-    var now = year+mon;
-
-    for(var i = (now - 5); i <= now; i++){
-        var format =  i;
-        monthList.push(format);
-    }
-
-    var ctxhome = document.getElementById('test4home').getContext('2d');
-    var test4home = new Chart(ctxhome, {
-        type: 'line',
-        data: {
-            labels: monthList,
-            datasets: [
-                {
-                    // ⑤dataset의 이름(String)
-                    label: 'test3a',
-                    // ⑥dataset값(Array)
-                    data: [12, 19, 3, 5, 2, 3],
-                    // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                    backgroundColor: [
-                        //색상
-                        'rgba(255, 99, 132, 0.5)',
-                    ],
-                    // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                    borderColor: 'rgba(255, 99, 132, 1)',
-                    // ⑨dataset의 선 두께(Number)
-                    borderWidth: 1
-                },
-                {
-                    // ⑤dataset의 이름(String)
-                    label: 'test3b',
-                    // ⑥dataset값(Array)
-                    data: [8, 1, 9, 11, -2, -4],
-                    // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                    backgroundColor: [
-                        //색상
-                        'rgba(54, 162, 235, 0.5)',
-                    ],
-                    // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    // ⑨dataset의 선 두께(Number)
-                    borderWidth: 1
-                }
-            ]
-        },
-
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    display: false
-                }
-            }
-        }
-    });
 
     function getDashboard1List() {
         commonAjax("/home/dashboard1", {}, function(res){
@@ -387,7 +321,7 @@
 
             var chartLabels = [];
             var chartData = [];
-            var listLength =dataDashboard1List.length < 10 ? dataDashboard1List.length : 10;
+            var listLength = dataDashboard1List.length < 10 ? dataDashboard1List.length : 10;
             for(var i=0; i<listLength ; i++){
                 chartLabels.push(dataDashboard1List[i].lv3Nm);
                 chartData.push(dataDashboard1List[i].sumCount);
@@ -421,12 +355,11 @@
                         ],
                         // ⑧dataset의 선 색(rgba값을 String으로 표현)
                         //borderColor: 'rgba(255, 99, 132, 1)',
-                        // ⑨dataset의 선 두께(Number)
-                        borderWidth: 1
                     }]
                 },
                 // ⑩차트의 설정(Object)
                 options: {
+                    maintainAspectRatio: false,
                     responsive: true,
                     //미입력시 X축이 default
                     plugins: {
@@ -520,6 +453,7 @@
                 },
                 // ⑩차트의 설정(Object)
                 options: {
+                    maintainAspectRatio: false,
                     responsive: true,
                     //미입력시 X축이 default
                     //indexAxis: 'y',
@@ -628,6 +562,7 @@
                 },
                 // ⑩차트의 설정(Object)
                 options: {
+                    maintainAspectRatio: false,
                     responsive: true,
                     scales: {
                         x: {
@@ -674,13 +609,82 @@
         });
     }
 
+    function getDashboard4List() {
+        commonAjax("/home/dashboard4", {}, function(res){
+            dataDashboard4List = res;
+            console.log('dataDashboard4List : ', dataDashboard4List);
+            //start ag-grid
+            var columnDefs = [
+                { headerName: '키워드', field: "keyword", width: 110  },
+                { headerName: '금일', field: "sumCountToday", width: 110  },
+                { headerName: '전일', field: "sumCountYesterday", width: 110  },
+                { headerName: '전주', field: "sumCountBeforeWeek", width: 110  },
+            ];
+            // let the grid know which columns and what data to use
+            var gridOptions = {
+                columnDefs: columnDefs,
+                rowData: dataDashboard4List,
+                pagination: true,
+                paginationAutoPageSize: true,
+                //paginationPageSize: 10,
+                defaultColDef: {
+                    width: 200,
+                    sortable: true,
+                    resizable: true,
+                    //enableRowGroup: true,
+                    //enablePivot: true,
+                    //enableValue: true,
+                },
+            };
+            var gridDiv = document.querySelector('#grid4home');
+            new agGrid.Grid(gridDiv, gridOptions);
+            //end ag-grid
+
+            var chartLabels = ['전주', '전일', '금일'];
+            var chartDataSets = [];
+            var listLength =dataDashboard4List.length < 10 ? dataDashboard4List.length : 10;
+            for(var i=0; i<listLength ; i++){
+                var dataset = {
+                    label: dataDashboard4List[i].keyword,
+                    data: [
+                        dataDashboard4List[i].sumCountBeforeWeek,
+                        dataDashboard4List[i].sumCountYesterday,
+                        dataDashboard4List[i].sumCountToday
+                    ]
+                }
+                chartDataSets.push(dataset);
+            }
+
+            var ctxhome = document.getElementById('test4home').getContext('2d');
+            var test4home = new Chart(ctxhome, {
+                type: 'line',
+                data: {
+                    labels: chartLabels,
+                    datasets: chartDataSets
+                },
+
+                options: {
+                    maintainAspectRatio: false,
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+
+
+        });
+    }
+
     // onclick 이벤트 처리
     //초기화
     $(function() {
         getDashboard1List();
         getDashboard2List();
         getDashboard3List();
-
+        getDashboard4List();
     });
 </script>
 

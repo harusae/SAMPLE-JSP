@@ -35,7 +35,7 @@
             A.KEYWORD,
             sum(A.count) AS SUM_COUNT
         FROM TB_WTM_STAT_KEYWORD A
-        WHERE 1=1
+        WHERE A.DIV = 'TS'
           --AND A.YEAR = to_number(to_char(sysdate, 'yyyy'))
           --AND A.MONTH = to_number(to_char(sysdate, 'mm'))
           --AND A.DAY = to_number(to_char(sysdate, 'dd'))
@@ -71,5 +71,36 @@
              ) A
                  LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
                                  ON A.CLS_LABEL = B. CSELTYPECD
+    </select>
+
+    <select id="getDashboard4List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.DashboardInfo4">
+        SELECT
+            A.KEYWORD,
+            0 as SUM_COUNT_BEFORE_WEEK,
+            nvl(sum(B.count), 0) AS SUM_COUNT_YESTERDAY,
+            A.SUM_COUNT_TODAY
+        FROM(
+                SELECT
+                    KEYWORD,
+                    sum(count) AS SUM_COUNT_TODAY
+                FROM TB_WTM_STAT_STOPWORD
+                WHERE DIV = 'TS'
+                          AND DIC_TYPE = 'ISSUE'
+                          AND YEAR = 2023--to_number(to_char(sysdate, 'yyyy'))
+                          AND MONTH = 9--to_number(to_char(sysdate, 'mm'))
+                          AND DAY = 2--to_number(to_char(sysdate, 'dd'))
+                GROUP BY KEYWORD
+                ORDER BY SUM_COUNT_TODAY DESC
+            ) A
+                LEFT OUTER JOIN TB_WTM_STAT_STOPWORD B
+                                ON  A.KEYWORD = B.KEYWORD
+                                    AND B.DIV = 'TS'
+                                    AND B.DIC_TYPE = 'ISSUE'
+                                    AND B.YEAR = 2023--to_number(to_char(sysdate -1, 'yyyy'))
+                                    AND B.MONTH = 9--to_number(to_char(sysdate -1, 'mm'))
+                                    AND B.DAY = 1--to_number(to_char(sysdate -1, 'dd'))
+        GROUP BY A.KEYWORD, A.SUM_COUNT_TODAY
+        ORDER BY A.SUM_COUNT_TODAY desc
+
     </select>
 </mapper>
