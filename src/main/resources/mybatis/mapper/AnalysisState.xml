@@ -6,12 +6,16 @@
 
     <select id="getAnalysisState1List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.AnalysisStateInfo1">
         SELECT
+            A.YEAR,
+            A.MONTH,
             A.DAY,
             A.SENT_CLS_CD,
             B.NAME AS SENT_CLS_CD_NM,
             A.SUM_COUNT
         FROM (
                  SELECT
+                     YEAR,
+                     MONTH,
                      DAY,
                      SENT_CLS_CD,
                      sum(count) AS SUM_COUNT
@@ -21,11 +25,11 @@
                    AND YEAR = 2023
                    AND MONTH = 9
                    AND DAY BETWEEN 1 AND 9
-                     --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -7, 'yyyy'))
-                     --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -7, 'mm'))
-                     --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -7, 'dd'))
-                 GROUP BY DAY , SENT_CLS_CD
-                 ORDER BY DAY
+                     --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+                     --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+                     --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+                 GROUP BY YEAR, MONTH, DAY, SENT_CLS_CD
+                 ORDER BY YEAR, MONTH, DAY
              ) A
         LEFT OUTER JOIN TB_WTM_IS_CODE B
             ON A.SENT_CLS_CD = B.CODE
