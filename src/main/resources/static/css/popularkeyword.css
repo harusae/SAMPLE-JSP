@@ -20,7 +20,7 @@ section .all ul{width: 100%; margin-left: 0.1%; }
 section .all li{ display: inline-block; width: 10%; padding: 0.7% 0; text-align: center; background: #fff;  border: 1px solid #e3e3e3; }
 #tit_1 li{height:25px;  background: #655c4f; padding-top: 4px; color: #fff; font-size: 13px; font-family: Nanum Gothic;} /* 맨위박스 */
 
-#nb p{border-radius : 0px 20px 20px 0px; background: #655c4f; width: 100%; height: 35px; color: #fff; padding: 10px 0 0 5px; font-size: 14px; font-weight: bold;"}
+#nb p{border-radius : 0px 20px 20px 0px; background: #655c4f; width: 100%; height: 35px; color: #fff; padding: 10px 0 0 5px; font-size: 14px; font-weight: bold;}
 /* 좌측 연번 */
 
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.AnalysisStateMapper">
+
+    <select id="getAnalysisState1List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.AnalysisStateInfo1">
+        SELECT
+            A.DAY,
+            A.SENT_CLS_CD,
+            B.NAME AS SENT_CLS_CD_NM,
+            A.SUM_COUNT
+        FROM (
+                 SELECT
+                     DAY,
+                     SENT_CLS_CD,
+                     sum(count) AS SUM_COUNT
+                 FROM TB_WTM_STAT_CLASS
+                 WHERE SENT_CLS_CD = #{sentClsCd}
+                   AND DIV = 'TS'
+                   AND YEAR = 2023
+                   AND MONTH = 9
+                   AND DAY BETWEEN 1 AND 9
+                     --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -7, 'yyyy'))
+                     --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -7, 'mm'))
+                     --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -7, 'dd'))
+                 GROUP BY DAY , SENT_CLS_CD
+                 ORDER BY DAY
+             ) A
+        LEFT OUTER JOIN TB_WTM_IS_CODE B
+            ON A.SENT_CLS_CD = B.CODE
+    </select>
+
+</mapper>

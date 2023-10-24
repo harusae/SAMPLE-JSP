@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.InterestKeywordMapper">
+    <select id="getInterestKeyword1List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.InterestKeywordInfo1">
+        SELECT
+            A.KEYWORD,
+            nvl(SUM_COUNT_TODAY,0) AS SUM_COUNT_TODAY,
+            nvl(SUM_COUNT_YESTERDAY,0) AS SUM_COUNT_YESTERDAY,
+            nvl(round(SUM_COUNT_BEFORE_WEEK/7),0) AS SUM_COUNT_BEFORE_WEEK_AVR,
+            nvl(SUM_COUNT_BEFORE_WEEK_DAY,0) AS SUM_COUNT_BEFORE_WEEK_DAY
+        FROM(
+                SELECT
+                    KEYWORD,
+                    sum(count) AS SUM_COUNT_TODAY
+                FROM TB_WTM_STAT_KEYWORD
+                WHERE DIV = 'TS'
+                          AND YEAR = 2023--to_number(to_char(sysdate, 'yyyy'))
+                          AND MONTH = 9--to_number(to_char(sysdate, 'mm'))
+                          AND DAY = 9--to_number(to_char(sysdate, 'dd'))
+                GROUP BY KEYWORD
+                ORDER BY SUM_COUNT_TODAY DESC
+            ) A
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_YESTERDAY
+            FROM TB_WTM_STAT_KEYWORD
+            WHERE DIV = 'TS'
+                      AND YEAR = 2023--to_number(to_char(sysdate -1, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -1, 'mm'))
+                      AND DAY = 8--to_number(to_char(sysdate -1, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) B
+                                ON A.KEYWORD = B.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_BEFORE_WEEK
+            FROM TB_WTM_STAT_KEYWORD
+            WHERE DIV = 'WS'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+              AND WEEK = 35--to_number(to_char(sysdate -7,'WW'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) C
+                                ON A.KEYWORD = C.KEYWORD
+                LEFT OUTER JOIN  (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_BEFORE_WEEK_DAY
+            FROM TB_WTM_STAT_KEYWORD
+            WHERE DIV = 'TS'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+                      AND DAY = 1--to_number(to_char(sysdate -7, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) D
+                                 ON A.KEYWORD = D.KEYWORD
+        ORDER BY A.SUM_COUNT_TODAY DESC
+    </select>
+
+    <select id="getInterestKeyword2List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.InterestKeywordInfo2">
+        SELECT
+            YEAR,
+            MONTH,
+            DAY,
+            KEYWORD,
+            sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_KEYWORD
+        WHERE DIV = 'TS'
+          AND keyword = #{keyword}
+          AND YEAR = 2023
+          AND MONTH = 9
+          AND DAY BETWEEN 1 AND 9
+            --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+            --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+            --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+        GROUP BY YEAR, MONTH, DAY, KEYWORD
+        ORDER BY YEAR, MONTH, DAY
+    </select>
+
+    <select id="getInterestKeyword3List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.InterestKeywordInfo1">
+        SELECT
+            A.KEYWORD,
+            nvl(SUM_COUNT_TODAY,0) AS SUM_COUNT_TODAY,
+            nvl(SUM_COUNT_YESTERDAY,0) AS SUM_COUNT_YESTERDAY,
+            nvl(round(SUM_COUNT_BEFORE_WEEK/7),0) AS SUM_COUNT_BEFORE_WEEK_AVR,
+            nvl(SUM_COUNT_BEFORE_WEEK_DAY,0) AS SUM_COUNT_BEFORE_WEEK_DAY
+        FROM(
+                SELECT
+                    KEYWORD,
+                    sum(count) AS SUM_COUNT_TODAY
+                FROM TB_WTM_STAT_STOPWORD
+                WHERE DIV = 'TS'
+                          --AND DIC_TYPE = 'INTEREST'
+                          AND YEAR = 2023--to_number(to_char(sysdate, 'yyyy'))
+                          AND MONTH = 9--to_number(to_char(sysdate, 'mm'))
+                          AND DAY = 8--to_number(to_char(sysdate, 'dd'))
+                GROUP BY KEYWORD
+                ORDER BY SUM_COUNT_TODAY DESC
+            ) A
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_YESTERDAY
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      --AND DIC_TYPE = 'INTEREST'
+                      AND YEAR = 2023--to_number(to_char(sysdate -1, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -1, 'mm'))
+                      AND DAY = 8--to_number(to_char(sysdate -1, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) B
+                                ON A.KEYWORD = B.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_BEFORE_WEEK
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'WS'
+                      --AND DIC_TYPE = 'INTEREST'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+              AND WEEK = 35--to_number(to_char(sysdate -7,'WW'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) C
+                                ON A.KEYWORD = C.KEYWORD
+                LEFT OUTER JOIN  (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_BEFORE_WEEK_DAY
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      --AND DIC_TYPE = 'INTEREST'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+                      AND DAY = 1--to_number(to_char(sysdate -7, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) D
+                                 ON A.KEYWORD = D.KEYWORD
+        ORDER BY A.SUM_COUNT_TODAY DESC
+    </select>
+
+    <select id="getInterestKeyword4List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.InterestKeywordInfo2">
+        SELECT
+            YEAR,
+            MONTH,
+            DAY,
+            KEYWORD,
+            sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_STOPWORD
+        WHERE DIV = 'TS'
+        --AND DIC_TYPE = 'INTEREST'
+          AND keyword = #{keyword}
+          AND YEAR = 2023
+          AND MONTH = 9
+          AND DAY BETWEEN 1 AND 9
+            --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+            --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+            --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+        GROUP BY YEAR, MONTH, DAY, KEYWORD
+        ORDER BY YEAR, MONTH, DAY
+    </select>
+
+</mapper>

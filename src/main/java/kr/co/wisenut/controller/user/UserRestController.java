@@ -1,8 +1,8 @@
 package kr.co.wisenut.controller.user;
 
-import kr.co.wisenut.entity.Lv1Info;
-import kr.co.wisenut.entity.RealtimeKeywordChartInfo;
-import kr.co.wisenut.entity.UserInfo;
+import kr.co.wisenut.entity.*;
+import kr.co.wisenut.service.AnalysisStateService;
+import kr.co.wisenut.service.InterestKeywordService;
 import kr.co.wisenut.service.RealtimeKeywordService;
 import kr.co.wisenut.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -28,6 +28,10 @@ public class UserRestController {
     private UserService userService;
     @Autowired
     private RealtimeKeywordService realtimeKeywordService;
+    @Autowired
+    private InterestKeywordService interestKeywordService;
+    @Autowired
+    private AnalysisStateService analysisStateService;
 
     @RequestMapping(method= RequestMethod.POST, value="/myPage/info")
     @ResponseBody
@@ -136,4 +140,54 @@ public class UserRestController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @RequestMapping(method= RequestMethod.POST, value="/interestKeyword/list1")
+    @ResponseBody
+    public ResponseEntity getInterestKeyword1List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getInterestKeyword1List param : {}", param);
+
+        List<InterestKeywordInfo1> list = interestKeywordService.getInterestKeyword1List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/interestKeyword/list2")
+    @ResponseBody
+    public ResponseEntity getInterestKeyword2List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getInterestKeyword2List param : {}", param);
+
+        List<InterestKeywordInfo2> list = interestKeywordService.getInterestKeyword2List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/interestKeyword/list3")
+    @ResponseBody
+    public ResponseEntity getInterestKeyword3List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getInterestKeyword3List param : {}", param);
+
+        List<InterestKeywordInfo1> list = interestKeywordService.getInterestKeyword3List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/interestKeyword/list4")
+    @ResponseBody
+    public ResponseEntity getInterestKeyword4List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getInterestKeyword4List param : {}", param);
+
+        List<InterestKeywordInfo2> list = interestKeywordService.getInterestKeyword4List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method= RequestMethod.POST, value="/analysisState/list1")
+    @ResponseBody
+    public ResponseEntity getAnalysisState1List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getAnalysisState1List param : {}", param);
+
+        List<AnalysisStateInfo1> list = analysisStateService.getAnalysisState1List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 }

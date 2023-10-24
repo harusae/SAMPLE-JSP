@@ -208,6 +208,7 @@
           </div>
         </div>
       </div>
+
     </div>
 
   </div>
@@ -222,7 +223,7 @@
 
     commonAjax("/realtimeKeyword/lv1List", {}, function(res){
       realtimeKeywordLv1List = res;
-      //console.log('realtimeKeywordLv1List : ',realtimeKeywordLv1List) ;
+      console.log('realtimeKeywordLv1List : ',realtimeKeywordLv1List) ;
       for(var i=0; i<10; i++){
         var tmpLv1Nm = realtimeKeywordLv1List[i] =='undefined' ? '-' : realtimeKeywordLv1List[i].lv1Nm;
         var tmpHeaderLi = '<li>'+ tmpLv1Nm +'</li>';
@@ -236,7 +237,7 @@
 
     commonAjax("/realtimeKeyword/getData", {}, function(res){
       realtimeKeywordDataList = res;
-      //console.log('realtimeKeywordDataList : ',realtimeKeywordDataList) ;
+      console.log('realtimeKeywordDataList : ',realtimeKeywordDataList) ;
       //console.log('realtimeKeywordDataList[0][0][0] : ',realtimeKeywordDataList[0][0][0]) ;
       for(var i=0; i<10; i++){
         var tmpTr = '<tr>';
@@ -294,20 +295,6 @@
             label: 'test1',
             // ⑥dataset값(Array)
             data: chartData,
-            // ⑦dataset의 배경색(rgba값을 String으로 표현)
-            backgroundColor: [
-              //색상
-              'rgba(255, 99, 132, 0.5)',
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(255, 206, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(255, 159, 64, 0.5)'
-            ],
-            // ⑧dataset의 선 색(rgba값을 String으로 표현)
-            //borderColor: 'rgba(255, 99, 132, 1)',
-            // ⑨dataset의 선 두께(Number)
-            borderWidth: 1
           }]
         },
         // ⑩차트의 설정(Object)
