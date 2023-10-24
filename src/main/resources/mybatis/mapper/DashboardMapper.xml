@@ -85,15 +85,15 @@
     <select id="getDashboard4List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.DashboardInfo4">
         SELECT
             A.KEYWORD,
-            A.SUM_COUNT_TODAY,
-            nvl(sum(B.count), 0) AS SUM_COUNT_BEFORE1,
-            nvl(sum(C.count), 0) AS SUM_COUNT_BEFORE2,
-            nvl(sum(D.count), 0) AS SUM_COUNT_BEFORE3,
-            nvl(sum(E.count), 0) AS SUM_COUNT_BEFORE4,
-            nvl(sum(F.count), 0) AS SUM_COUNT_BEFORE5,
-            nvl(sum(G.count), 0) AS SUM_COUNT_BEFORE6,
-            nvl(sum(H.count), 0) AS SUM_COUNT_BEFORE7,
-            nvl(sum(I.count), 0) AS SUM_COUNT_BEFORE8
+            nvl(SUM_COUNT_TODAY, 0) AS SUM_COUNT_TODAY,
+            nvl(SUM_COUNT_BEFORE1, 0) AS SUM_COUNT_BEFORE1,
+            nvl(SUM_COUNT_BEFORE2, 0) AS SUM_COUNT_BEFORE2,
+            nvl(SUM_COUNT_BEFORE3, 0) AS SUM_COUNT_BEFORE3,
+            nvl(SUM_COUNT_BEFORE4, 0) AS SUM_COUNT_BEFORE4,
+            nvl(SUM_COUNT_BEFORE5, 0) AS SUM_COUNT_BEFORE5,
+            nvl(SUM_COUNT_BEFORE6, 0) AS SUM_COUNT_BEFORE6,
+            nvl(SUM_COUNT_BEFORE7, 0) AS SUM_COUNT_BEFORE7,
+            nvl(SUM_COUNT_BEFORE8, 0) AS SUM_COUNT_BEFORE8
         FROM(
                 SELECT
                     KEYWORD,
@@ -107,63 +107,118 @@
                 GROUP BY KEYWORD
                 ORDER BY SUM_COUNT_TODAY DESC
             ) A
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD B
-                        ON  A.KEYWORD = B.KEYWORD
-                            AND B.DIV = 'TS'
-                            AND B.DIC_TYPE = 'ISSUE'
-                            AND B.YEAR = 2023--to_number(to_char(sysdate -1, 'yyyy'))
-                            AND B.MONTH = 9--to_number(to_char(sysdate -1, 'mm'))
-                            AND B.DAY = 8--to_number(to_char(sysdate -1, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD C
-                        ON  A.KEYWORD = C.KEYWORD
-                            AND C.DIV = 'TS'
-                            AND C.DIC_TYPE = 'ISSUE'
-                            AND C.YEAR = 2023--to_number(to_char(sysdate -2, 'yyyy'))
-                            AND C.MONTH = 9--to_number(to_char(sysdate -2, 'mm'))
-                            AND C.DAY = 7--to_number(to_char(sysdate -2, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD D
-                        ON  A.KEYWORD = D.KEYWORD
-                            AND D.DIV = 'TS'
-                            AND D.DIC_TYPE = 'ISSUE'
-                            AND D.YEAR = 2023--to_number(to_char(sysdate -3, 'yyyy'))
-                            AND D.MONTH = 9--to_number(to_char(sysdate -3, 'mm'))
-                            AND D.DAY = 6--to_number(to_char(sysdate -3, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD E
-                        ON  A.KEYWORD = E.KEYWORD
-                            AND E.DIV = 'TS'
-                            AND E.DIC_TYPE = 'ISSUE'
-                            AND E.YEAR = 2023--to_number(to_char(sysdate -4, 'yyyy'))
-                            AND E.MONTH = 9--to_number(to_char(sysdate -4, 'mm'))
-                            AND E.DAY = 5--to_number(to_char(sysdate -4, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD F
-                        ON  A.KEYWORD = F.KEYWORD
-                            AND F.DIV = 'TS'
-                            AND F.DIC_TYPE = 'ISSUE'
-                            AND F.YEAR = 2023--to_number(to_char(sysdate -5, 'yyyy'))
-                            AND F.MONTH = 9--to_number(to_char(sysdate -5, 'mm'))
-                            AND F.DAY = 4--to_number(to_char(sysdate -5, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD G
-                        ON  A.KEYWORD = G.KEYWORD
-                            AND G.DIV = 'TS'
-                            AND G.DIC_TYPE = 'ISSUE'
-                            AND G.YEAR = 2023--to_number(to_char(sysdate -6, 'yyyy'))
-                            AND G.MONTH = 9--to_number(to_char(sysdate -6, 'mm'))
-                            AND G.DAY = 3--to_number(to_char(sysdate -6, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD H
-                        ON  A.KEYWORD = H.KEYWORD
-                            AND H.DIV = 'TS'
-                            AND H.DIC_TYPE = 'ISSUE'
-                            AND H.YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
-                            AND H.MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
-                            AND H.DAY = 2--to_number(to_char(sysdate -7, 'dd'))
-        LEFT OUTER JOIN TB_WTM_STAT_STOPWORD I
-                        ON  A.KEYWORD = I.KEYWORD
-                            AND I.DIV = 'TS'
-                            AND I.DIC_TYPE = 'ISSUE'
-                            AND I.YEAR = 2023--to_number(to_char(sysdate -8, 'yyyy'))
-                            AND I.MONTH = 9--to_number(to_char(sysdate -8, 'mm'))
-                            AND I.DAY = 1--to_number(to_char(sysdate -8, 'dd'))
-        GROUP BY A.KEYWORD, A.SUM_COUNT_TODAY
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE1
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -1, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -1, 'mm'))
+                      AND DAY = 8--to_number(to_char(sysdate -1, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE1 DESC
+        ) B
+                                ON  A.KEYWORD = B.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE2
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -2, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -2, 'mm'))
+                      AND DAY = 7--to_number(to_char(sysdate -2, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE2 DESC
+        ) C
+                                ON  A.KEYWORD = C.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE3
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -3, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -3, 'mm'))
+                      AND DAY = 6--to_number(to_char(sysdate -3, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE3 DESC
+        ) D
+                                ON  A.KEYWORD = D.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE4
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -4, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -4, 'mm'))
+                      AND DAY = 5--to_number(to_char(sysdate -4, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE4 DESC
+        ) E
+                                ON  A.KEYWORD = E.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE5
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -5, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -5, 'mm'))
+                      AND DAY = 4--to_number(to_char(sysdate -5, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE5 DESC
+        ) E
+                                ON  A.KEYWORD = E.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE6
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -6, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -6, 'mm'))
+                      AND DAY = 3--to_number(to_char(sysdate -6, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE6 DESC
+        ) F
+                                ON  A.KEYWORD = F.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE7
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+                      AND DAY = 2--to_number(to_char(sysdate -7, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE7 DESC
+        ) G
+                                ON  A.KEYWORD = G.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                nvl(sum(count), 0) AS SUM_COUNT_BEFORE8
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -8, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -8, 'mm'))
+                      AND DAY = 1--to_number(to_char(sysdate -8, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY SUM_COUNT_BEFORE8 DESC
+        ) H
+                                ON  A.KEYWORD = H.KEYWORD
         ORDER BY A.SUM_COUNT_TODAY desc
     </select>
 </mapper>
