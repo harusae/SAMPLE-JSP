@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.NegativeCallMapper">
+    <select id="getlv3List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeCallInfo1">
+        SELECT B.lv3_CD, B.lv3_NM, sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_CLASS A,(
+            SELECT
+                A.CSELTYPECD AS lv1_CD, A.CSELTYPENM AS lv1_NM, A.CSELTYPEDEPTH AS lv1_DEPTH, A.CSELTYPEORD AS lv1_ORD,
+                B.CSELTYPECD AS lv2_CD, B.CSELTYPENM AS lv2_NM, B.CSELTYPEDEPTH AS lv2_DEPTH, B.CSELTYPEORD AS lv2_ORD,
+                C.CSELTYPECD AS lv3_CD, C.CSELTYPENM AS lv3_NM, C.CSELTYPEDEPTH AS lv3_DEPTH, C.CSELTYPEORD AS lv3_ORD
+            FROM TB_WTM_IS_CLSCODE A
+            LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+                ON A.CSELTYPECD = B.PARCSELTYPECD AND B.USEFG ='Y'
+            LEFT OUTER JOIN TB_WTM_IS_CLSCODE C
+                ON B.CSELTYPECD = C.PARCSELTYPECD AND B.USEFG ='Y'
+            WHERE A.CSELTYPEDEPTH = 1
+              AND A.USEFG ='Y'
+            ORDER BY lv1_CD, lv2_CD, lv3_CD ) B
+        WHERE A.CLS_LABEL = B.lv3_CD
+          AND A.DIV = 'TS'
+          AND A.SENT_CLS_CD = #{sentClsCd}
+        GROUP BY B.lv3_CD, B.lv3_NM
+        ORDER BY SUM_COUNT DESC
+    </select>
+
+    <select id="getlv3ChartList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeCallInfo2">
+        SELECT
+            A.YEAR,
+            A.MONTH,
+            A.DAY,
+            A.CLS_LABEL,
+            B.CSELTYPENM AS CLS_LABEL_NM,
+            A.SUM_COUNT
+        FROM (
+                 SELECT
+                     YEAR,
+                     MONTH,
+                     DAY,
+                     CLS_LABEL,
+                     sum(count) AS SUM_COUNT
+                 FROM TB_WTM_STAT_CLASS
+                 WHERE SENT_CLS_CD = '300002'
+                   AND DIV = 'TS'
+                   AND YEAR = 2023
+                   AND MONTH = 9
+                   AND DAY BETWEEN 1 AND 9
+                   AND CLS_LABEL IN
+                 <foreach collection="list" item="item" open="(" close=")" separator=",">
+                    #{item}
+                 </foreach>
+                 --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+                 --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+                 --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+                 GROUP BY YEAR, MONTH, DAY, CLS_LABEL
+                 ORDER BY YEAR, MONTH, DAY
+             ) A
+                 LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+                                 ON A.CLS_LABEL = B.CSELTYPECD
+        ORDER BY CLS_LABEL, YEAR, MONTH, DAY
+    </select>
+
+    <select id="getGridList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeCallInfo3">
+        SELECT
+            CLS_LABEL,
+            CLS_LABEL_NM,
+            SUM_COUNT,
+            round((SUM_COUNT / TOTAL_COUNT) * 100, 2) AS ratio
+        FROM (
+                 SELECT
+                     A.CLS_LABEL,
+                     B.CSELTYPENM AS CLS_LABEL_NM,
+                     A.SUM_COUNT
+                 FROM (
+                          SELECT
+                              CLS_LABEL,
+                              sum(count) AS SUM_COUNT
+                          FROM TB_WTM_STAT_CLASS
+                          WHERE SENT_CLS_CD = '300002'
+                                    AND DIV = 'TS'
+                                    AND YEAR = 2023
+                                    AND MONTH = 9
+                                    AND DAY BETWEEN 1 AND 9
+                                --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+                                --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+                                --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+                          GROUP BY CLS_LABEL
+                      ) A
+                          LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+                                          ON A.CLS_LABEL = B.CSELTYPECD
+                 ORDER BY SUM_COUNT DESC
+             ) A1
+                 LEFT OUTER JOIN (
+            SELECT
+                sum(count) AS TOTAL_COUNT
+            FROM TB_WTM_STAT_CLASS
+            WHERE SENT_CLS_CD = '300002'
+                      AND DIV = 'TS'
+                      AND YEAR = 2023
+                      AND MONTH = 9
+                      AND DAY BETWEEN 1 AND 9
+            --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+            --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+            --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+        ) A2 ON 1=1
+    </select>
+
+</mapper>

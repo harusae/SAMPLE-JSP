@@ -1,10 +1,7 @@
 package kr.co.wisenut.controller.user;
 
 import kr.co.wisenut.entity.*;
-import kr.co.wisenut.service.AnalysisStateService;
-import kr.co.wisenut.service.InterestKeywordService;
-import kr.co.wisenut.service.RealtimeKeywordService;
-import kr.co.wisenut.service.UserService;
+import kr.co.wisenut.service.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,6 +31,8 @@ public class UserRestController {
     private InterestKeywordService interestKeywordService;
     @Autowired
     private AnalysisStateService analysisStateService;
+    @Autowired
+    private NegativeCallService negativeCallService;
 
     @RequestMapping(method= RequestMethod.POST, value="/myPage/info")
     @ResponseBody
@@ -190,4 +191,39 @@ public class UserRestController {
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeCall/lv3List")
+    @ResponseBody
+    public ResponseEntity getNegativeCallLv3(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeCallLv3 param : {}", param);
+
+        List<NegativeCallInfo1> list = negativeCallService.getlv3List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeCall/lv3ChartList")
+    @ResponseBody
+    public ResponseEntity getNegativeCallLv3Chart(@RequestParam HashMap<String, Object> param, Authentication auth) {
+        logger.info("getNegativeCallLv3Chart param : {}", param);
+        //다중처리용 리스트 파라미터
+        ArrayList<String> paramList = new ArrayList<>();
+        String[] tmp = param.get("targetList").toString().split(",");
+        paramList.addAll(Arrays.asList(tmp));
+
+        List<NegativeCallInfo2> list = negativeCallService.getlv3ChartList(paramList);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeCall/gridList")
+    @ResponseBody
+    public ResponseEntity getNegativeGridList(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeGridList param : {}", param);
+
+        List<NegativeCallInfo3> list = negativeCallService.getGridList(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
 }
