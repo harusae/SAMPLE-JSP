@@ -307,8 +307,6 @@
             interestKeywordList3 = res;
             console.log('interestKeywordList3 : ',interestKeywordList3);
 
-
-
             //start ag-grid
             var columnDefs = [
                 { headerName: '키워드', field: "keyword"},

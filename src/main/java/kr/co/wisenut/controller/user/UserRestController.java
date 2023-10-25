@@ -1,6 +1,7 @@
 package kr.co.wisenut.controller.user;
 
 import kr.co.wisenut.entity.*;
+import kr.co.wisenut.mapper.NegativeKeywordMapper;
 import kr.co.wisenut.service.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -33,6 +34,8 @@ public class UserRestController {
     private AnalysisStateService analysisStateService;
     @Autowired
     private NegativeCallService negativeCallService;
+    @Autowired
+    private NegativeKeywordService negativeKeywordService;
 
     @RequestMapping(method= RequestMethod.POST, value="/myPage/info")
     @ResponseBody
@@ -225,5 +228,46 @@ public class UserRestController {
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeKeyword/list1")
+    @ResponseBody
+    public ResponseEntity getNegativeKeyword1List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeKeyword1List param : {}", param);
+
+        List<NegativeKeywordInfo1> list = negativeKeywordService.getNegativeKeyword1List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeKeyword/list2")
+    @ResponseBody
+    public ResponseEntity getNegativeKeyword2List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeKeyword2List param : {}", param);
+
+        List<NegativeKeywordInfo2> list = negativeKeywordService.getNegativeKeyword2List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeKeyword/list3")
+    @ResponseBody
+    public ResponseEntity getNegativeKeyword3List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeKeyword3List param : {}", param);
+
+        List<NegativeKeywordInfo3> list = negativeKeywordService.getNegativeKeyword3List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeKeyword/list4")
+    @ResponseBody
+    public ResponseEntity getNegativeKeyword4List(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeKeyword4List param : {}", param);
+
+        List<NegativeKeywordInfo4> list = negativeKeywordService.getNegativeKeyword4List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
 
 }

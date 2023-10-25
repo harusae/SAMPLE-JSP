@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.NegativeKeywordMapper">
+
+    <select id="getNegativeKeyword1List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeKeywordInfo1">
+        SELECT
+            A.KEYWORD,
+            nvl(SUM_COUNT_TODAY,0) AS SUM_COUNT_TODAY,
+            nvl(SUM_COUNT_YESTERDAY,0) AS SUM_COUNT_YESTERDAY,
+            nvl(round(SUM_COUNT_BEFORE_WEEK/7),0) AS SUM_COUNT_BEFORE_WEEK_AVR,
+            nvl(SUM_COUNT_BEFORE_WEEK_DAY,0) AS SUM_COUNT_BEFORE_WEEK_DAY
+        FROM(
+                SELECT
+                    KEYWORD,
+                    sum(count) AS SUM_COUNT_TODAY
+                FROM TB_WTM_STAT_STOPWORD
+                WHERE DIV = 'TS'
+                          AND DIC_TYPE = 'ISSUE'
+                          AND YEAR = 2023--to_number(to_char(sysdate, 'yyyy'))
+                          AND MONTH = 9--to_number(to_char(sysdate, 'mm'))
+                          AND DAY = 8--to_number(to_char(sysdate, 'dd'))
+                GROUP BY KEYWORD
+                ORDER BY SUM_COUNT_TODAY DESC
+            ) A
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_YESTERDAY
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -1, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -1, 'mm'))
+                      AND DAY = 8--to_number(to_char(sysdate -1, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) B
+                                ON A.KEYWORD = B.KEYWORD
+                LEFT OUTER JOIN (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_BEFORE_WEEK
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'WS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+              AND WEEK = 35--to_number(to_char(sysdate -7,'WW'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) C
+                                ON A.KEYWORD = C.KEYWORD
+                LEFT OUTER JOIN  (
+            SELECT
+                KEYWORD,
+                sum(count) AS SUM_COUNT_BEFORE_WEEK_DAY
+            FROM TB_WTM_STAT_STOPWORD
+            WHERE DIV = 'TS'
+                      AND DIC_TYPE = 'ISSUE'
+                      AND YEAR = 2023--to_number(to_char(sysdate -7, 'yyyy'))
+                      AND MONTH = 9--to_number(to_char(sysdate -7, 'mm'))
+                      AND DAY = 1--to_number(to_char(sysdate -7, 'dd'))
+            GROUP BY KEYWORD
+            ORDER BY sum(count) DESC
+        ) D
+                                 ON A.KEYWORD = D.KEYWORD
+        ORDER BY A.SUM_COUNT_TODAY DESC
+    </select>
+
+    <select id="getNegativeKeyword2List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeKeywordInfo2">
+        SELECT
+            YEAR,
+            MONTH,
+            DAY,
+            KEYWORD,
+            sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_STOPWORD
+        WHERE DIV = 'TS'
+          AND DIC_TYPE = 'ISSUE'
+          AND keyword = #{keyword}
+          AND YEAR = 2023
+          AND MONTH = 9
+          AND DAY BETWEEN 1 AND 9
+            --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+            --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+            --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+        GROUP BY YEAR, MONTH, DAY, KEYWORD
+        ORDER BY YEAR, MONTH, DAY
+    </select>
+
+    <select id="getNegativeKeyword3List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeKeywordInfo3">
+        SELECT
+            SESS_ID
+             ,CALL_ID
+             ,to_char(CALL_START_DT, 'yyyy-mm-dd') AS CALL_START_DATE
+             ,to_char(CALL_START_DT, 'hh24:mi:ss') AS CALL_START_TIME
+             ,ROUND( (CALL_END_DT - CALL_START_DT) *24*60 )||'분 '||MOD(ROUND( (CALL_END_DT - CALL_START_DT) *24*60*60 ),60)||'초' AS CALL_TIME
+             ,AGENT_NM
+             ,SENT_CLS_PT
+        FROM TB_WTM_IS_SESS
+        WHERE SENT_CLS_CD ='300002'
+          AND CALL_START_DT BETWEEN to_date('20230909000000', 'yyyymmddhh24miss') AND to_date('20230909235959', 'yyyymmddhh24miss')
+        --AND CALL_START_DT BETWEEN to_date(to_char(sysdate, 'yyyymmdd')||'000000', 'yyyymmddhh24miss') AND to_date(to_char(sysdate, 'yyyymmdd')||'000000', 'yyyymmddhh24miss')
+        ORDER BY SENT_CLS_PT desc
+    </select>
+
+    <select id="getNegativeKeyword4List" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeKeywordInfo4">
+        SELECT
+            CALL_ID
+             ,CONTENT_ID
+             ,CONTENTS
+        FROM TB_WTM_IS_BS_SENT
+        WHERE CALL_ID = #{callId}
+          AND CLS_LABEL ='부정'
+        ORDER BY CONTENT_ID
+    </select>
+</mapper>

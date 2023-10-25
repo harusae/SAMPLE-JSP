@@ -58,6 +58,15 @@ public class UserController {
         return view;
     }
 
+    @RequestMapping("/negativeCall2")
+    public ModelAndView negativeCall2() {
+
+        ModelAndView view = new ModelAndView();
+        view.setViewName("user/negativeCall2");
+
+        return view;
+    }
+
     @RequestMapping("/negativeKeyword")
     public ModelAndView negativeKeyword() {
 
