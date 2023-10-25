@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.wisenut.mapper.NegativeCallCounselMapper">
+    <select id="getNegativeCallCounselList1" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeCallCounselInfo1">
+        SELECT
+            AGENT_ID
+             ,nvl(AGENT_NM, AGENT_ID) AS AGENT_NM
+             ,sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_SENTIMENT
+        WHERE DIV = 'TS'
+          AND SENT_CLS_CD = '300002'
+                  AND YEAR = 2023
+                  AND MONTH = 9
+                  AND DAY = 9
+        GROUP BY AGENT_ID, AGENT_NM
+        ORDER BY sum(COUNT) desc
+    </select>
+
+    <select id="getNegativeCallCounselList2" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeCallCounselInfo2">
+        SELECT
+            YEAR,
+            MONTH,
+            DAY,
+            AGENT_ID,
+            nvl(AGENT_NM, AGENT_ID) AS AGENT_NM,
+            sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_SENTIMENT
+        WHERE DIV = 'TS'
+          AND SENT_CLS_CD = '300002'
+          AND YEAR = 2023
+          AND MONTH = 9
+          AND DAY BETWEEN 1 AND 9
+          AND AGENT_ID IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        --AND YEAR between to_number(to_char(sysdate, 'yyyy')) and to_number(to_char(sysdate -8, 'yyyy'))
+        --AND MONTH between to_number(to_char(sysdate, 'mm')) and to_number(to_char(sysdate -8, 'mm'))
+        --AND DAY between to_number(to_char(sysdate, 'dd')) and to_number(to_char(sysdate -8, 'dd'))
+        GROUP BY YEAR, MONTH, DAY, AGENT_ID, AGENT_NM
+        ORDER BY AGENT_NM, YEAR, MONTH, DAY
+    </select>
+
+    <select id="getNegativeCallCounselList3" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.NegativeCallCounselInfo3">
+        SELECT
+            AGENT_ID
+            ,nvl(AGENT_NM, AGENT_ID) AS AGENT_NM
+            ,SUM_COUNT
+            ,round((SUM_COUNT / TOTAL_COUNT) * 100, 2) AS ratio
+        FROM (
+                 SELECT
+                     AGENT_ID
+                      ,nvl(AGENT_NM, AGENT_ID) AS AGENT_NM
+                      ,sum(count) AS SUM_COUNT
+                 FROM TB_WTM_STAT_SENTIMENT
+                 WHERE DIV = 'TS'
+                   AND SENT_CLS_CD = '300002'
+                 GROUP BY AGENT_ID, AGENT_NM
+                 ORDER BY sum(COUNT) desc
+        ) A1
+        LEFT OUTER JOIN (
+            SELECT
+                sum(count) AS TOTAL_COUNT
+            FROM TB_WTM_STAT_SENTIMENT
+            WHERE DIV = 'TS'
+              AND SENT_CLS_CD = '300002'
+        ) A2 ON 1=1
+    </select>
+
+</mapper>

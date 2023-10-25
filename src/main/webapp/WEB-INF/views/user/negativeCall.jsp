@@ -140,7 +140,7 @@
                                                         <button type="button" class="btn btn-default" data-form-view-01-btn="excel_down_02">Excel</button>
                                                     </div>
                                                     <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-02" style="height: 630px;">
-                                                        <div id="grid1NegativeCall" style="height: 630px;" class="ag-theme-alpine" ></div>
+                                                        <div id="grid1NegativeCall" style="height: 590px;" class="ag-theme-alpine" ></div>
                                                     </div>
 
                                                 </div>

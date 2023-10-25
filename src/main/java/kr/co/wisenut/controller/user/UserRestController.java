@@ -1,7 +1,6 @@
 package kr.co.wisenut.controller.user;
 
 import kr.co.wisenut.entity.*;
-import kr.co.wisenut.mapper.NegativeKeywordMapper;
 import kr.co.wisenut.service.*;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -36,6 +35,8 @@ public class UserRestController {
     private NegativeCallService negativeCallService;
     @Autowired
     private NegativeKeywordService negativeKeywordService;
+    @Autowired
+    private NegativeCallCounselService negativeCallCounselService;
 
     @RequestMapping(method= RequestMethod.POST, value="/myPage/info")
     @ResponseBody
@@ -265,6 +266,41 @@ public class UserRestController {
         logger.info("getNegativeKeyword4List param : {}", param);
 
         List<NegativeKeywordInfo4> list = negativeKeywordService.getNegativeKeyword4List(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeCallCounsel/list1")
+    @ResponseBody
+    public ResponseEntity getNegativeCallCounselList1(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeCallCounselList1 param : {}", param);
+
+        List<NegativeCallCounselInfo1> list = negativeCallCounselService.getNegativeCallCounselList1(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeCallCounsel/list3")
+    @ResponseBody
+    public ResponseEntity getNegativeCallCounselList3(@RequestParam HashMap<String, Object> param, Authentication auth){
+        logger.info("getNegativeCallCounselList3 param : {}", param);
+
+        List<NegativeCallCounselInfo3> list = negativeCallCounselService.getNegativeCallCounselList3(param);
+
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
+    @RequestMapping(method= RequestMethod.POST, value="/negativeCallCounsel/list2")
+    @ResponseBody
+    public ResponseEntity getNegativeCallCounselList2(@RequestParam HashMap<String, Object> param, Authentication auth) {
+        logger.info("getNegativeCallCounselList2 param : {}", param);
+        //다중처리용 리스트 파라미터
+        ArrayList<String> paramList = new ArrayList<>();
+        String[] tmp = param.get("targetList").toString().split(",");
+        paramList.addAll(Arrays.asList(tmp));
+
+        List<NegativeCallCounselInfo2> list = negativeCallCounselService.getNegativeCallCounselList2(paramList);
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
