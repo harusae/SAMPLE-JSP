@@ -30,11 +30,7 @@
     </div>
 
     <div role="page-header">
-      <form name="searchView0" id="searchView0" method="post" onsubmit="return ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);" style="">
-        <input type="hidden" name="recordplayer" id="recordplayer">
-        <input type="hidden" id="userId">
-        <input type="hidden" id="docId">
-        <input type="hidden" id="kwd">
+      <form name="searchAllForm" id="searchAllForm" method="post" onsubmit="return ACTIONS.dispatch(ACTIONS.PAGE_SEARCH);" style="">
         <div data-ax-tbl="" id="" class="ax-search-tbl" style="">
           <div data-ax-tr="" id="" class="" style="">
             <div data-ax-tbl="" id="" class="ax-search-tbl" style="">
@@ -45,7 +41,7 @@
 
                     <div class="form-inline">
                       <div class="form-group">
-                        <input type="text" id="searchWord" class="form-control W600" placeholder="">
+                        <input type="text" id="query" class="form-control W600" placeholder="">
                       </div>
                     </div>
 
@@ -262,89 +258,26 @@
       <div data-split-panel="{height: &quot;*&quot;}" id="" style="padding-top: 10px; display: block; height: 570px; top: 0px;" class="split-panel-horizontal">
         <div style="padding-top: 10px;" class="" data-split-panel-wrap="">
           <div data-ax5layout="ax2" data-config="{layout:&quot;tab-panel&quot;}" data-fit-height-content="layout-view-01" style="height: 550px;">
-            <div data-tab-panel="{label: &quot;녹취리스트&quot;, active: true}" data-tab-active="true">
+            <div data-tab-panel="{label: &quot;상담목록&quot;, active: true}" data-tab-active="true">
               <div style="padding:10px 0 0 0;" data-split-panel-wrap="scroll">
 
                 <div id="gridTotalCnt" style="text-align: right; padding-right : 1%;"> </div>
                 <!-- 목록 -->
                 <div style="position: relative:height:470px;" id="grid-parent"></div>
-                <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 505px;"><div data-ax5grid-container="root" data-ax5grid-instance="ax5grid-37" style="height: 505px;">
-                  <div data-ax5grid-container="hidden">
-                    <textarea data-ax5grid-form="clipboard"></textarea>
-                  </div>
-                  <div data-ax5grid-container="header" style="height: 28px;">
-                    <div data-ax5grid-panel="aside-header" style="display: none;"></div>
-                    <div data-ax5grid-panel="left-header" style="display: none;"></div>
-                    <div data-ax5grid-panel="header" style="left: 0px; width: 1193px; height: 28px;">
-                      <div data-ax5grid-panel-scroll="header"><table border="0" cellpadding="0" cellspacing="0"><colgroup><col style="width:60px;"><col style="width:150px;"><col style="width:100px;"><col style="width:100px;"><col style="width:150px;"><col style="width:100px;"><col style="width:100px;"><col style="width:100px;"><col style="width:150px;"><col style="width:150px;"><col style="width:100px;"><col style="width:100px;"><col style="width:150px;"><col style="width:150px;"><col style="width:150px;"><col style="width:150px;"><col style="width:150px;"><col style="width:100px;"><col style="width:100px;"><col></colgroup><tbody><tr class=""><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="0" data-ax5grid-column-key="no" data-ax5grid-column-colindex="0" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="0" data-ax5grid-column-sort-order=""></span>&nbsp;</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="1" data-ax5grid-column-key="docId" data-ax5grid-column-colindex="1" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="1" data-ax5grid-column-sort-order=""></span>DOCID</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="2" data-ax5grid-column-key="date" data-ax5grid-column-colindex="2" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="2" data-ax5grid-column-sort-order=""></span>녹취일</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="3" data-ax5grid-column-key="stime" data-ax5grid-column-colindex="3" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="3" data-ax5grid-column-sort-order=""></span>녹취시작</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="4" data-ax5grid-column-key="duration" data-ax5grid-column-colindex="4" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="4" data-ax5grid-column-sort-order=""></span>통화시간</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="5" data-ax5grid-column-key="textValue" data-ax5grid-column-colindex="5" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="5" data-ax5grid-column-sort-order=""></span>통화내역</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="6" data-ax5grid-column-key="summary" data-ax5grid-column-colindex="6" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="6" data-ax5grid-column-sort-order=""></span>전문</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="7" data-ax5grid-column-key="outGb" data-ax5grid-column-colindex="7" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="7" data-ax5grid-column-sort-order=""></span>콜유형</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="8" data-ax5grid-column-key="userId" data-ax5grid-column-colindex="8" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="8" data-ax5grid-column-sort-order=""></span>상담사행번</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="9" data-ax5grid-column-key="userName" data-ax5grid-column-colindex="9" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="9" data-ax5grid-column-sort-order=""></span>상담사이름</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="10" data-ax5grid-column-key="custNo" data-ax5grid-column-colindex="10" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="10" data-ax5grid-column-sort-order=""></span>고객번호</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="11" data-ax5grid-column-key="custTel" data-ax5grid-column-colindex="11" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="11" data-ax5grid-column-sort-order=""></span>고객전화번호</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="12" data-ax5grid-column-key="groupName" data-ax5grid-column-colindex="12" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="12" data-ax5grid-column-sort-order=""></span>센터</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="13" data-ax5grid-column-key="groupId" data-ax5grid-column-colindex="13" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="13" data-ax5grid-column-sort-order=""></span>파트</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="14" data-ax5grid-column-key="tacategory1" data-ax5grid-column-colindex="14" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="14" data-ax5grid-column-sort-order=""></span>대분류</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="15" data-ax5grid-column-key="tacategory2" data-ax5grid-column-colindex="15" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="15" data-ax5grid-column-sort-order=""></span>중분류</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="16" data-ax5grid-column-key="tacategory3" data-ax5grid-column-colindex="16" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="16" data-ax5grid-column-sort-order=""></span>소분류</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="17" data-ax5grid-column-key="muteCount" data-ax5grid-column-colindex="17" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="17" data-ax5grid-column-sort-order=""></span>묵음횟수</span></td><td data-ax5grid-column-attr="default" data-ax5grid-column-row="0" data-ax5grid-column-col="18" data-ax5grid-column-key="muteTime" data-ax5grid-column-colindex="18" data-ax5grid-column-rowindex="0" colspan="1" rowspan="1" class="hasBorder isLastColumn " style="height: 27px;min-height: 1px;"><span data-ax5grid-cellholder="" data-ax5grid-text-align="center" style="height: 27px;line-height: 21px;"><span data-ax5grid-column-sort="18" data-ax5grid-column-sort-order=""></span>묵음시간</span></td><td data-ax5grid-column-row="null" data-ax5grid-column-col="null" style="height: 28px;min-height: 1px;"></td></tr></tbody></table><div data-ax5grid-column-resizer="0" style="height:27px;left: 56px;"></div><div data-ax5grid-column-resizer="1" style="height:27px;left: 206px;"></div><div data-ax5grid-column-resizer="2" style="height:27px;left: 306px;"></div><div data-ax5grid-column-resizer="3" style="height:27px;left: 406px;"></div><div data-ax5grid-column-resizer="4" style="height:27px;left: 556px;"></div><div data-ax5grid-column-resizer="5" style="height:27px;left: 656px;"></div><div data-ax5grid-column-resizer="6" style="height:27px;left: 756px;"></div><div data-ax5grid-column-resizer="7" style="height:27px;left: 856px;"></div><div data-ax5grid-column-resizer="8" style="height:27px;left: 1006px;"></div><div data-ax5grid-column-resizer="9" style="height:27px;left: 1156px;"></div><div data-ax5grid-column-resizer="10" style="height:27px;left: 1256px;"></div><div data-ax5grid-column-resizer="11" style="height:27px;left: 1356px;"></div><div data-ax5grid-column-resizer="12" style="height:27px;left: 1506px;"></div><div data-ax5grid-column-resizer="13" style="height:27px;left: 1656px;"></div><div data-ax5grid-column-resizer="14" style="height:27px;left: 1806px;"></div><div data-ax5grid-column-resizer="15" style="height:27px;left: 1956px;"></div><div data-ax5grid-column-resizer="16" style="height:27px;left: 2106px;"></div><div data-ax5grid-column-resizer="17" style="height:27px;left: 2206px;"></div><div data-ax5grid-column-resizer="18" style="height:27px;left: 2306px;"></div></div>
-                    </div>
-                    <div data-ax5grid-panel="right-header" style="display: none;"></div>
-                  </div>
-                  <div data-ax5grid-container="body" style="height: 430px;">
-                    <div data-ax5grid-panel="top-aside-body" style="display: none;"></div>
-                    <div data-ax5grid-panel="top-left-body" style="display: none;"></div>
-                    <div data-ax5grid-panel="top-body" style="display: none;">
-                      <div data-ax5grid-panel-scroll="top-body"></div>
-                    </div>
-                    <div data-ax5grid-panel="top-right-body" style="display: none;"></div>
-                    <div data-ax5grid-panel="aside-body" style="display: none;">
-                      <div data-ax5grid-panel-scroll="aside-body"></div>
-                    </div>
-                    <div data-ax5grid-panel="left-body" style="display: none;">
-                      <div data-ax5grid-panel-scroll="left-body"></div>
-                    </div>
-                    <div data-ax5grid-panel="body" style="left: 0px; width: 1193px; top: 0px; height: 430px;">
-                      <div data-ax5grid-panel-scroll="body"></div>
-                    </div>
-                    <div data-ax5grid-panel="right-body" style="display: none;">
-                      <div data-ax5grid-panel-scroll="right-body"></div>
-                    </div>
-                    <div data-ax5grid-panel="bottom-aside-body" style="display: none;"></div>
-                    <div data-ax5grid-panel="bottom-left-body" style="display: none;"></div>
-                    <div data-ax5grid-panel="bottom-body" style="display: none;">
-                      <div data-ax5grid-panel-scroll="bottom-body"></div>
-                    </div>
-                    <div data-ax5grid-panel="bottom-right-body" style="display: none;"></div>
-                  </div>
-                  <div data-ax5grid-container="page" style="height: 30px;">
-                    <div data-ax5grid-page="holder">
-                      <div data-ax5grid-page="navigation"></div>
-                      <div data-ax5grid-page="status"></div>
-                    </div>
-                  </div>
-                  <div data-ax5grid-container="scroller">
-                    <div data-ax5grid-scroller="vertical" style="display: none;">
-                      <div data-ax5grid-scroller="vertical-bar" style="width: 10px; left: 2px;"></div>
-                    </div>
-                    <div data-ax5grid-scroller="horizontal" style="display: block; width: 1193px; height: 15px; right: 0px; bottom: 30px;">
-                      <div data-ax5grid-scroller="horizontal-bar" style="height: 10px; top: 2px; left: 0px; width: 616.125px;"></div>
-                    </div>
-                    <div data-ax5grid-scroller="corner" style="display: none;"></div>
-                  </div>
-                  <div data-ax5grid-resizer="vertical"></div>
-                  <div data-ax5grid-resizer="horizontal"></div>
-                </div></div>
+                <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 505px;">
+                  <div id="grid1SearchAll" style="height: 490px;" class="ag-theme-alpine" ></div>
+                </div>
 
               </div>
             </div>
 
-            <div data-tab-panel="{label: &quot;키워드추이&quot;, active: false}">
-              <div style="padding:10px 0 0 0;" data-split-panel-wrap="scroll">
-
-                <div id="chart-container">FusionCharts XT will load here!</div>
-
-              </div>
-            </div>
 
             <div data-tab-panel-label-holder="ax5layout-34">
               <div data-tab-panel-label-border="ax5layout-34"></div>
               <div data-tab-panel-label-table="ax5layout-34">
                 <div data-tab-panel-aside="left"></div>
                 <div data-tab-panel-label="0" data-tab-active="true">
-                  <div data-tab-label="0">녹취리스트</div>
-                </div>
-                <div data-tab-panel-label="1" data-tab-active="false">
-                  <div data-tab-label="1">키워드추이</div>
+                  <div data-tab-label="0">상담목록</div>
                 </div>
                 <div data-tab-panel-aside="right"></div>
               </div>
@@ -355,6 +288,61 @@
     </div>
   </div>
 </div>
-
 </body>
+
+<script>
+  var searchAllList;
+
+  function getSearchAllList1() {
+    commonAjax("", $("#searchAllForm").serialize(), function(res){
+
+      //searchAllList = res.collectionList.resultList;
+      searchAllList = res;
+      console.log('searchAllList : ', searchAllList);
+
+      //start ag-grid
+      var columnDefs = [
+        { headerName: '상담ID', field: "CALL_ID"},
+        { headerName: '녹취일', field: "RECORD_DT" },
+        { headerName: '녹취시작', field: "RECORD_DT" },
+        { headerName: '통화시간', field: "RECORD_TIME" },
+        { headerName: '전문', field: "" },
+        { headerName: '요약', field: "" },
+        { headerName: '상담사이름', field: "AGENT_NM" },
+        { headerName: '지점', field: "BLNT_BRNO_NM" },
+        { headerName: '채널', field: "CHANNEL_SC_NM" },
+        { headerName: '대분류', field: "LD_CLS_NM" },
+        { headerName: '중분류', field: "MD_CLS_NM" },
+        { headerName: '소분류', field: "SD_CLS_NM" },
+        { headerName: '묵음시간', field: "MUTE_TIME" }
+      ];
+      // let the grid know which columns and what data to use
+      var gridOptions = {
+        columnDefs: columnDefs,
+        rowData: searchAllList,
+        pagination: true,
+        paginationAutoPageSize: true,
+        //paginationPageSize: 10,
+        defaultColDef: {
+          width: 110,
+          sortable: true,
+          resizable: true,
+          //enableRowGroup: true,
+          //enablePivot: true,
+          //enableValue: true,
+        },
+      };
+      var gridDiv = document.querySelector('#grid1SearchAll');
+      new agGrid.Grid(gridDiv, gridOptions);
+      //end ag-grid
+
+    });
+  }
+  //초기화
+  $(function() {
+    getSearchAllList1();
+
+  });
+</script>
+
 </html>
