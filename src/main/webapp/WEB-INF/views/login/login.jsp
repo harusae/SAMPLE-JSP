@@ -10,11 +10,14 @@
     <title>Login</title>
     <link rel="icon" href="data:,">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="css/new_page.css">
+    <link rel="stylesheet" href="font-awesome/css/all.min.css">
 </head>
 <body>
 
-<div class="container">
-    <h1>로그인</h1>
+<div class="login_box">
+    <h1><a href="#"><img src="/img/login_logo.png" alt="WISE TextMiner"></a></h1>
     <form method="post" action="/loginPrc">
         <div class="form-group">
             <label >아이디</label>
@@ -24,7 +27,9 @@
             <label >비밀번호</label>
             <input type="password" name="password" class="form-control" placeholder="비밀번호 입력해주세요">
         </div>
-        <button type="submit" class="btn btn-primary">로그인</button>
+        <div class="btn_group">
+            <button type="submit" class="btn btn-primary">로그인</button>
+        </div>
     </form>
     <br/>
     <!-- 로그인 실패 처리 -->

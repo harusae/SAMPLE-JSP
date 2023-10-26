@@ -14,6 +14,9 @@
     <title>Login</title>
     <link rel="icon" href="data:,">
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <link rel="stylesheet" type="text/css" href="css/new_page.css">
+    <link rel="stylesheet" href="font-awesome/css/all.min.css">
     <script src="/js/jquery-3.7.1.min.js"></script>
 </head>
 
@@ -99,7 +102,7 @@
 
 <body>
 
-<div class="container">
+<div class="login_box pw">
     <h1>비밀번호 변경</h1>
     <form method="post" id="resetPwForm">
         <div class="form-group">
@@ -111,7 +114,9 @@
             <input type="password" id="password2" name="password2" class="form-control" placeholder="다시 한 번 입력해주세요">
         </div>
     </form>
-    <button type="button" class="btn btn-primary" onclick="resetPw();">비밀번호 변경</button>
+    <div class="btn_group">
+        <button type="button" class="btn btn-primary" onclick="resetPw();">비밀번호 변경</button>
+    </div>
     <br/>
     <!-- 초기화 대상이 아닌 경우 -->
     <c:if test="${'Y' ne principal.resetYn}">
