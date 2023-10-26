@@ -25,7 +25,7 @@ public class CustomInterceptor implements HandlerInterceptor {
         if(     request.getRequestURI().startsWith("/js") ||
                 request.getRequestURI().startsWith("/css") ||
                 request.getRequestURI().startsWith("/img") ||
-                request.getRequestURI().startsWith("/fonts")
+                request.getRequestURI().startsWith("/font")
         ){return true;} //라이브러리 파일은 생략
 
         //이력저장 시 예외처리가 필요한 케이스는 공통처리에서 제외
