@@ -47,7 +47,8 @@ public class RealtimeKeywordService {
                     }
                     else{
                         //빈값 입력
-                        tmpList.add(new RealtimeKeywordInfo(lv1Info.getLv1Cd(), lv1Info.getLv1Nm(), "","","","-",0));
+                        //tmpList.add(new RealtimeKeywordInfo(lv1Info.getLv1Cd(), lv1Info.getLv1Nm(), "","","","-",0));
+                        tmpList.add(new RealtimeKeywordInfo(lv1Info.getLv1Cd(), lv1Info.getLv1Nm(), "-",0));
                     }
 
                 }
@@ -55,7 +56,8 @@ public class RealtimeKeywordService {
             else{
                 for(int j=0; j<10; j++){
                     //빈값 입력
-                    tmpList.add(new RealtimeKeywordInfo("", "", "","","","-",0));
+                    //tmpList.add(new RealtimeKeywordInfo("", "", "","","","-",0));
+                    tmpList.add(new RealtimeKeywordInfo("", "", "-",0));
 
                 }
             }
@@ -79,9 +81,8 @@ public class RealtimeKeywordService {
                 int num = k + l*10;
                 RealtimeKeywordInfo rtkInfo = tmpList.get(num);
                 logger.info("num : {} , rtkInfo : {}", num, rtkInfo);
-                //logger.info("num : {} , lv3Nm : {}, sumCount : {}", num, rtkInfo.getLv3Nm(), rtkInfo.getSumCount());
-                //tmpItem.put(rtkInfo.getLv3Nm(), rtkInfo.getSumCount());
-                tmpItem.add(rtkInfo.getLv3Nm());
+                //tmpItem.add(rtkInfo.getLv3Nm());
+                tmpItem.add(rtkInfo.getKeyword());
                 tmpItem.add(rtkInfo.getSumCount());
                 itemList.add(tmpItem);
 

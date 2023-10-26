@@ -4,6 +4,60 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.wisenut.mapper.RealtimeKeywordMapper">
     <select id="getRealtimeKeywordList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.RealtimeKeywordInfo">
+        SELECT B.lv1_CD, B.lv1_NM, A.keyword, sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_KEYWORD A,(
+            SELECT
+            A.CSELTYPECD AS lv1_CD, A.CSELTYPENM AS lv1_NM, A.CSELTYPEDEPTH AS lv1_DEPTH, A.CSELTYPEORD AS lv1_ORD,
+            B.CSELTYPECD AS lv2_CD, B.CSELTYPENM AS lv2_NM, B.CSELTYPEDEPTH AS lv2_DEPTH, B.CSELTYPEORD AS lv2_ORD,
+            C.CSELTYPECD AS lv3_CD, C.CSELTYPENM AS lv3_NM, C.CSELTYPEDEPTH AS lv3_DEPTH, C.CSELTYPEORD AS lv3_ORD
+            FROM TB_WTM_IS_CLSCODE A
+            LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+            ON A.CSELTYPECD = B.PARCSELTYPECD AND B.USEFG ='Y'
+            LEFT OUTER JOIN TB_WTM_IS_CLSCODE C
+            ON B.CSELTYPECD = C.PARCSELTYPECD AND B.USEFG ='Y'
+            WHERE A.CSELTYPEDEPTH = 1
+            AND A.USEFG ='Y'
+            <if test="lv1Cd != null and lv1Cd != ''">
+                AND A.CSELTYPECD = #{lv1Cd}
+            </if>
+            ORDER BY lv1_CD, lv2_CD, lv3_CD
+        ) B
+        WHERE A.CLS_LABEL = B.lv3_CD
+        AND A.DIV = 'TS'
+        GROUP BY B.lv1_CD, B.lv1_NM, keyword
+        ORDER BY B.lv1_CD, SUM_COUNT desc
+    </select>
+
+    <select id="getLv1ClsList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.Lv1Info">
+        SELECT
+            A.CSELTYPECD AS lv1_CD, A.CSELTYPENM AS lv1_NM, A.CSELTYPEDEPTH AS lv1_DEPTH, A.CSELTYPEORD AS lv1_ORD
+        FROM TB_WTM_IS_CLSCODE A
+        WHERE CSELTYPEDEPTH = 1 and USEFG ='Y'
+        ORDER BY lv1_CD
+    </select>
+
+    <select id="getLv1ChartList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.RealtimeKeywordChartInfo">
+        SELECT B.lv1_CD, B.lv1_NM, sum(count) AS SUM_COUNT
+        FROM TB_WTM_STAT_KEYWORD A,(
+            SELECT
+                A.CSELTYPECD AS lv1_CD, A.CSELTYPENM AS lv1_NM, A.CSELTYPEDEPTH AS lv1_DEPTH, A.CSELTYPEORD AS lv1_ORD,
+                B.CSELTYPECD AS lv2_CD, B.CSELTYPENM AS lv2_NM, B.CSELTYPEDEPTH AS lv2_DEPTH, B.CSELTYPEORD AS lv2_ORD,
+                C.CSELTYPECD AS lv3_CD, C.CSELTYPENM AS lv3_NM, C.CSELTYPEDEPTH AS lv3_DEPTH, C.CSELTYPEORD AS lv3_ORD
+            FROM TB_WTM_IS_CLSCODE A
+                     LEFT OUTER JOIN TB_WTM_IS_CLSCODE B
+                                     ON A.CSELTYPECD = B.PARCSELTYPECD AND B.USEFG ='Y'
+                     LEFT OUTER JOIN TB_WTM_IS_CLSCODE C
+                                     ON B.CSELTYPECD = C.PARCSELTYPECD AND B.USEFG ='Y'
+            WHERE A.CSELTYPEDEPTH = 1
+              AND A.USEFG ='Y'
+            ORDER BY lv1_CD, lv2_CD, lv3_CD ) B
+        WHERE A.CLS_LABEL = B.lv3_CD
+          AND A.DIV = 'TS'
+        GROUP BY B.lv1_CD, B.lv1_NM
+        ORDER BY SUM_COUNT DESC
+    </select>
+    <!--
+    <select id="getRealtimeKeywordList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.RealtimeKeywordInfo">
         SELECT B.lv1_CD, B.lv1_NM, B.lv2_CD, B.lv2_NM, B.lv3_CD, B.lv3_NM, sum(count) AS SUM_COUNT
         FROM TB_WTM_STAT_KEYWORD A,(
             SELECT
@@ -32,7 +86,7 @@
             A.CSELTYPECD AS lv1_CD, A.CSELTYPENM AS lv1_NM, A.CSELTYPEDEPTH AS lv1_DEPTH, A.CSELTYPEORD AS lv1_ORD
         FROM TB_WTM_IS_CLSCODE A
         WHERE CSELTYPEDEPTH = 1 and USEFG ='Y'
-        ORDER BY lv1_DEPTH
+        ORDER BY lv1_CD
     </select>
 
     <select id="getLv1ChartList" parameterType="java.util.Map" resultType="kr.co.wisenut.entity.RealtimeKeywordChartInfo">
@@ -55,5 +109,5 @@
         GROUP BY B.lv1_CD, B.lv1_NM
         ORDER BY SUM_COUNT DESC
     </select>
-
+    -->
 </mapper>

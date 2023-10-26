@@ -64,18 +64,6 @@
                   </div>
                 </div>
 
-                <div data-ax-td="" id="" class="" style=";width:180px">
-                  <div data-ax-td-label="" class="" style=";width:80px">기간유형</div>
-                  <div data-ax-td-wrap="">
-
-                    <select id="periodType" data-ax-path="periodType" class="form-control W80">
-                      <option value="day">일별</option>
-                      <option value="month">월별</option>
-                      <!-- <option value="time">시간대별</option> -->
-                    </select>
-
-                  </div>
-                </div>
 
                 <div data-ax-td="" id="" class="" style=";width:280px">
                   <div data-ax-td-label="" class="" style="">기간선택</div>
@@ -156,7 +144,7 @@
                 </div>
 
                 <div data-ax-td="" id="" class="" style=";width:270px">
-                  <div data-ax-td-label="" class="" style=";width:120px">고객번호</div>
+                  <div data-ax-td-label="" class="" style=";width:120px">상담원</div>
                   <div data-ax-td-wrap="">
 
                     <div class="form-inline">
@@ -168,22 +156,26 @@
                   </div>
                 </div>
 
-                <div data-ax-td="" id="" class="" style=";width:300px">
-                  <div data-ax-td-label="" class="" style="">전화번호</div>
+              </div>
+
+              <div data-ax-tr="" id="" class="" style="">
+
+                <div data-ax-td="" id="" class="" style=";width:195px">
+                  <div data-ax-td-label="" class="" style=";width:90px">채널명</div>
                   <div data-ax-td-wrap="">
 
-                    <div class="form-inline">
-                      <div class="form-group">
-                        <input type="text" id="cust_tel" class="form-control W130">
-                      </div>
-                    </div>
+                    <select id="callType" data-ax-path="callType" class="form-control W90">
+                      <option value="">전체</option>
+                      <option value="A">A</option>
+                      <option value="B">B</option>
+                      <option value="C">C</option>
+                      <option value="D">D</option>
+                      <option value="H">H</option>
+                    </select>
 
                   </div>
                 </div>
 
-              </div>
-
-              <div data-ax-tr="" id="" class="" style="">
                 <div data-ax-td="" id="" class="" style=";width:500px">
                   <div data-ax-td-label="" class="" style=";width:90px">분류</div>
                   <div data-ax-td-wrap="">
@@ -204,48 +196,18 @@
                 </div>
 
                 <div data-ax-td="" id="" class="" style=";width:250px">
-                  <div data-ax-td-label="" class="" style="">센터</div>
+                  <div data-ax-td-label="" class="" style="">긍부정</div>
                   <div data-ax-td-wrap="">
 
                     <select id="centerNm" data-ax-path="centerNm" class="form-control W120">
                       <option value="ALL">전체</option>
-                      <option value="CC">고객상담부</option>
-                      <option value="CARD">카드사업단</option>
+                      <option value="CC">긍정</option>
+                      <option value="CARD">부정</option>
                     </select>
 
                   </div>
                 </div>
 
-                <div data-ax-td="part" id="part" class="" style=";width:190px">
-                  <div data-ax-td-label="part" class="" style=";width:80px">파트</div>
-                  <div data-ax-td-wrap="">
-
-                    <div class="form-inline">
-                      <div class="form-group">
-                        <select id="groupID" data-ax-path="groupID" class="form-control W80">
-                          <option value="all">전체</option>
-                          <option value="15">예금</option>
-                          <option value="14">대출</option>
-                          <option value="16">비씨</option>
-                          <option value="20">멀티</option>
-                          <option value="9">자동화</option>
-                          <option value="8">인터넷</option>
-                          <option value="10">영업점</option>
-                        </select>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-
-                <div data-ax-td="" id="" class="" style=";width:260px">
-                  <div data-ax-td-label="" class="" style="">상담사명</div>
-                  <div data-ax-td-wrap="">
-
-                    <input type="text" id="user_nm" class="form-control W120">
-
-                  </div>
-                </div>
 
               </div>
             </div>
@@ -294,11 +256,10 @@
   var searchAllList;
 
   function getSearchAllList1() {
-    commonAjax("", $("#searchAllForm").serialize(), function(res){
+    commonAjax("http://100.80.79.22:15000/search/stt", $("#searchAllForm").serialize(), function(res){
 
-      //searchAllList = res.collectionList.resultList;
-      searchAllList = res;
-      console.log('searchAllList : ', searchAllList);
+      console.log('searchAllList res : ', res);
+      searchAllList = res.collectionList[0].resultList;
 
       //start ag-grid
       var columnDefs = [

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div data-ax5layout="ax1" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 879px;">
-            <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 600px; left: 0px;">
+            <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 950px; left: 0px;">
                 <div style="padding-right: 10px;" class="" data-split-panel-wrap="">
                     <div class="ax-button-group" data-fit-height-aside="grid-view-01">
                         <div class="left">
@@ -44,8 +44,8 @@
                     </div>
                 </div>
             </div>
-            <div data-splitter="{}" class="split-panel-vertical" style="display: block; width: 7px; left: 600px;"></div>
-            <div data-split-panel="{width: &quot;*&quot;}"  class="split-panel-vertical" style="display: block; width:800px; left: 607px;">
+            <div data-splitter="{}" class="split-panel-vertical" style="display: block; width: 7px; left: 950px;"></div>
+            <div data-split-panel="{width: &quot;*&quot;}"  class="split-panel-vertical" style="display: block; width:900px; left: 957px;">
                 <div style="padding-left: 10px;" class="" data-split-panel-wrap="scroll">
                     <div class="ax-button-group" role="panel-header">
                         <div class="left">

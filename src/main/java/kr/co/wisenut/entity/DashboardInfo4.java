@@ -6,6 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DashboardInfo4 {
+    private String year;
+    private String month;
+    private String day;
     private String keyword;
     private int sumCountToday;
     private int sumCountTodayBefore1;

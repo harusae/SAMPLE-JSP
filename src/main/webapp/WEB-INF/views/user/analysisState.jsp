@@ -123,7 +123,7 @@
                         <div style="padding-top: 5px;" class="" data-split-panel-wrap="">
 
                             <div data-ax5layout="ax3" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 734px;">
-                                <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 672.8px; left: 0px;">
+                                <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 872.8px; left: 0px;">
                                     <div style="padding-right: 5px; height: 350px;" class="" data-split-panel-wrap="">
 
                                         <div style="height: 350px;">
@@ -141,7 +141,7 @@
 
 
                             <div data-ax5layout="ax3" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 734px;">
-                                <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 672.8px; left: 0px;">
+                                <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 872.8px; left: 0px;">
                                     <div style="padding-right: 5px; height: 350px;" class="" data-split-panel-wrap="">
 
                                         <div style="height: 350px;">
@@ -162,10 +162,10 @@
             </div>
 
 
-            <div data-split-panel="{width: &quot;*&quot;}" id="" class="split-panel-vertical" style="display: block; width: 571.74px; left: 1023.26px;">
+            <div data-split-panel="{width: &quot;*&quot;}" id="" class="split-panel-vertical" style="display: block; width: 801.74px; left: 1023.26px;">
                 <div style="padding-left: 3px;" class="" data-split-panel-wrap="">
 
-                    <div data-fit-height-content="right-view-01" style="border: 1px solid rgb(216, 216, 216); background: rgb(255, 255, 255); height: 794px;" align="center">
+                    <div data-fit-height-content="right-view-01" style="border: 1px solid rgb(216, 216, 216); background: rgb(255, 255, 255); height: 694px;" align="center">
                         <canvas id="chart3AnalysisState"></canvas>
                     </div>
                 </div>

@@ -56,6 +56,10 @@
 
   //DIV에 하위페이지 로드/이동 처리
   function navInit(id, name, url){
+      console.log('navInit id : ', id);
+      console.log('navInit name : ', name);
+      console.log('navInit url : ', url);
+
     $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
     //로그인 세션 체크
     commonAjax('/sessionChk', {}, function(res){
@@ -193,7 +197,10 @@
       }
     });
   }
-
+  //초기화
+  $(function() {
+    navInit('home', '대시보드', '/home');
+  });
 </script>
 <body class="ax-body " data-page-auto-height="true">
 

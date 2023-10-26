@@ -8,9 +8,10 @@ import lombok.Data;
 public class RealtimeKeywordInfo {
     private String lv1Cd;
     private String lv1Nm;
-    private String lv2Cd;
-    private String lv2Nm;
-    private String lv3Cd;
-    private String lv3Nm;
+    //private String lv2Cd;
+    //private String lv2Nm;
+    //private String lv3Cd;
+    //private String lv3Nm;
+    private String keyword;
     private int sumCount;
 }

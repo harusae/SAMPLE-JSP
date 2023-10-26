@@ -162,6 +162,7 @@
                             </div>
                         </div>
 
+                        <!--
                         <div data-tab-panel="{label: &quot;대분류별 업무&quot;, active: false}">
                             <div style="padding:10px 0 0 0;" data-split-panel-wrap="">
 
@@ -249,6 +250,7 @@
 
                             </div>
                         </div>
+                        -->
 
                         <div data-tab-panel-label-holder="ax5layout-34">
                             <div data-tab-panel-label-border="ax5layout-34"></div>
@@ -257,9 +259,11 @@
                                 <div data-tab-panel-label="0" data-tab-active="true">
                                     <div data-tab-label="0">소분류별 업무</div>
                                 </div>
+                                <!--
                                 <div data-tab-panel-label="1" data-tab-active="false">
                                     <div data-tab-label="1">대분류별 업무</div>
                                 </div>
+                                -->
                                 <div data-tab-panel-aside="right"></div>
                             </div>
                         </div>

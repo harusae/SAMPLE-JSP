@@ -68,7 +68,7 @@
             <div data-split-panel="{height: &quot;48%&quot;}" style="padding-bottom: 5px; display: block; height: 352.32px; top: 0px;" class="split-panel-horizontal">
                 <div style="padding-bottom: 5px;" class="" data-split-panel-wrap="">
                     <div class="ax-button-group" data-fit-height-aside="grid-view-01">
-                        <div class="left" style="width:37%">
+                        <div class="left" style="width:44%">
                             <h2><i class="cqc-list"></i> 부정 키워드 </h2>
                         </div>
                         <div class="left" style="width:40%">
@@ -82,7 +82,7 @@
                     </div>
 
                     <div data-ax5layout="ax2" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 734px;">
-                        <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 672.8px; left: 0px;">
+                        <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 900px; left: 0px;">
                             <div style="padding-right: 5px; height:390px;" class="" data-split-panel-wrap="">
 
                                 <div data-ax5grid="grid-view-01" data-fit-height-content="grid-view-01" style="height: 310px;">
@@ -93,10 +93,10 @@
                             </div>
                         </div>
 
-                        <div data-split-panel="{width: &quot;60%&quot;}" class="split-panel-vertical" style="display: block; width: 622.2px; left: 672.8px;">
+                        <div data-split-panel="{width: &quot;60%&quot;}" class="split-panel-vertical" style="display: block; width: 900px; left: 1000px;">
                             <div style="padding-left: 5px; height: 771px;" class="" data-split-panel-wrap="">
 
-                                <div style="height: 320px;">
+                                <div style="height: 310px;">
                                     <canvas id="chart1NegativeKeyword"></canvas>
                                 </div>
 
@@ -113,16 +113,17 @@
                         <div class="left" style="width:30%">
                             <h3><i class="cqc-list"></i> 부정 문장 </h3>
                         </div>
-                        <div class="right" style="width:10%">
+                        <div class="right" style="width:17%">
                             <button type="button" class="btn btn-default" data-form-view-01-btn="excel_down_02">Excel</button>
                         </div>
+                        <div class="right" style="width:6%;"> </div>
                         <div class="left">
                             <h2><i class="cqc-list"></i> 부정 문장 차트 </h2>
                         </div>
                     </div>
 
                     <div data-ax5layout="ax3" role="page-content" data-config="{layout:&quot;split-panel&quot;, orientation: &quot;vertical&quot;, splitter: {size: 7}}" style="height: 734px;">
-                        <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 672.8px; left: 0px;">
+                        <div data-split-panel="{width: &quot;40%&quot;}" class="split-panel-vertical" style="display: block; width: 900px; left: 0px;">
                             <div style="padding-right: 5px; height:307px;" class="" data-split-panel-wrap="">
 
                                 <div data-ax5grid="grid-view-02" data-fit-height-content="grid-view-02" style="height: 320px;">
@@ -132,7 +133,7 @@
                             </div>
                         </div>
 
-                        <div data-split-panel="{width: &quot;60%&quot;}" class="split-panel-vertical" style="display: block; width: 522.2px; left: 672.8px;">
+                        <div data-split-panel="{width: &quot;60%&quot;}" class="split-panel-vertical" style="display: block; width: 900px; left: 1000px;">
                             <div style="padding-left: 5px; height: 771px;" class="" data-split-panel-wrap="">
 
                                 <div data-ax5grid="grid-view-03" data-fit-height-content="grid-view-03" style="height: 320px;">
@@ -231,20 +232,6 @@
                         label: keyword,
                         // ⑥dataset값(Array)
                         data: chartData,
-                        // ⑦dataset의 배경색(rgba값을 String으로 표현)
-                        backgroundColor: [
-                            //색상
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(153, 102, 255, 0.5)',
-                            'rgba(255, 159, 64, 0.5)'
-                        ],
-                        // ⑧dataset의 선 색(rgba값을 String으로 표현)
-                        //borderColor: 'rgba(255, 99, 132, 1)',
-                        // ⑨dataset의 선 두께(Number)
-                        borderWidth: 1
                     }]
                 },
                 // ⑩차트의 설정(Object)

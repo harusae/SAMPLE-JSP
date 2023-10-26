@@ -613,18 +613,28 @@
         commonAjax("/home/dashboard4", {}, function(res){
             dataDashboard4List = res;
             console.log('dataDashboard4List : ', dataDashboard4List);
+             var ymd = [];
+             var today = dataDashboard4List[0].year
+                 +'-'+ dataDashboard4List[0].month
+                 +'-'+ dataDashboard4List[0].day;
+
+             var dt = new Date(today);
+             for(var i=0; i<9; i++){
+                ymd.push(dt.getFullYear()+'-'+(dt.getMonth()+1)+'-'+dt.getDate());
+                dt.setDate(dt.getDate() - 1);
+             }
             //start ag-grid
             var columnDefs = [
                 { headerName: '키워드', field: "keyword", width: 80  },
-                { headerName: '금일', field: "sumCountToday", width: 70  },
-                { headerName: 'D-1', field: "sumCountTodayBefore1", width: 70  },
-                { headerName: 'D-2', field: "sumCountTodayBefore2", width: 70  },
-                { headerName: 'D-3', field: "sumCountTodayBefore3", width: 70  },
-                { headerName: 'D-4', field: "sumCountTodayBefore4", width: 70  },
-                { headerName: 'D-5', field: "sumCountTodayBefore5", width: 70  },
-                { headerName: 'D-6', field: "sumCountTodayBefore6", width: 70  },
-                { headerName: 'D-7', field: "sumCountTodayBefore7", width: 70  },
-                { headerName: 'D-8', field: "sumCountTodayBefore8", width: 70  },
+                { headerName: ymd[0], field: "sumCountToday", width: 100  },
+                { headerName: ymd[1], field: "sumCountTodayBefore1", width: 100  },
+                { headerName: ymd[2], field: "sumCountTodayBefore2", width: 100  },
+                { headerName: ymd[3], field: "sumCountTodayBefore3", width: 100  },
+                { headerName: ymd[4], field: "sumCountTodayBefore4", width: 100  },
+                { headerName: ymd[5], field: "sumCountTodayBefore5", width: 100  },
+                { headerName: ymd[6], field: "sumCountTodayBefore6", width: 100  },
+                { headerName: ymd[7], field: "sumCountTodayBefore7", width: 100  },
+                { headerName: ymd[8], field: "sumCountTodayBefore8", width: 100  },
             ];
             // let the grid know which columns and what data to use
             var gridOptions = {
@@ -646,7 +656,8 @@
             new agGrid.Grid(gridDiv, gridOptions);
             //end ag-grid
 
-            var chartLabels = ['D-8','D-7','D-6','D-5','D-4','D-3','D-2', 'D-1', '금일'];
+            console.log('ymd : ', ymd);
+            var chartLabels = [ymd[8],ymd[7],ymd[6],ymd[5],ymd[4],ymd[3],ymd[2], ymd[1], ymd[0]];
             var chartDataSets = [];
             var listLength =dataDashboard4List.length < 10 ? dataDashboard4List.length : 10;
             for(var i=0; i<listLength ; i++){

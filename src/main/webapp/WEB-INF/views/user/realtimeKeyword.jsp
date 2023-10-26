@@ -241,7 +241,7 @@
       //console.log('realtimeKeywordDataList[0][0][0] : ',realtimeKeywordDataList[0][0][0]) ;
       for(var i=0; i<10; i++){
         var tmpTr = '<tr>';
-        tmpTr += '<td id="nb" style="width: 3.5%;"><p>'+ i +'</p></td>';
+        tmpTr += '<td id="nb" style="width: 3.5%;"><p>'+ (i+1) +'</p></td>';
         tmpTr += '<td style="width: 96.5%;">';
         tmpTr += '<ul>';
 
