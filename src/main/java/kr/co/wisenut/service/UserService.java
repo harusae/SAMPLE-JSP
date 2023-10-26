@@ -1,7 +1,7 @@
 package kr.co.wisenut.service;
 
 import kr.co.wisenut.config.sub.AES256;
-import kr.co.wisenut.config.sub.SHA256;
+import kr.co.wisenut.config.sub.SHA512;
 import kr.co.wisenut.entity.SsoUsrInfo;
 import kr.co.wisenut.entity.UserActionInfo;
 import kr.co.wisenut.entity.UserInfo;
@@ -77,7 +77,7 @@ public class UserService {
         }
 
         //password 암호화
-        SHA256 encoder = new SHA256();
+        SHA512 encoder = new SHA512();
         try {
             param.put("userPw", encoder.encode(param.get("password").toString()));
         } catch (NoSuchAlgorithmException e) {
@@ -125,7 +125,7 @@ public class UserService {
     public int initUserPw(HashMap<String, Object> param) {
 
         //초기화 password 암호화
-        SHA256 encoder = new SHA256();
+        SHA512 encoder = new SHA512();
         try {
             param.put("userPw", encoder.encode(pwInit));
         } catch (NoSuchAlgorithmException e) {
@@ -147,7 +147,7 @@ public class UserService {
     public int registUser(Map<String, Object> param){
 
         //초기화 password 암호화
-        SHA256 encoder = new SHA256();
+        SHA512 encoder = new SHA512();
         try {
             param.put("userPw", encoder.encode(pwInit));
         } catch (NoSuchAlgorithmException e) {
@@ -175,7 +175,7 @@ public class UserService {
 
         if(param.containsKey("myPagePwChange") && param.get("myPagePwChange").toString().equals("Y")){
             //password 암호화
-            SHA256 encoder = new SHA256();
+            SHA512 encoder = new SHA512();
             try {
                 //기존 패스워드 일치여부 확인
                 UserInfo userInfo = userMapper.getLoginInfo(param);

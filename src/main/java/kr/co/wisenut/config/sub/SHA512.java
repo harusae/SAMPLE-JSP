@@ -7,11 +7,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 //sha256 for PasswordEncoder
-public class SHA256 implements PasswordEncoder {
+public class SHA512 implements PasswordEncoder {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     public String encode(String text) throws NoSuchAlgorithmException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
         md.update(text.getBytes());
 
         return bytesToHex(md.digest());
