@@ -374,6 +374,7 @@
         }
     }
     function initUserGrid(data){
+        $('#gridManageUser').append("<div id='gridManageUserSub'></div>");
         gridUserList = new gridjs.Grid({
             columns:[
                 {id: 'userId',name:'ID'},
@@ -398,7 +399,7 @@
             resizable: true,
             search: true,
             sort: true
-        }).render(document.getElementById("gridManageUser"));
+        }).render(document.getElementById("gridManageUserSub"));
         gridUserList.on('rowClick', (...args) => {
             /*
             console.log(Object.keys(args[1]));
@@ -414,11 +415,8 @@
 
     }
     function updateUserGrid(data){
-        gridUserList.updateConfig({
-            search: false,
-            pagination: false,
-            data: data
-        }).forceRender();
+        $('#gridManageUserSub').remove();
+        initUserGrid(data);
     }
 
     $('#pwInit').change(function(){

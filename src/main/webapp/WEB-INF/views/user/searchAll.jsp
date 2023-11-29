@@ -13,6 +13,9 @@
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>통합검색</title>
 
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 </head>
 <body class="ax-body" data-page-auto-height="true"><input type="hidden" id="ssMenuGrpCd" value="null">
 <div id="ax-base-root" data-root-container="true">
@@ -250,13 +253,69 @@
     </div>
   </div>
 </div>
+
+<!-- 231020 상담요약 팝업 -->
+<div class="layer_pop">
+  <div class="layer_top">
+    <strong class="top_tit">상담요약</strong>
+    <a href="#" class="ly_pop_close"><img src="./%ED%86%B5%ED%95%A9%EA%B2%80%EC%83%89_files/ico_pop_close.png"></a>
+  </div>
+  <div class="layer_cont">
+    <table class="tbl_top">
+      <caption class="screen_out">상담요약 상세내용</caption>
+      <colgroup>
+        <col style="width:90px">
+        <col style="width:180px">
+        <col style="width:90px">
+        <col style="width:180px">
+      </colgroup>
+      <tbody>
+      <tr>
+        <th>콜유형</th>
+        <td class="first">인바운드</td>
+        <th class="first">채널</th>
+        <td class="first">리턴콜</td>
+      </tr>
+      <tr>
+        <th>시작시간</th>
+        <td>2023.09.13<br>13:00:00</td>
+        <th>종료시간</th>
+        <td>2023.09.13<br>13:00:00</td>
+      </tr>
+      <tr>
+        <th>상담유형</th>
+        <td colspan="3">체크/신용카드 &gt; 발급/재발급 &gt; 발급내역조회</td>
+      </tr>
+      <tr>
+        <th>키워드</th>
+        <td colspan="3">핸드폰, 번호, 고객</td>
+      </tr>
+      <tr>
+        <th>요약문</th>
+        <td colspan="3" class="summary_cont">
+          <div>
+            해당 카드 사용 등록 비밀번호 등록 필요합니다.<br>
+            다른 계좌에서 직접 이 계좌로 이체할 수 없어요.<br>
+            OOO ·
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<!--// 231020 상담요약 팝업 -->
+
 </body>
 
 <script>
   var searchAllList;
 
   function getSearchAllList1() {
-    commonAjax("http://100.80.79.22:15000/search/stt", $("#searchAllForm").serialize(), function(res){
+    //로컬 테스트용 URL
+    //commonAjax("http://100.80.79.22:15000/search/stt", $("#searchAllForm").serialize(), function(res){
+    //개발 서버용 URL
+    commonAjax("http://129.10.18.155:15000/search", $("#searchAllForm").serialize(), function(res){
 
       console.log('searchAllList res : ', res);
       searchAllList = res.collectionList[0].resultList;
@@ -299,6 +358,8 @@
 
     });
   }
+
+  $('#fromDay').datepicker();
   //초기화
   $(function() {
     getSearchAllList1();

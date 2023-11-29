@@ -18,6 +18,13 @@ public class AuthrorizationChecker {
     //로그인한 사용자 메뉴 별 권한체크
     public boolean check(HttpServletRequest request, Authentication auth){
 
+        logger.info("check : {}", request.getRequestURI());
+        //favicon는 예외
+        if(request.getRequestURI().equals("/favicon-32x32.png")){
+            logger.info("check true : {}", request.getRequestURI().equals("/favicon-32x32.png"));
+            return true;
+        }
+
         //로그인정보가 없는 경우
         if(!(auth.getPrincipal() instanceof UserDetailsImpl)){
             return false;

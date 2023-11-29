@@ -294,6 +294,15 @@
 
             //start ag-grid
             var columnDefs = [
+                {
+                    headerName: '읽기',
+                    cellRenderer: function(params) {
+                        let keyData = params.data.sumCount;
+                        let newLink = `<a href= "#">읽기</a>`;
+                        return newLink;
+                    },
+                    width: 130
+                },
                 { headerName: '대분류', field: "lv1Nm", width: 130 },
                 { headerName: '중분류', field: "lv2Nm", width: 110 },
                 { headerName: '소분류', field: "lv3Nm", width: 130 },
@@ -301,6 +310,7 @@
             ];
             // let the grid know which columns and what data to use
             var gridOptions = {
+                rowHeight: 30,
                 columnDefs: columnDefs,
                 rowData: dataDashboard1List,
                 pagination: true,
@@ -313,6 +323,7 @@
                     //enableRowGroup: true,
                     //enablePivot: true,
                     //enableValue: true,
+                    editable: true
                 },
             };
             var gridDiv = document.querySelector('#grid1home');
@@ -357,6 +368,7 @@
                         //borderColor: 'rgba(255, 99, 132, 1)',
                     }]
                 },
+                plugins: [ChartDataLabels],
                 // ⑩차트의 설정(Object)
                 options: {
                     maintainAspectRatio: false,
@@ -367,9 +379,14 @@
                             //미입력 시 top이 default
                             position: 'bottom',
                         },
-                        // 미입력시 검은색이 default
                         datalabels: {
-                            color: '#FE777B'
+                            formatter: (value, ctx) => {
+                                const datapoints = ctx.chart.data.datasets[0].data
+                                const total = datapoints.reduce((total, datapoint) => total + datapoint, 0)
+                                const percentage = value / total * 100
+                                return percentage.toFixed(0) + "%";
+                            },
+                            color: '#fff',
                         },
                         title: {
                             display: true,
@@ -461,6 +478,11 @@
                         legend: {
                             //미입력 시 top이 default
                             position: 'bottom',
+                            labels: {
+                                font: {
+                                    size: 20
+                                }
+                            }
                         },
                         // 미입력시 검은색이 default
                         datalabels: {
@@ -480,6 +502,7 @@
     function getDashboard3List() {
         commonAjax("/home/dashboard3", {}, function(res){
             dataDashboard3List = res;
+            console.log("dataDashboard3List : ", dataDashboard3List);
 
             //start ag-grid
             var columnDefs = [
@@ -512,7 +535,8 @@
             var listLength =dataDashboard3List.length < 10 ? dataDashboard3List.length : 10;
             for(var i=0; i<listLength ; i++){
                 chartLabels.push(dataDashboard3List[i].lv3Nm);
-                chartData.push(dataDashboard3List[i].sumCount);
+                //chartData.push(dataDashboard3List[i].sumCount);
+                chartData.push(dataDashboard3List[i]);
             }
             // 차트를 그럴 영역을 dom요소로 가져온다.
             var chartArea3home = document.getElementById('test3home').getContext('2d');
@@ -523,7 +547,7 @@
                 // ②차트의 데이터(Object)
                 data: {
                     // ③x축에 들어갈 이름들(Array)
-                    labels: chartLabels,
+                    //labels: chartLabels,
                     // ④실제 차트에 표시할 데이터들(Array), dataset객체들을 담고 있다.
                     datasets: [
                         {
@@ -562,6 +586,10 @@
                 },
                 // ⑩차트의 설정(Object)
                 options: {
+                    parsing: {
+                        xAxisKey: 'sumCount',
+                        yAxisKey: 'lv3Nm'
+                    },
                     maintainAspectRatio: false,
                     responsive: true,
                     scales: {
@@ -591,7 +619,6 @@
                 },
             });
 
-            /*
             document.getElementById('test3home').onclick = function(evt) {
                 var points = chart3home.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, true);
 
@@ -599,13 +626,15 @@
                     var firstPoint = points[0];
                     var label = chart3home.data.labels[firstPoint.index];
                     var value = chart3home.data.datasets[firstPoint.datasetIndex].data[firstPoint.index];
+                    var clsLabel = chart3home.data.datasets[firstPoint.datasetIndex].data[firstPoint.index].clsLabel;
 
                     //console.log(label);
                     //console.log(value);
-                    alert(label);
+                    console.log('clsLabel : ', clsLabel);
+                    //alert(label);
                 }
             };
-            */
+
         });
     }
 

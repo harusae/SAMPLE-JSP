@@ -38,6 +38,9 @@ public class SHA512 implements PasswordEncoder {
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
         try {
             String target = encode(rawPassword.toString()).toLowerCase();
+            logger.info("rawPassword : {}", rawPassword);
+            logger.info("encodedPassword : {}", encodedPassword);
+            logger.info("target : {}", target);
             return target.equals(encodedPassword.toLowerCase());
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);

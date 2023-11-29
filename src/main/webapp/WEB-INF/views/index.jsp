@@ -12,9 +12,19 @@
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>TA</title>
-  <link rel="icon" href="data:,">
 </head>
 
+<link
+        href="https://code.jquery.com/ui/1.12.1/themes/ui-lightness/jquery-ui.css"
+        rel="stylesheet"
+/>
+<script src="/js/jquery-3.7.1.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
+        integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA=="
+        crossorigin="anonymous"
+        referrerpolicy="no-referrer"
+></script>
 <!--chart.js-->
 <script src="/js/chart.js"></script>
 <script src="/js/datalabels.js"></script>
@@ -26,7 +36,6 @@
 <script src="/js/exceljs.min.js"></script>
 <script src="/js/FileSaver.min.js"></script>
 <!--bootstrap Treeview-->
-<script src="/js/jquery-3.7.1.min.js"></script>
 <script src="/js/bootstrap-treeview.js"></script>
 <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 <link href="/css/bootstrap-treeview.css" rel="stylesheet"/>
@@ -132,15 +141,18 @@
   //메뉴 > 상위메뉴 선택 시
   $(document).on('click', '.depth01', function() { //class depth01 선택 시
       var menuBarMenuId = $(this).attr("id");
-      var menuBarUlId = menuBarMenuId.substring(7,menuBarMenuId.length);
-      var ulFlag = $('#depth2_'+menuBarUlId).css('display');
-      //console.log('ulFlag : ', ulFlag);
+      if(menuBarMenuId != null){
+          console.log('menuBarMenuId : ', menuBarMenuId);
+          var menuBarUlId = menuBarMenuId.substring(7,menuBarMenuId.length);
+          var ulFlag = $('#depth2_'+menuBarUlId).css('display');
+          //console.log('ulFlag : ', ulFlag);
 
-      $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
-      if ( ulFlag === 'none' ) {
-          $('#depth2_'+menuBarUlId).show();
-      } else {
-          $('#depth2_'+menuBarUlId).hide();
+          $('.depth02_list.m02').hide();    //메뉴바 하위메뉴 비표시처리
+          if ( ulFlag === 'none' ) {
+              $('#depth2_'+menuBarUlId).show();
+          } else {
+              $('#depth2_'+menuBarUlId).hide();
+          }
       }
   });
 
@@ -149,7 +161,6 @@
     commonAjax('/sessionChk', {}, function(res){
       //console.log('sessionChk : ', res);
     });
-    console.log($(this).attr("id"));
 
     var navItemId = $(this).attr("id");
     var id = navItemId.substring(7,navItemId.length);
@@ -221,24 +232,38 @@
                     <c:set var="lastLi" value="Y"/>
                     <c:set var="firstUl" value="N"/>
                     <c:set var="lastUl" value="N"/>
-                    <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
+                <c:forEach items="${principal.menuList}" var="menu" varStatus="status">
+                    <script>
+                        //console.log("menu : ", '${menu}');
+                        //console.log("firstLi : ", '${firstLi}');
+                        //console.log("lastLi : ", '${lastLi}');
+                        //console.log("firstUl : ", '${firstUl}');
+                        //console.log("lastUl : ", '${lastUl}');
+                    </script>
                     <c:if test="${menu.upperMenuId == null and lastUl == 'Y'}">
-                </ul>
-                </li>
-                <c:set var="firstLi" value="Y"/>
-                </c:if>
-
-                <c:if test="${firstLi == 'Y'}">
-                <li>
+                    </ul>
+                    </li>
+                        <c:set var="firstLi" value="Y"/>
+                        <c:set var="lastLi" value="Y"/>
+                        <c:set var="firstUl" value="N"/>
+                        <c:set var="lastUl" value="N"/>
                     </c:if>
 
-                    <c:if test="${menu.upperMenuId == null and menu.menuUrl != null}">
+                    <c:if test="${firstLi == 'Y'}">
+                    <li>
+                        <c:set var="firstLi" value="Y"/>
+                        <c:set var="lastLi" value="Y"/>
+                        <c:set var="firstUl" value="N"/>
+                        <c:set var="lastUl" value="N"/>
+                    </c:if>
+
                     <!-- 최상위메뉴 + 하위메뉴가 없는 경우 -->
+                    <c:if test="${menu.upperMenuId == null and menu.menuUrl != null}">
                     <a href="#" class="depth01" onclick="javascript:navInit('${menu.menuId}','${menu.menuName}','${menu.menuUrl}');">${menu.menuName}</a>
                     </c:if>
 
-                    <c:if test="${menu.upperMenuId == null and menu.menuUrl == null}">
                     <!-- 최상위메뉴 + 하위메뉴가 있는 경우 -->
+                    <c:if test="${menu.upperMenuId == null and menu.menuUrl == null}">
                         <c:set var="firstLi" value="N"/>
                         <c:set var="lastLi" value="N"/>
                         <c:set var="firstUl" value="Y"/>
@@ -260,7 +285,7 @@
                         <c:if test="${lastLi == 'Y'}">
                             </li>
                         </c:if>
-                        </c:forEach>
+                 </c:forEach>
                         <!--
                         <li>
                             <a href="#" class="depth01 on">상담현황<i class="fas fa-angle-up"></i></a>
