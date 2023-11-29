@@ -20,8 +20,8 @@ public class AuthrorizationChecker {
 
         logger.info("check : {}", request.getRequestURI());
         //favicon는 예외
-        if(request.getRequestURI().equals("/favicon-32x32.png")){
-            logger.info("check true : {}", request.getRequestURI().equals("/favicon-32x32.png"));
+        if(request.getRequestURI().equals("/favicon.png")){
+            logger.info("favicon check : {}", request.getRequestURI().equals("/favicon.png"));
             return true;
         }
 
