@@ -67,8 +67,8 @@
                AND A1.DIV= 'TS'
                AND B1.CSELTYPEDEPTH = '3'
                AND A1.SENT_CLS_CD = '300002'
-               AND A1.HOUR = 1 --to_number(to_char(sysdate, 'hh24'))
-               AND A1.MINUTE = 30 --trunc(to_number(to_char(sysdate, 'mi')), 1)
+               --AND A1.HOUR = 1 --to_number(to_char(sysdate, 'hh24'))
+               --AND A1.MINUTE = 30 --trunc(to_number(to_char(sysdate, 'mi')), 1)
                --AND A1.YEAR = to_number(to_char(sysdate, 'yyyy'))
                --AND A1.MONTH = to_number(to_char(sysdate, 'mm'))
                --AND A1.DAY = to_number(to_char(sysdate, 'dd'))

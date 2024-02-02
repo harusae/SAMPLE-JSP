@@ -16,7 +16,10 @@
 <body>
 
 <div class="login_box">
-    <h1><a href="#"><img src="/img/login_logo.png" alt="WISE TextMiner"></a></h1>
+    <h1><a href="#">
+        LOGIN
+        <!--<img src="/img/img01.jpg" alt="Pixabay로부터 입수된 alhh님의 이미지 입니다."></a>-->
+    </h1>
     <form method="post" action="/loginPrc">
         <div class="form-group">
             <label >아이디</label>

@@ -225,7 +225,7 @@
             </ul>
         </div>
         <div class="header">
-            <h1 class="h_logo"><a href="#"><img src="img/header_logo.png" alt="wisenut"></a></h1>
+            <h1 class="h_logo"><a href="#"><img src="/img/img01.jpg" alt="Pixabay로부터 입수된 alhh님의 이미지 입니다." style="width:150px; height:40px;"></a></h1>
             <div class="menu_total_wrap">
                 <ul class="gnb_menu">
                     <c:set var="firstLi" value="Y"/>
