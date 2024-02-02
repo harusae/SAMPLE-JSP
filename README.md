@@ -1,4 +1,5 @@
 springboot 2.7 / jdk 1.8 / jsp + jstl 1.2 / maven / oracle
+
 chart.js / excel.js / ag-grid 
 
 Request for just 1 page working structure > all page open in parent page by div
