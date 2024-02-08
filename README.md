@@ -9,7 +9,7 @@ Request for just 1 page working structure > all page open in index page by div
 source working on local oracle DB
 > table script + menu data
 -------------------------
-CREATE TABLE TB_WTM_IS_BS_CLASS"
+CREATE TABLE "TB_WTM_IS_BS_CLASS"
    (	"CLS_ID" NUMBER(11,0), 
 	"CALL_ID" VARCHAR2(30), 
 	"CLS_SC_CD" VARCHAR2(4), 
@@ -128,7 +128,7 @@ CREATE TABLE "TB_WTM_IS_CODE"
 	"MOD_USER_ID" VARCHAR2(100)
    );
 
-CREATE TABLE "TEST1"."TB_WTM_IS_DICTIONARIES"
+CREATE TABLE "TB_WTM_IS_DICTIONARIES"
 (	"DIC_ID" NUMBER(11,0),
 "DIC_NAME" VARCHAR2(100),
 "DIC_TYPE" VARCHAR2(100),
