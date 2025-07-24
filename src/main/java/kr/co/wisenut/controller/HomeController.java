@@ -99,4 +99,32 @@ public class HomeController {
 
         return new ResponseEntity(list, HttpStatus.OK);
     }
+
+    @ResponseStatus(code = HttpStatus.OK)   //에러처리 대신 정상처리(200)으로 위장
+    @RequestMapping("/err/400")
+    public ModelAndView home() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("error/400");  //이동할 페이지 아직 안만듬
+
+        return view;
+    }
+
+    @ResponseStatus(code = HttpStatus.OK)   //에러처리 대신 정상처리(200)으로 위장
+    @RequestMapping("/err/404")
+    public ModelAndView home() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("error/404");  //이동할 페이지 아직 안만듬
+
+        return view;
+    }
+
+    @ResponseStatus(code = HttpStatus.OK)   //에러처리 대신 정상처리(200)으로 위장
+    @RequestMapping("/err/default")
+    public ModelAndView home() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("error/default");  //이동할 페이지 아직 안만듬
+
+        return view;
+    }
+
 }
